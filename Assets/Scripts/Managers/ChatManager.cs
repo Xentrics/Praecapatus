@@ -6,6 +6,7 @@ using Assets.Scripts.Commands;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.Exception;
 
 namespace Assets.Scripts.Managers
 {
@@ -55,7 +56,15 @@ namespace Assets.Scripts.Managers
                         chatInputField.text = chatInputField.text.Remove(chatInputField.text.Length - 1);                       
                     else if (CrossPlatformInputManager.GetButton("Submit"))
                     {
-                        CommandParser.parseCommandLine(chatInputField.text);
+                        try
+                        {
+                            CommandParser.parseCommandLine(chatInputField.text);
+                        }
+                        catch (CommandNotFoundException e)
+                        {
+                            print(e.Message);
+                        }
+
                         chatInputField.text = ""; // clear current line. TODO: muss line to history
                     }
                     else

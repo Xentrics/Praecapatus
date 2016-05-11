@@ -71,10 +71,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Abilities\AbstractAbility.cs" />
+    <Compile Include="Assets\Scripts\Abilities\EUsageMode.cs" />
+    <Compile Include="Assets\Scripts\Abilities\TestAbility.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraPlayer.cs" />
     <Compile Include="Assets\Scripts\Character\CharAttributeOverrider.cs" />
     <Compile Include="Assets\Scripts\Character\CharAttributes.cs" />
     <Compile Include="Assets\Scripts\Character\CharInfo.cs" />
+    <Compile Include="Assets\Scripts\Abilities\EAbilities.cs" />
     <Compile Include="Assets\Scripts\Exception\InvalidAttributeLevelException.cs" />
     <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Commands\Command.cs" />
@@ -90,6 +94,7 @@
     <Compile Include="Assets\Scripts\Managers\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameOverManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\Player\AbilityController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
