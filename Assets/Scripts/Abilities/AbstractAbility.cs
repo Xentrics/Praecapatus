@@ -8,6 +8,8 @@ namespace Assets.Scripts.Abilities
 {
     abstract class AbstractAbility
     {
+        public int level = AbilityController.UNLEARNED; // the base ability level. This is used for dice-rolls
+
         protected EUsageMode usageMode = EUsageMode.none;
         protected PlayerController playerC;
         
@@ -16,7 +18,16 @@ namespace Assets.Scripts.Abilities
             this.playerC = playerC;
         }
 
-        public abstract void use();
+        public void use()
+        {
+            if (canUse())
+                useOverride();
+            else
+                return;
+        }
+
+        public abstract void useOverride();
+
         public abstract bool canUse();
 
         public EUsageMode getUsageMode()

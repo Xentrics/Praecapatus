@@ -18,9 +18,8 @@ namespace Assets.Scripts.Abilities
             return true;
         }
 
-        public override void use()
+        public override void useOverride()
         {
-            // make something funny here
             throw new NotImplementedException();
         }
     }

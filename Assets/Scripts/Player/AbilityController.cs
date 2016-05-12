@@ -10,6 +10,9 @@ namespace Assets.Scripts.Player
 {
     class AbilityController : MonoBehaviour
     {
+        public static readonly int DEFAULT_ABILITY_LEVEL = 0;
+        public static readonly int UNLEARNED = -1;
+
         PlayerController playerC;
         Dictionary<EAbilities, AbstractAbility> abilities;
 
