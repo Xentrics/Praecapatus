@@ -53,7 +53,10 @@ namespace Assets.Scripts.Managers
                 if (isChatting && Input.anyKeyDown)
                 {
                     if (Input.GetKeyDown(KeyCode.Backspace))
-                        chatInputField.text = chatInputField.text.Remove(chatInputField.text.Length - 1);                       
+                    {
+                        if (chatInputField.text.Length > 0)
+                            chatInputField.text = chatInputField.text.Remove(chatInputField.text.Length - 1);
+                    }
                     else if (CrossPlatformInputManager.GetButton("Submit"))
                     {
                         try

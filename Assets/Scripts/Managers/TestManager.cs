@@ -11,12 +11,12 @@ namespace Assets.Scripts.Managers
         // the inner classes will only be used here. They should handle variable packs easier
         struct instantTest
         {
-
+            int roll;
         };
 
         struct prolongedTest
         {
-
+            List<int> rolls;
         };
 
         // variables
