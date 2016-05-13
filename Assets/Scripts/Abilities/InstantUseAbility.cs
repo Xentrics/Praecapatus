@@ -8,7 +8,7 @@ namespace Assets.Scripts.Abilities
 {
     abstract class InstantUseAbility : AbstractAbility
     {
-        public InstantUseAbility(PlayerController playerC) : base(playerC)
+        public InstantUseAbility() : base()
         {
 
         }

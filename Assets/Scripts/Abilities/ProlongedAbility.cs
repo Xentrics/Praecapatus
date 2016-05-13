@@ -8,7 +8,7 @@ namespace Assets.Scripts.Abilities
 {
     abstract class ProlongedAbility : AbstractAbility
     {
-        public ProlongedAbility(PlayerController playerC) : base(playerC)
+        public ProlongedAbility() : base()
         {
         }
     }

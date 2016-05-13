@@ -9,26 +9,37 @@ namespace Assets.Scripts.Abilities
     abstract class AbstractAbility
     {
         public int level = AbilityController.UNLEARNED; // the base ability level. This is used for dice-rolls
-
+        protected EAttrGrp attributeGrp;
         protected EUsageMode usageMode = EUsageMode.none;
-        protected PlayerController playerC;
-        
-        public AbstractAbility(PlayerController playerC)
-        {
-            this.playerC = playerC;
-        }
-
-        public void use()
-        {
-            if (canUse())
-                useOverride();
-            else
-                return;
-        }
 
         public abstract void useOverride();
 
-        public abstract bool canUse();
+        /**
+         * test, whether or not this ability can be used by 'user' on 'targets'
+         */
+        public abstract bool canUse(PlayerController user, List<PlayerController> targets);
+
+        /**
+         * TODO: HEADER NEEDS SOME INPUT
+         * the returned value will be added to the ability level pool (fw + aw + modifier)
+         */
+        public abstract int getTestModifier();
+
+        /**
+         * gets called from the TestManager after rolling some dice
+         * rp are the remaining points of the test
+         */
+        public abstract void applySuccess(int rp, List<PlayerController> targets);
+
+        /**
+         * method header may need some tweaking later on
+         */
+        public abstract void applyFailure(int rp, PlayerController user, List<PlayerController> targets);
+
+        public EAttrGrp getAttributeGroup()
+        {
+            return attributeGrp;
+        }
 
         public EUsageMode getUsageMode()
         {

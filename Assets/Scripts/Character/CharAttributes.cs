@@ -15,7 +15,7 @@ namespace Assets.Scripts
         public static readonly int defLevel = 10;
         public static readonly int maxLevel = 20;
 
-        public Dictionary<EAttrGrp, int> attributes; // TODO: make private after testing
+        Dictionary<EAttrGrp, int> attributes; // TODO: make private after testing
 
         void Awake()
         {
@@ -60,6 +60,16 @@ namespace Assets.Scripts
         public bool canLevelUp(EAttrGrp A, int by = 1)
         {
             return attributes[A] + by <= maxLevel;
+        }
+
+        public int getAttributeLevel(EAttrGrp A)
+        {
+            return attributes[A];
+        }
+
+        public Dictionary<EAttrGrp, int> deepCopy()
+        {
+            return new Dictionary<EAttrGrp, int>(attributes);
         }
 
         /**

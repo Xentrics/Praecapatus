@@ -14,5 +14,10 @@ namespace Assets.Scripts
                 attr = gameObject.AddComponent<CharAttributes>(); // may need some testing!
             }
         }
+
+        public int getAttributeValue(EAttrGrp A)
+        {
+            return attr.getAttributeLevel(A);
+        }
     }
 }

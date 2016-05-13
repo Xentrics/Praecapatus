@@ -44,7 +44,7 @@ namespace Assets.Scripts.Character
             }
 
             // store old values (just in case)
-            attr_orig = new Dictionary<EAttrGrp, int>(attrToOverride.attributes); // deep copy
+            attr_orig = attrToOverride.deepCopy(); // deep copy
 
             // apply override
             overrideAttributes();
@@ -57,24 +57,24 @@ namespace Assets.Scripts.Character
         {
             foreach (EAttrGrp A in Enum.GetValues(typeof(EAttrGrp)))
             {
-                attrToOverride.attributes[A] = attr_orig[A];
+                attrToOverride.setAttributeTo(A, attr_orig[A]);
             }
         }
 
         public void overrideAttributes()
         {
             if (AU != NO_OVERRIDE)
-                attrToOverride.attributes[EAttrGrp.AU] = AU;
+                attrToOverride.setAttributeTo(EAttrGrp.AU, AU);
             if (GE != NO_OVERRIDE)
-                attrToOverride.attributes[EAttrGrp.GE] = GE;
+                attrToOverride.setAttributeTo(EAttrGrp.GE, GE);
             if (IN != NO_OVERRIDE)
-                attrToOverride.attributes[EAttrGrp.IN] = IN;
+                attrToOverride.setAttributeTo(EAttrGrp.IN, IN);
             if (KO != NO_OVERRIDE)
-                attrToOverride.attributes[EAttrGrp.KO] = KO;
+                attrToOverride.setAttributeTo(EAttrGrp.KO, KO);
             if (LO != NO_OVERRIDE)
-                attrToOverride.attributes[EAttrGrp.LO] = LO;
+                attrToOverride.setAttributeTo(EAttrGrp.LO, LO);
             if (MO != NO_OVERRIDE)
-                attrToOverride.attributes[EAttrGrp.MO] = MO;
+                attrToOverride.setAttributeTo(EAttrGrp.MO, MO);
         }
     }
 }
