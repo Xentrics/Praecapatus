@@ -416,9 +416,11 @@ GameObject:
   - 114: {fileID: 220997241}
   - 114: {fileID: 220997233}
   - 114: {fileID: 220997234}
+  - 114: {fileID: 220997243}
+  - 114: {fileID: 220997242}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: MainCharacter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -635,6 +637,28 @@ MonoBehaviour:
   IN: -1
   LO: -1
   attrToOverride: {fileID: 0}
+--- !u!114 &220997242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 220997231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f4ba6fc4c1c1f40b329b8c8698cf16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &220997243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 220997231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db6e26e49e97f0a469c9121b11994a5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &222662856
 GameObject:
   m_ObjectHideFlags: 0

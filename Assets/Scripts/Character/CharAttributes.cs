@@ -23,14 +23,8 @@ namespace Assets.Scripts
             attributes = new Dictionary<EAttrGrp, int>(Constants.NUM_ATTRIBUTES);
             foreach (EAttrGrp A in Enum.GetValues(typeof(EAttrGrp)))
             {
-                attributes.Add(A, CharAttributes.minLevel);
+                attributes.Add(A, CharAttributes.defLevel);
             }
-        }
-
-        public void loadDefaultAttributes()
-        {
-            foreach (EAttrGrp A in Enum.GetValues(typeof(EAttrGrp)))
-                attributes[A] = defLevel;
         }
 
         /*

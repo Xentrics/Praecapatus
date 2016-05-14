@@ -81,10 +81,12 @@
     <Compile Include="Assets\Scripts\Character\CharAttributes.cs" />
     <Compile Include="Assets\Scripts\Character\CharInfo.cs" />
     <Compile Include="Assets\Scripts\Abilities\EAbilities.cs" />
+    <Compile Include="Assets\Scripts\Commands\UseAbilityCommand.cs" />
     <Compile Include="Assets\Scripts\ETestMode.cs" />
+    <Compile Include="Assets\Scripts\Exception\GameLogicException.cs" />
     <Compile Include="Assets\Scripts\Exception\InvalidAttributeLevelException.cs" />
     <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
-    <Compile Include="Assets\Scripts\Commands\Command.cs" />
+    <Compile Include="Assets\Scripts\Commands\AbstractCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandParser.cs" />
     <Compile Include="Assets\Scripts\Commands\TestCommand.cs" />
     <Compile Include="Assets\Scripts\Constants.cs" />
@@ -98,7 +100,7 @@
     <Compile Include="Assets\Scripts\Managers\GameOverManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TestManager.cs" />
-    <Compile Include="Assets\Scripts\Player\AbilityController.cs" />
+    <Compile Include="Assets\Scripts\Managers\AbilityManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />

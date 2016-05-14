@@ -6,42 +6,44 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.Commands;
 using Assets.Scripts.Exception;
+using Assets.Scripts.Player;
 
 namespace Assets.Scripts
 {
-    static class CommandParser
+    class CommandParser
     {
-        static bool isInitiated = false;
-        static Dictionary<string, Command> commandList;
+        Dictionary<string, AbstractCommand> commandList;
+        PlayerController playerC;
 
-        private static void initiate()
+        public CommandParser(PlayerController pc)
         {
-            // instantiate all commands
-            commandList = new Dictionary<string, Command>();
-            commandList.Add("test", new TestCommand());
-
-            isInitiated = true;
+            playerC = pc;
+            initiate();
         }
 
-        public static void parseCommandLine(String cmdline)
+        private void initiate()
         {
-            if (!isInitiated)
-                initiate();
+            // instantiate all commands
+            commandList = new Dictionary<string, AbstractCommand>();
+            commandList.Add("test", new TestCommand());
+            commandList.Add(UseAbilityCommand.cmdName, new UseAbilityCommand());
+        }
 
+        public void parseCommandLine(String cmdline, PlayerController pc)
+        {
             if (cmdline == null)
                 throw new ArgumentNullException("parseCommandLine: given cmdline was empty!");
 
             String[] input = cmdline.Split(' '); // seperate by empty spaces
             if (input.Length > 0)
             {
-                Command cmd = null;
+                AbstractCommand cmd = null;
                 commandList.TryGetValue(input[0], out cmd);
                 if (cmd == null)
                     throw new CommandNotFoundException(input[0]);
                 else
-                    cmd.use(input.Skip(1).ToArray());
+                    cmd.use(input.Skip(1).ToArray(), pc);
             }
         }
-
     }
 }

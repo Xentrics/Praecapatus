@@ -10,15 +10,21 @@ using Assets.Scripts.Managers;
 namespace Assets.Scripts.Player
 {
     [RequireComponent(typeof(PlayerMovement))]
+    [RequireComponent(typeof(AbilityManager))]
+    [RequireComponent(typeof(TestManager))]
     class PlayerController : MonoBehaviour
     {
         PlayerMovement moveComp;
+        AbilityManager abiCon;
+        TestManager testManager;
         public ChatManager chatManager;
         bool isChatting = false;
 
         void Awake()
         {
             moveComp = GetComponent<PlayerMovement>();
+            abiCon = GetComponent<AbilityManager>();
+            testManager = GetComponent<TestManager>();
             if (chatManager == null) throw new NullReferenceException("Chracter needs input field!");
         }
 
@@ -45,9 +51,19 @@ namespace Assets.Scripts.Player
             }
         }
 
-        private void getPressedKey()
+        public Vector3 getPosition()
         {
+            return moveComp.getPosition();
+        }
 
+        public float getMeleeRange()
+        {
+            return 10; // 1 meter?
+        }
+
+        public void executeAbilityWith(EAbilities A, int minRP = 0)
+        {
+            testManager.testInstant(minRP, abiCon.getAbility(A), this, null);
         }
     }
 }

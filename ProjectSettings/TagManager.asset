@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - ChatBox
+  - MainCharacter
   layers:
   - Default
   - TransparentFX

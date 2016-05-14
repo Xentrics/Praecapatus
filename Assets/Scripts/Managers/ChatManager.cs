@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.Exception;
+using Assets.Scripts.Player;
 
 namespace Assets.Scripts.Managers
 {
@@ -15,6 +16,8 @@ namespace Assets.Scripts.Managers
     {
         bool allowChat = true;
         bool isChatting = false;
+        CommandParser cmdParser;
+        PlayerController playerC;
         public InputField chatInputField;
 
         void Awake()
@@ -22,6 +25,12 @@ namespace Assets.Scripts.Managers
             if (chatInputField == null)
                 chatInputField = GetComponent<InputField>();
             chatInputField.placeholder.GetComponent<Text>().text = "<press tab to type command>";
+        }
+
+        void Start()
+        {
+            playerC = GameObject.FindGameObjectWithTag("MainCharacter").GetComponent<PlayerController>();
+            cmdParser = new CommandParser(playerC);
         }
 
         /*
@@ -59,13 +68,16 @@ namespace Assets.Scripts.Managers
                     }
                     else if (CrossPlatformInputManager.GetButton("Submit"))
                     {
-                        try
+                        if (chatInputField.text.StartsWith("@"))
                         {
-                            CommandParser.parseCommandLine(chatInputField.text);
-                        }
-                        catch (CommandNotFoundException e)
-                        {
-                            print(e.Message);
+                            try
+                            {
+                                cmdParser.parseCommandLine(chatInputField.text.Substring(1), playerC);
+                            }
+                            catch (CommandNotFoundException e)
+                            {
+                                print(e.Message);
+                            }
                         }
 
                         chatInputField.text = ""; // clear current line. TODO: muss line to history

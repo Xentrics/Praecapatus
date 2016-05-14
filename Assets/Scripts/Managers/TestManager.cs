@@ -41,7 +41,7 @@ namespace Assets.Scripts.Managers
         {
             if (ability.canUse(user, targets))
             {
-                int c = ability.getTestModifier();
+                int c = ability.getTestModifier(user, targets);
                 int aw = charInfo.getAttributeValue(ability.getAttributeGroup());
                 int fw = ability.level;
                 bool failed = false;
@@ -67,6 +67,8 @@ namespace Assets.Scripts.Managers
                             failed = true; // Patzer
                     } while (!failed && reroll >= 19);
                 }
+
+                print("Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw);
 
                 if (rp >= minRP)
                     ability.applySuccess(rp, targets);

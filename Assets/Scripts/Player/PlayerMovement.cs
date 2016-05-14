@@ -193,5 +193,10 @@ namespace Assets.Scripts
                 animatorComp.applyRootMotion = false;
             }
         }
+
+        public Vector3 getPosition()
+        {
+            return rigitBodyComp.position;
+        }
     }
 }

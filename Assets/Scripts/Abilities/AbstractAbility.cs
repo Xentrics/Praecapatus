@@ -8,9 +8,10 @@ namespace Assets.Scripts.Abilities
 {
     abstract class AbstractAbility
     {
-        public int level = AbilityController.UNLEARNED; // the base ability level. This is used for dice-rolls
+        public int level = AbilityManager.UNLEARNED; // the base ability level. This is used for dice-rolls
         protected EAttrGrp attributeGrp;
         protected EUsageMode usageMode = EUsageMode.none;
+        protected bool useableWithoutLearning = true; // if level equals UNLEARNED, shall we still be able to make a test for this ability
 
         public abstract void useOverride();
 
@@ -23,7 +24,7 @@ namespace Assets.Scripts.Abilities
          * TODO: HEADER NEEDS SOME INPUT
          * the returned value will be added to the ability level pool (fw + aw + modifier)
          */
-        public abstract int getTestModifier();
+        public abstract int getTestModifier(PlayerController user, List<PlayerController> targets);
 
         /**
          * gets called from the TestManager after rolling some dice
