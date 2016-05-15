@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Entity;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class EnemyManager : MonoBehaviour
     {
-        public PlayerHealth playerHealth;
+        public EntityHealth playerHealth;
         public GameObject enemy;
         public float spawnTime = 3f;
         public Transform[] spawnPoints;

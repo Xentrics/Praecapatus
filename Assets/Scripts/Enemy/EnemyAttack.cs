@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Entity;
 
 namespace Assets.Scripts
 {
@@ -11,7 +12,7 @@ namespace Assets.Scripts
 
         Animator anim;
         GameObject player;
-        PlayerHealth playerHealth;
+        EntityHealth playerHealth;
         //EnemyHealth enemyHealth;
         bool playerInRange;
         float timer;
@@ -20,7 +21,7 @@ namespace Assets.Scripts
         void Awake()
         {
             player = GameObject.FindGameObjectWithTag("Player");
-            playerHealth = player.GetComponent<PlayerHealth>();
+            playerHealth = player.GetComponent<EntityHealth>();
             //enemyHealth = GetComponent<EnemyHealth>();
             anim = GetComponent<Animator>();
         }

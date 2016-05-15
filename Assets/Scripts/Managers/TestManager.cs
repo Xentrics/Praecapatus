@@ -3,16 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Assets.Scripts.Player;
+using Assets.Scripts.Entity;
 using Assets.Scripts.Abilities;
+using Assets.Scripts.Character;
 
 namespace Assets.Scripts.Managers
 {
-    [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(EntityController))]
     [RequireComponent(typeof(CharInfo))]
     class TestManager : MonoBehaviour
     {
-        PlayerController playerC;
+        EntityController playerC;
         CharInfo charInfo;
 
         public void Awake()
@@ -37,7 +38,7 @@ namespace Assets.Scripts.Managers
         /**
          * 
          */
-        public void testInstant(int minRP, AbstractAbility ability, PlayerController user, List<PlayerController> targets)
+        public void testInstant(int minRP, AbstractAbility ability, EntityController user, List<EntityController> targets)
         {
             if (ability.canUse(user, targets))
             {

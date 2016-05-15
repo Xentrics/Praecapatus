@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.Commands;
 using Assets.Scripts.Exception;
-using Assets.Scripts.Player;
+using Assets.Scripts.Entity;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Commands
 {
     class CommandParser
     {

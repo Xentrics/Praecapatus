@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Entity;
+using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Managers
 {
     public class GameOverManager : MonoBehaviour
     {
-        public PlayerHealth playerHealth;
+        public EntityHealth playerHealth;
 
 
         Animator anim;

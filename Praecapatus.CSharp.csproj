@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Character\CharInfo.cs" />
     <Compile Include="Assets\Scripts\Abilities\EAbilities.cs" />
     <Compile Include="Assets\Scripts\Commands\UseAbilityCommand.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityMovement.cs" />
     <Compile Include="Assets\Scripts\ETestMode.cs" />
     <Compile Include="Assets\Scripts\Exception\GameLogicException.cs" />
     <Compile Include="Assets\Scripts\Exception\InvalidAttributeLevelException.cs" />
@@ -101,10 +102,11 @@
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TestManager.cs" />
     <Compile Include="Assets\Scripts\Managers\AbilityManager.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerShooting.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityController.cs" />
+    <Compile Include="Assets\Scripts\Entity\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityHealth.cs" />
+    <Compile Include="Assets\Scripts\Entity\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Entity\PlayerShooting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />

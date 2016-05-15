@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Player;
+﻿using Assets.Scripts.Entity;
 using System;
 using UnityEngine;
 

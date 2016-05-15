@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Abilities;
-using Assets.Scripts.Player;
+using Assets.Scripts.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

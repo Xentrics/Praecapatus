@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.Entity;
 
-namespace Assets.Scripts.Player
+namespace Assets.Scripts.Managers
 {
     class AbilityManager : MonoBehaviour
     {

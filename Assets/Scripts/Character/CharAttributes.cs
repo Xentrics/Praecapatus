@@ -7,7 +7,7 @@ using Assets.Scripts.Exception;
  * a component that contains all basic attributes and methods to modify them
  * may be attached to any character
  */
-namespace Assets.Scripts
+namespace Assets.Scripts.Character
 {
     class CharAttributes : MonoBehaviour
     {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.Exception;
-using Assets.Scripts.Player;
+using Assets.Scripts.Entity;
 
 namespace Assets.Scripts.Managers
 {

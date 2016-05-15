@@ -3,9 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Entity
 {
-    public class PlayerHealth : MonoBehaviour
+    public class EntityHealth : MonoBehaviour
     {
         public int startingHealth = 100;
         public int currentHealth;

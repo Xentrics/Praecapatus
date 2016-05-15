@@ -1,5 +1,5 @@
 ﻿
-using Assets.Scripts.Player;
+using Assets.Scripts.Entity;
 
 namespace Assets.Scripts.Commands
 {

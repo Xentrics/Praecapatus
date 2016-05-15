@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Exception;
-using Assets.Scripts.Player;
+using Assets.Scripts.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,23 +16,23 @@ namespace Assets.Scripts.Abilities
             this.usageMode = EUsageMode.instant;
         }
 
-        public override void applyFailure(int rp, PlayerController user, List<PlayerController> targets)
+        public override void applyFailure(int rp, EntityController user, List<EntityController> targets)
         {
             UnityEngine.MonoBehaviour.print("Test ability finally failed!");
         }
 
-        public override void applySuccess(int rp, List<PlayerController> targets)
+        public override void applySuccess(int rp, List<EntityController> targets)
         {
             UnityEngine.MonoBehaviour.print("Test ability successfully used!");
         }
 
-        public override bool canUse(PlayerController user, List<PlayerController> targets)
+        public override bool canUse(EntityController user, List<EntityController> targets)
         {
             // no self cast
             return targets == null || !targets.Contains(user);
         }
 
-        public override int getTestModifier(PlayerController user, List<PlayerController> targets)
+        public override int getTestModifier(EntityController user, List<EntityController> targets)
         {
             if (targets == null || targets.Count() == 0)
                 return 0;

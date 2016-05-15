@@ -6,15 +6,18 @@ using System.Linq;
 using System.Text;
 using UnityEngine.UI;
 using Assets.Scripts.Managers;
+using Assets.Scripts.Entity;
+using Assets.Scripts.Abilities;
 
-namespace Assets.Scripts.Player
+namespace Assets.Scripts.Entity
 {
     [RequireComponent(typeof(PlayerMovement))]
     [RequireComponent(typeof(AbilityManager))]
     [RequireComponent(typeof(TestManager))]
-    class PlayerController : MonoBehaviour
+    class PlayerController : EntityController
     {
         PlayerMovement moveComp;
+        public EntityMovement mcomp;
         AbilityManager abiCon;
         TestManager testManager;
         public ChatManager chatManager;
