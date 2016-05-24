@@ -48,7 +48,7 @@ namespace Assets.Scripts.Managers
                 bool failed = false;
 
                 int diceroll = UnityEngine.Random.Range(1, 20);
-                int rp = fw + aw - diceroll;
+                int rp = fw + aw - c - diceroll;
 
                 if (diceroll == 1)
                 {

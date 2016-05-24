@@ -65,10 +65,13 @@ namespace Assets.Scripts.Entity
                 {
                     // AI jump
                     throw new NotImplementedException("Make AI Jump!");
+                    /*
+                     * de-comment on implement
                     Vector3 viewVelocity = Quaternion.LookRotation(lookDir * turnSpeed) * inputVelocity;
                     rigitBodyComp.velocity = new Vector3(rigitBodyComp.velocity.x + viewVelocity.x * moveSpeed, jumpStrength, rigitBodyComp.velocity.z + viewVelocity.z * moveSpeed);
                     isInAir = true;
                     animatorComp.applyRootMotion = false;
+                    */
                 }
             }
 
@@ -164,7 +167,7 @@ namespace Assets.Scripts.Entity
             }
         }
 
-        public Vector3 getPosition()
+        public virtual Vector3 getPosition()
         {
             return rigitBodyComp.position;
         }

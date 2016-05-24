@@ -11,7 +11,7 @@ public class CameraPlayer : MonoBehaviour
 
     public Vector3 offset = Vector3.zero;                     // The initial offset from the target.
     public float pitch = 0.0f;
-
+    public float lookUpOffset = 0.0f;   // how much should we look above the shoulder of the observed player
 
     void Start()
     {
@@ -38,6 +38,6 @@ public class CameraPlayer : MonoBehaviour
     {
         offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turnSpeed, Vector3.up) * offset;
         transform.position = target.position + offset;
-        transform.LookAt(target.position, Vector3.up);
+        transform.LookAt(target.position + lookUpOffset * Vector3.up, Vector3.up);
     }
 }

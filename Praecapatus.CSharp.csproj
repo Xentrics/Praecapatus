@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Abilities\AbstractAbility.cs" />
     <Compile Include="Assets\Scripts\Abilities\EUsageMode.cs" />
     <Compile Include="Assets\Scripts\Abilities\InstantUseAbility.cs" />
+    <Compile Include="Assets\Scripts\Abilities\NullAbility.cs" />
     <Compile Include="Assets\Scripts\Abilities\ProlongedAbility.cs" />
     <Compile Include="Assets\Scripts\Abilities\TestAbility.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraPlayer.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Assets\Scripts\Character\CharAttributes.cs" />
     <Compile Include="Assets\Scripts\Character\CharInfo.cs" />
     <Compile Include="Assets\Scripts\Abilities\EAbilities.cs" />
+    <Compile Include="Assets\Scripts\Commands\WriteLineCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\UseAbilityCommand.cs" />
     <Compile Include="Assets\Scripts\Entity\EntityMovement.cs" />
     <Compile Include="Assets\Scripts\ETestMode.cs" />
@@ -99,7 +101,9 @@
     <Compile Include="Assets\Scripts\Managers\ChatManager.cs" />
     <Compile Include="Assets\Scripts\Managers\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameOverManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\PlayerInputManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\ShortKeyBarManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TestManager.cs" />
     <Compile Include="Assets\Scripts\Managers\AbilityManager.cs" />
     <Compile Include="Assets\Scripts\Entity\EntityController.cs" />

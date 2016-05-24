@@ -2,6 +2,7 @@
 {
     enum EAbilities
     {
+        null_,
         test
     }
 }

@@ -14,9 +14,9 @@ namespace Assets.Scripts.Entity
     [RequireComponent(typeof(TestManager))]
     class EntityController : MonoBehaviour
     {
-        EntityMovement moveComp;
-        AbilityManager abiCon;
-        TestManager testManager;
+        protected EntityMovement moveComp;
+        protected AbilityManager abiCon;
+        protected TestManager testManager;
 
         void Awake()
         {
@@ -32,17 +32,17 @@ namespace Assets.Scripts.Entity
         {
         }
 
-        public Vector3 getPosition()
+        public virtual Vector3 getPosition()
         {
             return moveComp.getPosition();
         }
 
-        public float getMeleeRange()
+        public virtual float getMeleeRange()
         {
             return 10; // 1 meter?
         }
 
-        public void executeAbilityWith(EAbilities A, int minRP = 0)
+        public virtual void executeAbilityWith(EAbilities A, int minRP = 0)
         {
             testManager.testInstant(minRP, abiCon.getAbility(A), this, null);
         }

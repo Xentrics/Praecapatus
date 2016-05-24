@@ -26,6 +26,7 @@ namespace Assets.Scripts.Managers
         public void Start()
         {
             abilities = new Dictionary<EAbilities, AbstractAbility>();
+            abilities.Add(EAbilities.null_, new NullAbility());
             abilities.Add(EAbilities.test, new TestAbility());
             // TODO: add abilities here
         }

@@ -27,6 +27,7 @@ namespace Assets.Scripts.Commands
             commandList = new Dictionary<string, AbstractCommand>();
             commandList.Add("test", new TestCommand());
             commandList.Add(UseAbilityCommand.cmdName, new UseAbilityCommand());
+            commandList.Add(WriteLineCommand.cmdName, new WriteLineCommand());
         }
 
         public void parseCommandLine(String cmdline, PlayerController pc)

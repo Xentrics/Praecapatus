@@ -16,18 +16,17 @@ namespace Assets.Scripts.Entity
     [RequireComponent(typeof(TestManager))]
     class PlayerController : EntityController
     {
-        PlayerMovement moveComp;
-        public EntityMovement mcomp;
-        AbilityManager abiCon;
-        TestManager testManager;
+        PlayerMovement pMoveComp;
         public ChatManager chatManager;
         bool isChatting = false;
 
         void Awake()
         {
-            moveComp = GetComponent<PlayerMovement>();
-            abiCon = GetComponent<AbilityManager>();
-            testManager = GetComponent<TestManager>();
+            pMoveComp = GetComponent<PlayerMovement>();
+        }
+
+        void Start()
+        {
             if (chatManager == null) throw new NullReferenceException("Chracter needs input field!");
         }
 
@@ -42,29 +41,29 @@ namespace Assets.Scripts.Entity
                 if (isChatting)
                 {
                     // deactivate chat
-                    moveComp.setCinematicMode(false); // disable input to movement component
+                    pMoveComp.setCinematicMode(false); // disable input to movement component
                     isChatting = false;
                 }
                 else
                 {
                     // activate chat & disable player movement
-                    moveComp.setCinematicMode(true);
+                    pMoveComp.setCinematicMode(true);
                     isChatting = true;
                 }
             }
         }
 
-        public Vector3 getPosition()
+        public override Vector3 getPosition()
         {
-            return moveComp.getPosition();
+            return pMoveComp.getPosition();
         }
 
-        public float getMeleeRange()
+        public override float getMeleeRange()
         {
             return 10; // 1 meter?
         }
 
-        public void executeAbilityWith(EAbilities A, int minRP = 0)
+        public override void executeAbilityWith(EAbilities A, int minRP = 0)
         {
             testManager.testInstant(minRP, abiCon.getAbility(A), this, null);
         }
