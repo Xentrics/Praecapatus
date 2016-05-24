@@ -21,10 +21,7 @@ namespace Assets.Scripts.Managers
         {
             if (playerC == null)
                 playerC = GetComponent<PlayerController>();
-        }
 
-        public void Start()
-        {
             abilities = new Dictionary<EAbilities, AbstractAbility>();
             abilities.Add(EAbilities.null_, new NullAbility());
             abilities.Add(EAbilities.test, new TestAbility());

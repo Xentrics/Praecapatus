@@ -20,20 +20,28 @@ namespace Assets.Scripts.Entity
         public ChatManager chatManager;
         bool isChatting = false;
 
-        void Awake()
+        AbstractAbility[] keybarAbilities;
+
+        protected override void Awake()
         {
+            base.Awake();
             pMoveComp = GetComponent<PlayerMovement>();
         }
 
-        void Start()
+        protected override void Start()
         {
+            base.Start();
+
             if (chatManager == null) throw new NullReferenceException("Chracter needs input field!");
+            keybarAbilities = new AbstractAbility[10];
+            for (int i = 0; i < 10; ++i)
+                keybarAbilities[i] = abiCon.getAbility(EAbilities.null_);
         }
 
         /*
          * handle correct key input across multiple scripts & mechanics
          */
-        void LateUpdate()
+        protected override void LateUpdate()
         {
             // check whether or not the player opens/cloeses chat
             if (chatManager.isChatAllowed() && CrossPlatformInputManager.GetButtonDown("OpenChat"))
@@ -63,9 +71,19 @@ namespace Assets.Scripts.Entity
             return 10; // 1 meter?
         }
 
-        public override void executeAbilityWith(EAbilities A, int minRP = 0)
+        public void executeKeybarAbility(int keyID)
         {
-            testManager.testInstant(minRP, abiCon.getAbility(A), this, null);
+            if (keyID >= 0 && keyID <= 9)
+            {
+                testManager.testInstant(0, keybarAbilities[keyID], this, null);
+            }
+            else
+                throw new ArgumentOutOfRangeException("keyID must be element of [0,9]");
+        }
+
+        public void releaseKeybarAbility(int keyID)
+        {
+            // will be needed for prolonged tests, etc., maybe or so. How knows now?
         }
     }
 }

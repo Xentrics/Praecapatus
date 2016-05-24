@@ -517,7 +517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -663,10 +663,10 @@ GameObject:
   - 82: {fileID: 220997235}
   - 222: {fileID: 220997239}
   - 114: {fileID: 220997232}
+  - 114: {fileID: 220997243}
   - 114: {fileID: 220997241}
   - 114: {fileID: 220997233}
   - 114: {fileID: 220997234}
-  - 114: {fileID: 220997243}
   - 114: {fileID: 220997242}
   - 114: {fileID: 220997244}
   - 114: {fileID: 220997245}

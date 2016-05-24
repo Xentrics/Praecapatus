@@ -18,17 +18,22 @@ namespace Assets.Scripts.Entity
         protected AbilityManager abiCon;
         protected TestManager testManager;
 
-        void Awake()
+        protected virtual void Awake()
         {
             moveComp = GetComponent<EntityMovement>();
             abiCon = GetComponent<AbilityManager>();
             testManager = GetComponent<TestManager>();
         }
 
+        protected virtual void Start()
+        {
+
+        }
+
         /*
          * handle correct key input across multiple scripts & mechanics
          */
-        void LateUpdate()
+        protected virtual void LateUpdate()
         {
         }
 
