@@ -7,7 +7,6 @@ namespace Assets.Scripts.Entity
 {
     [RequireComponent(typeof(Camera))]
     [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(Animator))]
     public class PlayerMovement : EntityMovement
     {
         public Camera followCamera;              // The default third person camera

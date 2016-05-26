@@ -8,7 +8,6 @@ using UnitySampleAssets.CrossPlatformInput;
 namespace Assets.Scripts.Entity
 {
     [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(Animator))]
     public class EntityMovement : MonoBehaviour
     {
         public float moveSpeed = 6f;            // The speed that the player will move at.
@@ -46,6 +45,8 @@ namespace Assets.Scripts.Entity
 
             // Set up references. They cannot be null since they are required!
             animatorComp = GetComponent<Animator>();
+            if (!animatorComp)
+                animatorComp = GetComponentInChildren<Animator>();
             rigitBodyComp = GetComponent<Rigidbody>();
         }
 
@@ -123,7 +124,9 @@ namespace Assets.Scripts.Entity
             bool walking = h != 0f || v != 0f;
 
             // Tell the animator whether or not the player is walking.
-            animatorComp.SetBool("IsWalking", walking);
+            //animatorComp.SetBool("IsWalking", walking);
+            animatorComp.SetBool("IsRunning", walking);
+            animatorComp.SetBool("IsJumping", isInAir);
         }
 
 
