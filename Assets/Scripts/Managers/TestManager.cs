@@ -18,7 +18,7 @@ namespace Assets.Scripts.Managers
 
         public void Awake()
         {
-            playerC = GetComponent<PlayerController>();
+            playerC = GetComponent<PlayerController_Old>();
             charInfo = GetComponent<CharInfo>();
         }
 

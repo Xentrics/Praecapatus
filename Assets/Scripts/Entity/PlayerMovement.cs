@@ -5,15 +5,11 @@ using UnitySampleAssets.CrossPlatformInput;
 
 namespace Assets.Scripts.Entity
 {
-    [RequireComponent(typeof(Camera))]
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerMovement : EntityMovement
     {
         public Camera followCamera;              // The default third person camera
-
-        public bool freeLook = false;           // If true, the rotation of the player will adjust to the cameras rotation. May be disabled by pressing/holding a certain key
         bool cinimaticModeOn = false;     // disable free movement etc. for cinematic actions
-
 
         protected override void Awake()
         {
@@ -41,7 +37,7 @@ namespace Assets.Scripts.Entity
             CheckGroundStatus();
 
             // correct player mesh rotation based on the camera rotation
-            if ((followCamera != null) && (!freeLook))
+            if (followCamera != null)
             {
                 lookDir = transform.position - followCamera.transform.position;
                 lookDir.y = 0; // we don't need y. yet.
@@ -63,18 +59,15 @@ namespace Assets.Scripts.Entity
                         Vector3 viewVelocity = Quaternion.LookRotation(lookDir * turnSpeed) * inputVelocity;
                         rigitBodyComp.velocity = new Vector3(rigitBodyComp.velocity.x + viewVelocity.x * moveSpeed, jumpStrength, rigitBodyComp.velocity.z + viewVelocity.z * moveSpeed);
                         isInAir = true;
-                        animatorComp.applyRootMotion = false;
                     }
                 }
-
-                freeLook = CrossPlatformInputManager.GetButton("freeLook"); // we can still look around when flowing in time and space
             }
 
             // Move the player around the scene.
             if (isInAir)
                 base.Fall();
             else
-                base.Move(inputVelocity.x, inputVelocity.z, isRunning);
+                base.Move(inputVelocity.x, inputVelocity.z, bRun);
 
             // Turn the player to face the mouse cursor.
             base.Turning();

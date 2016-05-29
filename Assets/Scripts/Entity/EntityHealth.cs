@@ -18,7 +18,7 @@ namespace Assets.Scripts.Entity
 
         Animator anim;
         AudioSource playerAudio;
-        PlayerMovement playerMovement;
+        PlayerMovement_Old playerMovement;
         //PlayerShooting playerShooting;
         bool isDead;
         bool damaged;
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Entity
         {
             anim = GetComponent<Animator>();
             playerAudio = GetComponent<AudioSource>();
-            playerMovement = GetComponent<PlayerMovement>();
+            playerMovement = GetComponent<PlayerMovement_Old>();
             //playerShooting = GetComponentInChildren <PlayerShooting> ();
             currentHealth = startingHealth;
         }

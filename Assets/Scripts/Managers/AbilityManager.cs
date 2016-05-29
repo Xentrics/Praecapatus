@@ -14,13 +14,13 @@ namespace Assets.Scripts.Managers
         public static readonly int DEFAULT_ABILITY_LEVEL = 0;
         public static readonly int UNLEARNED = 0;
 
-        PlayerController playerC;
+        PlayerController_Old playerC;
         Dictionary<EAbilities, AbstractAbility> abilities;
 
         public void Awake()
         {
             if (playerC == null)
-                playerC = GetComponent<PlayerController>();
+                playerC = GetComponent<PlayerController_Old>();
 
             abilities = new Dictionary<EAbilities, AbstractAbility>();
             abilities.Add(EAbilities.null_, new NullAbility());

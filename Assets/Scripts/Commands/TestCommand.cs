@@ -18,7 +18,7 @@ namespace Assets.Scripts.Commands
             throw new NotImplementedException();
         }
 
-        public override bool use(string[] args, PlayerController pc)
+        public override bool use(string[] args, PlayerController_Old pc)
         {
             string arg_line = "";
             foreach (string s in args)

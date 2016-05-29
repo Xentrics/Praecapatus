@@ -13,9 +13,9 @@ namespace Assets.Scripts.Commands
     class CommandParser
     {
         Dictionary<string, AbstractCommand> commandList;
-        PlayerController playerC;
+        PlayerController_Old playerC;
 
-        public CommandParser(PlayerController pc)
+        public CommandParser(PlayerController_Old pc)
         {
             playerC = pc;
             initiate();
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Commands
             commandList.Add(WriteLineCommand.cmdName, new WriteLineCommand());
         }
 
-        public void parseCommandLine(String cmdline, PlayerController pc)
+        public void parseCommandLine(String cmdline, PlayerController_Old pc)
         {
             if (cmdline == null)
                 throw new ArgumentNullException("parseCommandLine: given cmdline was empty!");

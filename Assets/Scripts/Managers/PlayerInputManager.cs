@@ -10,20 +10,20 @@ namespace Assets.Scripts.Managers
     /**
      * ADD THIS COMPONENT TO THE PLAYER
      */
-    [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(PlayerController_Old))]
     class PlayerInputManager : MonoBehaviour
     {
         #pragma warning disable 0169
         public Canvas HUDCanvas;
         ShortKeyBarManager barManager;
-        PlayerController pc;
+        PlayerController_Old pc;
 
         void Awake()
         {
             barManager = HUDCanvas.GetComponentInChildren<ShortKeyBarManager>();
             if (!barManager)
                 throw new NullReferenceException("Could not aquire bar manager from given canvas!");
-            pc = GetComponent<PlayerController>();
+            pc = GetComponent<PlayerController_Old>();
         }
 
         void Update()

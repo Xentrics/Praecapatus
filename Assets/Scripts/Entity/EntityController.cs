@@ -9,18 +9,18 @@ using UnitySampleAssets.CrossPlatformInput;
 
 namespace Assets.Scripts.Entity
 {
-    [RequireComponent(typeof(EntityMovement))]
+    [RequireComponent(typeof(EntityMovement_Old))]
     [RequireComponent(typeof(AbilityManager))]
     [RequireComponent(typeof(TestManager))]
     class EntityController : MonoBehaviour
     {
-        protected EntityMovement moveComp;
+        protected EntityMovement_Old moveComp;
         protected AbilityManager abiCon;
         protected TestManager testManager;
 
         protected virtual void Awake()
         {
-            moveComp = GetComponent<EntityMovement>();
+            moveComp = GetComponent<EntityMovement_Old>();
             abiCon = GetComponent<AbilityManager>();
             testManager = GetComponent<TestManager>();
         }

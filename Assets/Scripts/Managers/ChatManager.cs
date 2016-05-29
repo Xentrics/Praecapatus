@@ -17,7 +17,7 @@ namespace Assets.Scripts.Managers
         bool allowChat = true;
         bool isChatting = false;
         CommandParser cmdParser;
-        PlayerController playerC;
+        PlayerController_Old playerC;
         Text contentText;
         public InputField chatInputField;
 
@@ -51,7 +51,7 @@ namespace Assets.Scripts.Managers
 
         void Start()
         {
-            playerC = GameObject.FindGameObjectWithTag("MainCharacter").GetComponent<PlayerController>();
+            playerC = GameObject.FindGameObjectWithTag("MainCharacter").GetComponent<PlayerController_Old>();
             cmdParser = new CommandParser(playerC);
             contentText.text = chatline;
 

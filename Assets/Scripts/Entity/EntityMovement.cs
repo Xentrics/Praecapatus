@@ -10,10 +10,11 @@ namespace Assets.Scripts.Entity
     [RequireComponent(typeof(Rigidbody))]
     public class EntityMovement : MonoBehaviour
     {
-        public float moveSpeed = 6f;            // The speed that the player will move at.
+        public float moveSpeed = 6f;            // The speed that the player will move at
+        public float unSpeed = 12f;    // The speed that the player will move at.
         public float turnSpeed = 0.25f;         // The rate at which the player can turn around (independent of the camera)
-        public float jumpStrength = 12f;         // This values defines with respect to the characters weight how high he can jump
-        public float gravityMultiplier = 4f;     // Additional gravity that can be applied
+        public float jumpStrength = 12f;        // This values defines with respect to the characters weight how high he can jump
+        public float gravityMultiplier = 4f;    // Additional gravity that can be applied
 
         protected Vector3 velocity;                        // The vector to store the direction of the player's movement.
         protected Vector3 inputVelocity;                   // The amount of movement caused by mouse/keyboard input
@@ -23,15 +24,14 @@ namespace Assets.Scripts.Entity
         protected float OrigGroundCheckDistance;
         public Vector3 groundCheckOffset;
 
-
-        protected Animator animatorComp;                   // Reference to the animator component.
+        protected MultiSpriteAnimator animComp;
         protected Rigidbody rigitBodyComp;                 // Reference to the player's rigidbody.
         protected int floorMask;                           // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
 
         // character states
-        public bool isInAir = false;                    // shall be true, if the player is in the air (for whatever reason)
+        public bool isInAir = false;                       // shall be true, if the player is in the air (for whatever reason)
         protected bool canJump = true;                     // can be false duo to exhaustion and other reasons
-        protected bool isRunning = false;
+        protected bool bRun = true;
         protected bool canRun = true;                      // can be false duo to exhaustion and other reasons
 
         virtual protected void Awake()
@@ -44,10 +44,10 @@ namespace Assets.Scripts.Entity
             OrigGroundCheckDistance = GroundCheckDistance;
 
             // Set up references. They cannot be null since they are required!
-            animatorComp = GetComponent<Animator>();
-            if (!animatorComp)
-                animatorComp = GetComponentInChildren<Animator>();
             rigitBodyComp = GetComponent<Rigidbody>();
+            animComp = GetComponentInChildren<MultiSpriteAnimator>();
+            if (animComp == null)
+                throw new NullReferenceException("Could not find MultiSpriteAnimator component!");
         }
 
 
@@ -80,7 +80,7 @@ namespace Assets.Scripts.Entity
             if (isInAir)
                 Fall();
             else
-                Move(inputVelocity.x, inputVelocity.z, isRunning);
+                Move(inputVelocity.x, inputVelocity.z, bRun);
 
             // Turn the player to face the mouse cursor.
             Turning();
@@ -108,7 +108,10 @@ namespace Assets.Scripts.Entity
             velocity = velocity.normalized * moveSpeed * Time.deltaTime;
 
             // Move the player to it's current position plus the movement.
-            rigitBodyComp.MovePosition(transform.position + Quaternion.LookRotation(lookDir * turnSpeed) * velocity);
+            if (bRun)
+                rigitBodyComp.MovePosition(transform.position + Quaternion.LookRotation(lookDir * turnSpeed) * velocity);
+            else
+                rigitBodyComp.MovePosition(transform.position + Quaternion.LookRotation(lookDir * turnSpeed) * velocity);
         }
 
 
@@ -123,13 +126,20 @@ namespace Assets.Scripts.Entity
             // Create a boolean that is true if either of the input axes is non-zero.
             bool walking = h != 0f || v != 0f;
 
-            // Tell the animator whether or not the player is walking.
-            //animatorComp.SetBool("IsWalking", walking);
-            animatorComp.SetBool("IsRunning", walking);
-            animatorComp.SetBool("IsJumping", isInAir);
+            if (h != 0)
+                animComp.setLookDirection(h < 0); // keep the current look direction if h == 0!
+
+            // Tell the animator which animation to play
+            if (walking)
+                if (bRun)
+                    animComp.setCurrentAnimation(EEntityState.running);
+                else
+                    animComp.setCurrentAnimation(EEntityState.walking);
+            else
+                animComp.setCurrentAnimation(EEntityState.idle);
         }
 
-
+        /*
         public void OnAnimatorMove()
         {
             // we implement this function to override the default root motion.
@@ -143,6 +153,7 @@ namespace Assets.Scripts.Entity
                 rigitBodyComp.velocity = v;
             }
         }
+        */
 
 
         /**
@@ -161,12 +172,10 @@ namespace Assets.Scripts.Entity
             {
                 // hit something.
                 isInAir = false;
-                animatorComp.applyRootMotion = true;
             }
             else
             {
                 isInAir = true;
-                animatorComp.applyRootMotion = false;
             }
         }
 
