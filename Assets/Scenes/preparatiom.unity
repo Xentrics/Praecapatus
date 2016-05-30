@@ -732,7 +732,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 220997240}
-  - 95: {fileID: 220997238}
   - 54: {fileID: 220997237}
   - 136: {fileID: 220997236}
   - 82: {fileID: 220997235}
@@ -778,7 +777,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 6
-  unSpeed: 12
+  runSpeed: 24
   turnSpeed: 0.25
   jumpStrength: 12
   gravityMultiplier: 4
@@ -904,24 +903,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!95 &220997238
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9512460, guid: 19339428d48649e4f822c71811e3e8f5,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 220997231}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: f1d84cc28597f5641a3d9cbc4df7e306, type: 3}
-  m_Controller: {fileID: 9100000, guid: e529f2d5145fce44bbc681e506a76f2e, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 0
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!222 &220997239
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1769,6 +1750,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 779781913}
   - 212: {fileID: 779781916}
+  - 114: {fileID: 779781914}
+  - 114: {fileID: 779781918}
+  - 114: {fileID: 779781917}
   - 114: {fileID: 779781915}
   m_Layer: 0
   m_Name: EntitySprite
@@ -1789,7 +1773,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 220997240}
   m_RootOrder: 0
---- !u!114 &779781915
+--- !u!114 &779781914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1801,25 +1785,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   framesPerSecond: 16
-  IdleSprites:
-  - {fileID: 21300000, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  - {fileID: 21300002, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  - {fileID: 21300004, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  - {fileID: 21300006, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  - {fileID: 21300004, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  - {fileID: 21300002, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  WalkSprites:
-  - {fileID: 21300008, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  - {fileID: 21300010, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  - {fileID: 21300012, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  - {fileID: 21300014, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  - {fileID: 21300012, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  - {fileID: 21300010, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  RunSprites:
+  IdleAnim: {fileID: 779781918}
+  WalkAnim: {fileID: 779781917}
+  RunAnim: {fileID: 779781915}
+  lookLeft: 0
+--- !u!114 &779781915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 779781912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed057d1038b96334d88102d7dd974e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 2
+  framesPerSecond: 24
+  startSprites: []
+  ongoingSprites:
   - {fileID: 21300040, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
   - {fileID: 21300042, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
   - {fileID: 21300044, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  lookLeft: 0
+  - {fileID: 21300042, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  endSprites: []
+  bLoopAnim: 1
+  bInteruptable: 1
 --- !u!212 &779781916
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1850,6 +1841,54 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!114 &779781917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 779781912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed057d1038b96334d88102d7dd974e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 1
+  framesPerSecond: 16
+  startSprites: []
+  ongoingSprites:
+  - {fileID: 21300008, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  - {fileID: 21300010, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  - {fileID: 21300012, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  - {fileID: 21300014, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  - {fileID: 21300012, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  - {fileID: 21300010, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  endSprites: []
+  bLoopAnim: 1
+  bInteruptable: 1
+--- !u!114 &779781918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 779781912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed057d1038b96334d88102d7dd974e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  framesPerSecond: 12
+  startSprites: []
+  ongoingSprites:
+  - {fileID: 21300000, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  - {fileID: 21300002, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  - {fileID: 21300004, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  - {fileID: 21300006, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  - {fileID: 21300004, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  - {fileID: 21300002, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  endSprites: []
+  bLoopAnim: 1
+  bInteruptable: 1
 --- !u!1 &845413812
 GameObject:
   m_ObjectHideFlags: 0

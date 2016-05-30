@@ -9,18 +9,18 @@ using UnitySampleAssets.CrossPlatformInput;
 
 namespace Assets.Scripts.Entity
 {
-    [RequireComponent(typeof(EntityMovement_Old))]
+    [RequireComponent(typeof(EntityMovement))]
     [RequireComponent(typeof(AbilityManager))]
     [RequireComponent(typeof(TestManager))]
     class EntityController : MonoBehaviour
     {
-        protected EntityMovement_Old moveComp;
+        protected EntityMovement moveComp;
         protected AbilityManager abiCon;
         protected TestManager testManager;
 
         protected virtual void Awake()
         {
-            moveComp = GetComponent<EntityMovement_Old>();
+            moveComp = GetComponent<EntityMovement>();
             abiCon = GetComponent<AbilityManager>();
             testManager = GetComponent<TestManager>();
         }
@@ -45,6 +45,16 @@ namespace Assets.Scripts.Entity
         public virtual float getMeleeRange()
         {
             return 10; // 1 meter?
+        }
+
+        public void toggleRunning()
+        {
+            moveComp.toggleRunning();
+        }
+
+        public void setIsRunning(bool b)
+        {
+            moveComp.setIsRunning(b);
         }
 
         public virtual void executeAbilityWith(EAbilities A, int minRP = 0)

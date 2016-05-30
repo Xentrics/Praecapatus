@@ -11,7 +11,7 @@ namespace Assets.Scripts.Entity
     public class EntityMovement : MonoBehaviour
     {
         public float moveSpeed = 6f;            // The speed that the player will move at
-        public float unSpeed = 12f;    // The speed that the player will move at.
+        public float runSpeed = 24f;    // The speed that the player will move at.
         public float turnSpeed = 0.25f;         // The rate at which the player can turn around (independent of the camera)
         public float jumpStrength = 12f;        // This values defines with respect to the characters weight how high he can jump
         public float gravityMultiplier = 4f;    // Additional gravity that can be applied
@@ -105,13 +105,10 @@ namespace Assets.Scripts.Entity
             velocity.Set(h, 0f, v);
 
             // Normalise the movement vector and make it proportional to the speed per second.
-            velocity = velocity.normalized * moveSpeed * Time.deltaTime;
+            velocity = velocity.normalized * ((bRun) ? runSpeed : moveSpeed) * Time.deltaTime;
 
             // Move the player to it's current position plus the movement.
-            if (bRun)
-                rigitBodyComp.MovePosition(transform.position + Quaternion.LookRotation(lookDir * turnSpeed) * velocity);
-            else
-                rigitBodyComp.MovePosition(transform.position + Quaternion.LookRotation(lookDir * turnSpeed) * velocity);
+            rigitBodyComp.MovePosition(transform.position + Quaternion.LookRotation(lookDir * turnSpeed) * velocity);
         }
 
 
@@ -132,11 +129,11 @@ namespace Assets.Scripts.Entity
             // Tell the animator which animation to play
             if (walking)
                 if (bRun)
-                    animComp.setCurrentAnimation(EEntityState.running);
+                    animComp.setCurrentAnimation(EEntityState.running, false);
                 else
-                    animComp.setCurrentAnimation(EEntityState.walking);
+                    animComp.setCurrentAnimation(EEntityState.walking, false);
             else
-                animComp.setCurrentAnimation(EEntityState.idle);
+                animComp.setCurrentAnimation(EEntityState.idle, false);
         }
 
         /*
@@ -177,6 +174,16 @@ namespace Assets.Scripts.Entity
             {
                 isInAir = true;
             }
+        }
+
+        public void toggleRunning()
+        {
+            bRun = !bRun;
+        }
+
+        public void setIsRunning(bool b)
+        {
+            bRun = b;
         }
 
         public virtual Vector3 getPosition()

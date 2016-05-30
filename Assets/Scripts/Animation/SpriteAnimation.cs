@@ -6,11 +6,15 @@ using UnityEngine;
 
 namespace Assets.Scripts.Animation
 {
-    class SpriteAnimation
+    public class SpriteAnimation : MonoBehaviour
     {
-        Sprite[] startSprites; // leave empty, if no custom start frames necessary
-        Sprite[] ongoingSprites;      // the ongoing frames come here
-        Sprite[] endSprites;   // if animation can be eneded, this comes here
+        public EEntityState AnimType = EEntityState.custom;
+
+        public int framesPerSecond = 16; // the frame rate at which to play this animation
+
+        public Sprite[] startSprites = null;   // leave empty, if no custom start frames necessary
+        public Sprite[] ongoingSprites = null; // the ongoing frames come here
+        public Sprite[] endSprites = null;     // if animation can be eneded, this comes here
 
         Sprite[] curAnim;
         bool isStartAnim = true;
@@ -20,14 +24,18 @@ namespace Assets.Scripts.Animation
 
         protected int animIndex = 0;
 
+        void Start()
+        {
+
+        }
+
         /*
          * this should be called whenever this animation should start, regardless of it having a custom start
          */
         public Sprite startAnimation()
         {
-            animIndex = 0;
-
-            if (startSprites == null)
+            // get next animation
+            if (startSprites == null || startSprites.Length == 0)
             {
                 isStartAnim = false;
                 curAnim = ongoingSprites;
@@ -37,7 +45,8 @@ namespace Assets.Scripts.Animation
                 curAnim = startSprites;
             }
 
-            return getCurrentFrame();
+            animIndex = 0;
+            return null;
         }
 
         /*
@@ -46,17 +55,14 @@ namespace Assets.Scripts.Animation
          */
         public Sprite endAnimation()
         {
-            if (endSprites != null)
+
+            if (endSprites != null || endSprites.Length == 0)
             {
-                animIndex = 0;
+                animIndex = -1;
                 curAnim = endSprites;
-                return getCurrentFrame();
             }
-            else
-            {
-                return getNextFrame();
-            }
-            
+
+            return null;
         }
 
         /*
@@ -64,7 +70,7 @@ namespace Assets.Scripts.Animation
          */
         public Sprite getCurrentFrame()
         {
-            return curAnim[animIndex];
+            return curAnim[(animIndex >= 0) ? animIndex : 0];
         }
 
         /*

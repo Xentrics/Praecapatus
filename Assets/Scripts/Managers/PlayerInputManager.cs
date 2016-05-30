@@ -4,26 +4,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnitySampleAssets.CrossPlatformInput;
 
 namespace Assets.Scripts.Managers
 {
     /**
      * ADD THIS COMPONENT TO THE PLAYER
      */
-    [RequireComponent(typeof(PlayerController_Old))]
+    [RequireComponent(typeof(PlayerController))]
     class PlayerInputManager : MonoBehaviour
     {
         #pragma warning disable 0169
         public Canvas HUDCanvas;
         ShortKeyBarManager barManager;
-        PlayerController_Old pc;
+        PlayerController pc;
 
         void Awake()
         {
             barManager = HUDCanvas.GetComponentInChildren<ShortKeyBarManager>();
             if (!barManager)
                 throw new NullReferenceException("Could not aquire bar manager from given canvas!");
-            pc = GetComponent<PlayerController_Old>();
+            pc = GetComponent<PlayerController>();
         }
 
         void Update()
@@ -47,6 +48,10 @@ namespace Assets.Scripts.Managers
                 }
 
                 // handle remaining keys
+                if (CrossPlatformInputManager.GetButton("toggleWalk"))
+                {
+                    pc.toggleRunning();
+                }
             }
 
             // check if we have do handle key-up events
@@ -66,6 +71,8 @@ namespace Assets.Scripts.Managers
                     barManager.releaseButton(9);
                     pc.releaseKeybarAbility(9);
                 }
+
+                // handle remaining keys
             }
         }
     }
