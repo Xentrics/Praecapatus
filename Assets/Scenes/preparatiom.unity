@@ -1754,6 +1754,9 @@ GameObject:
   - 114: {fileID: 779781918}
   - 114: {fileID: 779781917}
   - 114: {fileID: 779781915}
+  - 114: {fileID: 779781921}
+  - 114: {fileID: 779781920}
+  - 114: {fileID: 779781919}
   m_Layer: 0
   m_Name: EntitySprite
   m_TagString: Untagged
@@ -1888,6 +1891,69 @@ MonoBehaviour:
   - {fileID: 21300002, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
   endSprites: []
   bLoopAnim: 1
+  bInteruptable: 1
+--- !u!114 &779781919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 779781912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed057d1038b96334d88102d7dd974e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 5
+  framesPerSecond: 16
+  startSprites:
+  - {fileID: 21300120, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  ongoingSprites:
+  - {fileID: 21300128, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  endSprites:
+  - {fileID: 21300120, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  bLoopAnim: 1
+  bInteruptable: 1
+--- !u!114 &779781920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 779781912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed057d1038b96334d88102d7dd974e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 4
+  framesPerSecond: 16
+  startSprites:
+  - {fileID: 21300040, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  ongoingSprites:
+  - {fileID: 21300126, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  endSprites:
+  - {fileID: 21300120, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  bLoopAnim: 1
+  bInteruptable: 1
+--- !u!114 &779781921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 779781912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed057d1038b96334d88102d7dd974e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 3
+  framesPerSecond: 16
+  startSprites:
+  - {fileID: 21300120, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  ongoingSprites:
+  - {fileID: 21300124, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  endSprites:
+  - {fileID: 21300120, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
+  bLoopAnim: 0
   bInteruptable: 1
 --- !u!1 &845413812
 GameObject:

@@ -11,7 +11,8 @@ namespace Assets.Scripts
         walking,
         running,
         jumpUp,
-        jumpDiag,
+        jumpForward,
+        jumpBackward,
         custom
     }
 }
