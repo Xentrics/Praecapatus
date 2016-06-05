@@ -1791,6 +1791,9 @@ MonoBehaviour:
   IdleAnim: {fileID: 779781918}
   WalkAnim: {fileID: 779781917}
   RunAnim: {fileID: 779781915}
+  JumpUpAnim: {fileID: 779781921}
+  JumpForwAnim: {fileID: 779781920}
+  JumpBackAnim: {fileID: 779781919}
   lookLeft: 0
 --- !u!114 &779781915
 MonoBehaviour:
@@ -1953,7 +1956,7 @@ MonoBehaviour:
   - {fileID: 21300124, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
   endSprites:
   - {fileID: 21300120, guid: f618fa5bfb48a0e42bdb160a710865c6, type: 3}
-  bLoopAnim: 0
+  bLoopAnim: 1
   bInteruptable: 1
 --- !u!1 &845413812
 GameObject:

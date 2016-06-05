@@ -127,13 +127,23 @@ namespace Assets.Scripts.Entity
                 animComp.setLookDirection(h < 0); // keep the current look direction if h == 0!
 
             // Tell the animator which animation to play
-            if (walking)
-                if (bRun)
-                    animComp.setCurrentAnimation(EEntityState.running, false);
+            if (isInAir)
+            {
+                if (walking && bRun)
+                    animComp.setCurrentAnimation(EEntityState.jumpForward, false);
                 else
-                    animComp.setCurrentAnimation(EEntityState.walking, false);
+                    animComp.setCurrentAnimation(EEntityState.jumpUp, false);
+            }
             else
-                animComp.setCurrentAnimation(EEntityState.idle, false);
+            {
+                if (walking)
+                    if (bRun)
+                        animComp.setCurrentAnimation(EEntityState.running, false);
+                    else
+                        animComp.setCurrentAnimation(EEntityState.walking, false);
+                else
+                    animComp.setCurrentAnimation(EEntityState.idle, false);
+            }
         }
 
         /*

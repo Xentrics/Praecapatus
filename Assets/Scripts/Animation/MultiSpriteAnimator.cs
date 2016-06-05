@@ -16,6 +16,9 @@ namespace Assets.Scripts
         public SpriteAnimation IdleAnim;
         public SpriteAnimation WalkAnim;
         public SpriteAnimation RunAnim;
+        public SpriteAnimation JumpUpAnim;
+        public SpriteAnimation JumpForwAnim;
+        public SpriteAnimation JumpBackAnim;
 
         public bool lookLeft = false;
         protected SpriteAnimation currentAnim;
@@ -33,6 +36,9 @@ namespace Assets.Scripts
             if (IdleAnim == null) IdleAnim = this.gameObject.AddComponent<SpriteAnimation>();
             if (WalkAnim == null) WalkAnim = this.gameObject.AddComponent<SpriteAnimation>();
             if (RunAnim == null)  RunAnim = this.gameObject.AddComponent<SpriteAnimation>();
+            if (IdleAnim == null) JumpUpAnim = this.gameObject.AddComponent<SpriteAnimation>();
+            if (IdleAnim == null) JumpForwAnim = this.gameObject.AddComponent<SpriteAnimation>();
+            if (IdleAnim == null) JumpBackAnim = this.gameObject.AddComponent<SpriteAnimation>();
         }
 
 
@@ -48,6 +54,7 @@ namespace Assets.Scripts
 
         void Update()
         {
+            print(currentState);
             if ((Time.time - lastFrameUpdateTime) * framesPerSecond >= 1.0f)
             {
                 if (bHasPendingAnimation && currentAnim.hasFinishedEndAnimation())
@@ -122,6 +129,9 @@ namespace Assets.Scripts
                 case EEntityState.idle: return IdleAnim;
                 case EEntityState.walking: return WalkAnim;
                 case EEntityState.running: return RunAnim;
+                case EEntityState.jumpUp: return JumpUpAnim;
+                case EEntityState.jumpForward: return JumpForwAnim;
+                case EEntityState.jumpBackward: return JumpBackAnim;
                 default:
                     print("Could not set anim for state " + state + " : Did you forget that entry?");
                     return null;

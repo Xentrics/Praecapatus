@@ -42,6 +42,7 @@ namespace Assets.Scripts.Animation
             }
             else
             {
+                isStartAnim = true;
                 curAnim = startSprites;
             }
 
