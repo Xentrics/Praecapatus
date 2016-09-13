@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.4f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -65,20 +63,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Abilities\AbstractAbility.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityAstralbelebung.cs" />
+    <Compile Include="Assets\Scripts\Abilities\AbilityTest.cs" />
+    <Compile Include="Assets\Scripts\Abilities\AbstractAbility.cs" />
     <Compile Include="Assets\Scripts\Abilities\EAbilities.cs" />
     <Compile Include="Assets\Scripts\Abilities\EUsageMode.cs" />
     <Compile Include="Assets\Scripts\Abilities\InstantUseAbility.cs" />
     <Compile Include="Assets\Scripts\Abilities\NullAbility.cs" />
     <Compile Include="Assets\Scripts\Abilities\ProlongedAbility.cs" />
-    <Compile Include="Assets\Scripts\Abilities\AbilityTest.cs" />
     <Compile Include="Assets\Scripts\Animation\MultiSpriteAnimator.cs" />
     <Compile Include="Assets\Scripts\Animation\SpriteAnimation.cs" />
+    <Compile Include="Assets\Scripts\Attributes.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraPlayer.cs" />
     <Compile Include="Assets\Scripts\Camera\SideWiseCamera.cs" />
     <Compile Include="Assets\Scripts\Character\CharAttributeOverrider.cs" />
-    <Compile Include="Assets\Scripts\Attributes.cs" />
     <Compile Include="Assets\Scripts\Character\CharInfo.cs" />
     <Compile Include="Assets\Scripts\Commands\AbstractCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandParser.cs" />
@@ -251,6 +249,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
+    <None Include="Assets\Scripts\README.txt" />
     <None Include="Assets\import\Prefabs\overlord\models\overlord\Materials\clothshader.shader" />
     <None Include="Assets\import\Prefabs\overlord\readme.txt" />
     <None Include="Assets\import\Standard Assets\Cameras\CameraGuidelines.txt" />
@@ -351,9 +350,6 @@
     <None Include="Assets\import\Standard Assets\Vehicles\Car\Shaders\DiffuseReflectiveShader.shader" />
     <None Include="Assets\import\Standard Assets\Vehicles\Car\Shaders\ReflectiveDiffuseSpec.shader" />
     <None Include="Assets\import\Standard Assets\Vehicles\Car\Shaders\ReflectiveDiffuseSpecTransp.shader" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\Scripts\README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

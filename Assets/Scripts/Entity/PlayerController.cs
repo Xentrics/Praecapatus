@@ -27,6 +27,7 @@ namespace Assets.Scripts.Entity
         public ChatManager chatManager;
         bool isChatting = false;
 
+        protected bool bInstantUseDuringStory = true; // true: do not show ability version selection even during story mode
 
         protected override void Awake()
         {
@@ -80,8 +81,15 @@ namespace Assets.Scripts.Entity
         {
             if (keyID >= 0 && keyID <= 9)
             {
-                int minRP = 0; //TODO: minRP must be set from the central game logic
-                testManager.testInstant(keybarAbilities[keyID].instant_version, minRP, keybarAbilities[keyID].abi, this, null);
+                if (bInstantUseDuringStory || bInfight)
+                {
+                    testManager.testInstant(keybarAbilities[keyID].instant_version, keybarAbilities[keyID].abi, this, null);
+                }
+                else
+                {
+                    //TODO: ability selection mode
+                    throw new NotImplementedException("Ability selection mode not available yet!");
+                }
             }
             else
                 throw new ArgumentOutOfRangeException("keyID must be element of [0,9]");

@@ -16,16 +16,18 @@ namespace Assets.Scripts.Managers
         EntityController playerC;
         CharInfo charInfo;
         ChatManager chatManager;
+        GameManager gameManager;
 
         public void Awake()
         {
-            playerC = GetComponent<PlayerController_Old>();
+            playerC = GetComponent<PlayerController>();
             charInfo = GetComponent<CharInfo>();
         }
 
         public void Start()
         {
             chatManager = GameObject.FindGameObjectWithTag("ChatBox").GetComponent<ChatManager>();
+            gameManager = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<GameManager>();
         }
 
         /**
@@ -44,7 +46,24 @@ namespace Assets.Scripts.Managers
             }
         }
 
+        /*
+         * Func: Basic dice roll test function for the use of abilities in the game
+         * Func: this version should be called by entity controller
+         * Func: uses GameManager to determine minimal required RP
+         * @version: changes specifics of 'ability'
+         * @minRP: minimum Restpunkte required for a successful test
+         * @ability: the one that will be executed
+         * @user: entity using the ability
+         * @targets: potential targets for the ability (if necessary)
+         */
+        public void testInstant(int version, AbstractAbility ability, EntityController user, List<EntityController> targets)
+        {
+            int minRP = 0; //TODO: the GameManager should somehow determine this value
+            this.testInstant(version, minRP, ability, user, targets);
+        }
+
         /**
+         * DEBUG VERSION
          * Func: Basic dice roll test function for the use of abilities in the game
          * @version: changes specifics of 'ability'
          * @minRP: minimum Restpunkte required for a successful test

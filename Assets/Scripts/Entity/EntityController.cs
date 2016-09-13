@@ -18,6 +18,8 @@ namespace Assets.Scripts.Entity
         protected AbilityManager abiCon;
         protected TestManager testManager;
 
+        protected bool bInfight = false;
+
         protected virtual void Awake()
         {
             moveComp = GetComponent<EntityMovement>();
@@ -35,6 +37,11 @@ namespace Assets.Scripts.Entity
          */
         protected virtual void LateUpdate()
         {
+        }
+
+        public virtual void executeAbilityWith(EAbilities A, int version = 0, int minRP = 0)
+        {
+            testManager.testInstant(version, minRP, abiCon.getAbility(A), this, null);
         }
 
         public virtual Vector3 getPosition()
@@ -57,9 +64,14 @@ namespace Assets.Scripts.Entity
             moveComp.setIsRunning(b);
         }
 
-        public virtual void executeAbilityWith(EAbilities A, int version = 0, int minRP = 0)
+        public void setInfight(bool isInfight)
         {
-            testManager.testInstant(version, minRP, abiCon.getAbility(A), this, null);
+            this.bInfight = isInfight;
+        }
+
+        public bool isInfight()
+        {
+            return this.bInfight;
         }
     }
 }

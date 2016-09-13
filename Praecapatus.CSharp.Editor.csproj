@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
+    <None Include="Assets\Scripts\README.txt" />
     <None Include="Assets\import\Prefabs\overlord\models\overlord\Materials\clothshader.shader" />
     <None Include="Assets\import\Prefabs\overlord\readme.txt" />
     <None Include="Assets\import\Standard Assets\Cameras\CameraGuidelines.txt" />
