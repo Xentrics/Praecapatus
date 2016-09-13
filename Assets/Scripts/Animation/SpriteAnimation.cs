@@ -8,7 +8,7 @@ namespace Assets.Scripts.Animation
 {
     public class SpriteAnimation : MonoBehaviour
     {
-        public EEntityState AnimType = EEntityState.custom;
+        public EMovementState AnimType = EMovementState.custom;
 
         public int framesPerSecond = 16; // the frame rate at which to play this animation
 

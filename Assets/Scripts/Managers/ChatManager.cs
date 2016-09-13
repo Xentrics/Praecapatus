@@ -17,7 +17,7 @@ namespace Assets.Scripts.Managers
         bool allowChat = true;
         bool isChatting = false;
         CommandParser cmdParser;
-        PlayerController_Old playerC;
+        PlayerController playerC;
         Text contentText;
         public InputField chatInputField;
 
@@ -51,7 +51,11 @@ namespace Assets.Scripts.Managers
 
         void Start()
         {
-            playerC = GameObject.FindGameObjectWithTag("MainCharacter").GetComponent<PlayerController_Old>();
+            playerC = GameObject.FindGameObjectWithTag("MainCharacter").GetComponent<PlayerController>();
+            foreach (var g in GameObject.FindGameObjectsWithTag("MainCharacter"))
+            {
+                print(g.name);
+            }
             cmdParser = new CommandParser(playerC);
             contentText.text = chatline;
 
@@ -100,7 +104,8 @@ namespace Assets.Scripts.Managers
                     }
                     else if (CrossPlatformInputManager.GetButton("Submit"))
                     {
-                        if (chatInputField.text.StartsWith("@"))
+                        addLine(chatInputField.text); // add lines to chat box
+                        if (chatInputField.text.StartsWith("@")) // handle commands
                         {
                             try
                             {
@@ -112,7 +117,7 @@ namespace Assets.Scripts.Managers
                             }
                         }
 
-                        chatInputField.text = ""; // clear current line. TODO: muss line to history
+                        chatInputField.text = ""; // clear current line
                     }
                     else
                         chatInputField.text += Input.inputString;
@@ -145,6 +150,9 @@ namespace Assets.Scripts.Managers
             return allowChat;
         }
 
+        /**
+         * add a new text passage to the array of strings and update text box
+         */
         public void addLine(string l)
         {
             if (String.IsNullOrEmpty(l))

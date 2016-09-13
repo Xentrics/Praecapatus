@@ -15,6 +15,7 @@ namespace Assets.Scripts.Managers
     {
         EntityController playerC;
         CharInfo charInfo;
+        ChatManager chatManager;
 
         public void Awake()
         {
@@ -22,6 +23,14 @@ namespace Assets.Scripts.Managers
             charInfo = GetComponent<CharInfo>();
         }
 
+        public void Start()
+        {
+            chatManager = GameObject.FindGameObjectWithTag("ChatBox").GetComponent<ChatManager>();
+        }
+
+        /**
+         * must be called before making any dice roll testing
+         */
         public void initiateNewTest(ETestMode mode)
         {
             switch (mode)
@@ -36,13 +45,18 @@ namespace Assets.Scripts.Managers
         }
 
         /**
-         * 
+         * Func: Basic dice roll test function for the use of abilities in the game
+         * @version: changes specifics of 'ability'
+         * @minRP: minimum Restpunkte required for a successful test
+         * @ability: the one that will be executed
+         * @user: entity using the ability
+         * @targets: potential targets for the ability (if necessary)
          */
-        public void testInstant(int minRP, AbstractAbility ability, EntityController user, List<EntityController> targets)
+        public void testInstant(int version, int minRP, AbstractAbility ability, EntityController user, List<EntityController> targets)
         {
-            if (ability.canUse(user, targets))
+            if (ability.canUse(version, user, targets))
             {
-                int c = ability.getTestModifier(user, targets);
+                int c = ability.getTestModifier(version, user, targets);
                 int aw = charInfo.getAttributeValue(ability.getAttributeGroup());
                 int fw = ability.level;
                 bool failed = false;
@@ -70,11 +84,18 @@ namespace Assets.Scripts.Managers
                 }
 
                 print("Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw);
+                chatManager.addLine("Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw);
 
                 if (rp >= minRP)
-                    ability.applySuccess(rp, targets);
+                {
+                    chatManager.addLine("Success!");
+                    ability.applySuccess(version, rp, targets);
+                }
                 else
-                    ability.applyFailure(rp, user, targets);
+                {
+                    chatManager.addLine("Failed!");
+                    ability.applyFailure(version, rp, user, targets);
+                }
             }
             else
             {
@@ -82,6 +103,9 @@ namespace Assets.Scripts.Managers
             }
         }
 
+        /**
+         * TODO: might be needed for prolonged tests. However, I might just spawn instances for these tests instead?
+         */
         private bool hasTestFinished()
         {
             throw new NotImplementedException();

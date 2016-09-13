@@ -57,9 +57,9 @@ namespace Assets.Scripts.Entity
             moveComp.setIsRunning(b);
         }
 
-        public virtual void executeAbilityWith(EAbilities A, int minRP = 0)
+        public virtual void executeAbilityWith(EAbilities A, int version = 0, int minRP = 0)
         {
-            testManager.testInstant(minRP, abiCon.getAbility(A), this, null);
+            testManager.testInstant(version, minRP, abiCon.getAbility(A), this, null);
         }
     }
 }

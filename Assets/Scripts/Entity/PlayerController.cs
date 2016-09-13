@@ -16,11 +16,17 @@ namespace Assets.Scripts.Entity
     [RequireComponent(typeof(TestManager))]
     class PlayerController : EntityController
     {
+        struct KeybarAbility {
+            public AbstractAbility abi;
+            public int instant_version; // specific modification of the ability for instant use
+        };
+
+        KeybarAbility[] keybarAbilities;
+
         PlayerMovement pMoveComp;
         public ChatManager chatManager;
         bool isChatting = false;
 
-        AbstractAbility[] keybarAbilities;
 
         protected override void Awake()
         {
@@ -33,13 +39,16 @@ namespace Assets.Scripts.Entity
             base.Start();
 
             if (chatManager == null) throw new NullReferenceException("Chracter needs input field!");
-            keybarAbilities = new AbstractAbility[10];
+            keybarAbilities = new KeybarAbility[10];
             for (int i = 0; i < 10; ++i)
-                keybarAbilities[i] = abiCon.getAbility(EAbilities.null_);
+            {
+                keybarAbilities[i].abi = abiCon.getAbility(EAbilities.null_);
+                keybarAbilities[i].instant_version = 0;
+            }
         }
 
         /*
-         * handle correct key input across multiple scripts & mechanics
+         * func: handle correct key input across multiple scripts & mechanics
          */
         protected override void LateUpdate()
         {
@@ -60,6 +69,37 @@ namespace Assets.Scripts.Entity
                 }
             }
         }
+        
+
+        /**
+         * func: use the ability set for a specific keyboard key
+         * is called from PlayerInputManager
+         * @keyID: input key from the keyboard
+         */
+        public void executeKeybarAbility(int keyID)
+        {
+            if (keyID >= 0 && keyID <= 9)
+            {
+                int minRP = 0; //TODO: minRP must be set from the central game logic
+                testManager.testInstant(keybarAbilities[keyID].instant_version, minRP, keybarAbilities[keyID].abi, this, null);
+            }
+            else
+                throw new ArgumentOutOfRangeException("keyID must be element of [0,9]");
+        }
+
+        /**
+         * func: load the abilities preset ingame
+         */
+        public void loadKeybarAbilitiesFromSave()
+        {
+            //TODO: implement
+            throw new NotImplementedException("load keybar abilities from save");
+        }
+
+        public void releaseKeybarAbility(int keyID)
+        {
+            // will be needed for prolonged tests, etc., maybe or so. How knows now?
+        }
 
         public override Vector3 getPosition()
         {
@@ -68,22 +108,7 @@ namespace Assets.Scripts.Entity
 
         public override float getMeleeRange()
         {
-            return 10; // 1 meter?
-        }
-
-        public void executeKeybarAbility(int keyID)
-        {
-            if (keyID >= 0 && keyID <= 9)
-            {
-                testManager.testInstant(0, keybarAbilities[keyID], this, null);
-            }
-            else
-                throw new ArgumentOutOfRangeException("keyID must be element of [0,9]");
-        }
-
-        public void releaseKeybarAbility(int keyID)
-        {
-            // will be needed for prolonged tests, etc., maybe or so. How knows now?
+            return 10; // TODO: 1 meter?
         }
     }
 }

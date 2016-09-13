@@ -20,7 +20,7 @@ namespace Assets.Scripts.Character
         public int IN = NO_OVERRIDE;
         public int LO = NO_OVERRIDE;
 
-        public CharAttributes attrToOverride;
+        public Attributes attrToOverride;
         public Dictionary<EAttrGrp, int> attr_orig;
         
 
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Character
                 if (info != null)
                     attrToOverride = info.attr;
                 else
-                    attrToOverride = GetComponent<CharAttributes>();
+                    attrToOverride = GetComponent<Attributes>();
 
                 if (attrToOverride == null)
                     throw new NullReferenceException("CharAttributeOverrider: Could not aquire CharAttributes component!");

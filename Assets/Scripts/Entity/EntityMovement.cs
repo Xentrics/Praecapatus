@@ -8,6 +8,9 @@ using UnitySampleAssets.CrossPlatformInput;
 namespace Assets.Scripts.Entity
 {
     [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Collider))]
     public class EntityMovement : MonoBehaviour
     {
         public float moveSpeed = 6f;            // The speed that the player will move at
@@ -20,12 +23,14 @@ namespace Assets.Scripts.Entity
         protected Vector3 inputVelocity;                   // The amount of movement caused by mouse/keyboard input
         protected Vector3 lookDir;                         // 
 
-        protected float GroundCheckDistance = 0.1f;
+        public float GroundCheckDistance = 0.1f;
         protected float OrigGroundCheckDistance;
         public Vector3 groundCheckOffset;
 
-        protected MultiSpriteAnimator animComp;
+        protected Animator animComp;
         protected Rigidbody rigitBodyComp;                 // Reference to the player's rigidbody.
+        protected SpriteRenderer spriteRenderer;           // lets us flit stuff easily
+        protected Collider mainCollider;
         protected int floorMask;                           // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
 
         // character states
@@ -45,9 +50,9 @@ namespace Assets.Scripts.Entity
 
             // Set up references. They cannot be null since they are required!
             rigitBodyComp = GetComponent<Rigidbody>();
-            animComp = GetComponentInChildren<MultiSpriteAnimator>();
-            if (animComp == null)
-                throw new NullReferenceException("Could not find MultiSpriteAnimator component!");
+            animComp = GetComponent<Animator>();
+            mainCollider = GetComponent<Collider>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
 
@@ -94,8 +99,7 @@ namespace Assets.Scripts.Entity
             // apply extra gravity from multiplier:
             Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
             rigitBodyComp.AddForce(extraGravityForce);
-
-            GroundCheckDistance = rigitBodyComp.velocity.y < 0 ? OrigGroundCheckDistance : 0.01f;
+            //GroundCheckDistance = rigitBodyComp.velocity.y < 0 ? OrigGroundCheckDistance : 0.01f;
         }
 
 
@@ -124,44 +128,27 @@ namespace Assets.Scripts.Entity
             bool walking = h != 0f || v != 0f;
 
             if (h != 0)
-                animComp.setLookDirection(h < 0); // keep the current look direction if h == 0!
-
-            // Tell the animator which animation to play
-            if (isInAir)
             {
-                if (walking && bRun)
-                    animComp.setCurrentAnimation(EEntityState.jumpForward, false);
+                spriteRenderer.flipX = (h > 0) ? false : true;
+                animComp.SetInteger("direction", (h > 0) ? (int)EDirection.EAST : (int)EDirection.WEST); // keep the current look direction if h == 0!
+            }
+
+            if (walking)
+            {
+                if (bRun)
+                {
+                    animComp.SetBool("running", true);
+                } 
                 else
-                    animComp.setCurrentAnimation(EEntityState.jumpUp, false);
+                {
+                    animComp.SetBool("running", true);
+                }
             }
             else
             {
-                if (walking)
-                    if (bRun)
-                        animComp.setCurrentAnimation(EEntityState.running, false);
-                    else
-                        animComp.setCurrentAnimation(EEntityState.walking, false);
-                else
-                    animComp.setCurrentAnimation(EEntityState.idle, false);
+                animComp.SetBool("running", false);
             }
         }
-
-        /*
-        public void OnAnimatorMove()
-        {
-            // we implement this function to override the default root motion.
-            // this allows us to modify the positional speed before it's applied.
-            if (!isInAir && Time.deltaTime > 0)
-            {
-                Vector3 v = (animatorComp.deltaPosition * moveSpeed) / Time.deltaTime;
-
-                // we preserve the existing y part of the current velocity.
-                v.y = rigitBodyComp.velocity.y;
-                rigitBodyComp.velocity = v;
-            }
-        }
-        */
-
 
         /**
          * check if the player is still in the air using ray casts
@@ -171,19 +158,24 @@ namespace Assets.Scripts.Entity
             RaycastHit hitInfo;
 #if UNITY_EDITOR
             // helper to visualise the ground check ray in the scene view
-            Debug.DrawLine(transform.position + groundCheckOffset + (Vector3.up * 0.1f), transform.position + groundCheckOffset + (Vector3.up * 0.1f) + (Vector3.down * GroundCheckDistance));
+            Debug.DrawLine(transform.position + groundCheckOffset + (Vector3.up * 0.1f), transform.position + groundCheckOffset + (Vector3.up * 0.1f) + (Vector3.down * GroundCheckDistance), Color.red, 5f);
 #endif
             // 0.1f is a small offset to start the ray from inside the character
-            // it is also good to note that the transform position in the sample assets is at the base of the character
+            // we ignore the entity plane. Come up with a better idea later...
+            int oldlayer = this.gameObject.layer;
+            //this.gameObject.layer = 2; // temporarily set to "ignore raycast" layer
             if (Physics.Raycast(transform.position + groundCheckOffset + (Vector3.up * 0.1f), Vector3.down, out hitInfo, GroundCheckDistance))
             {
                 // hit something.
                 isInAir = false;
+                animComp.SetBool("grounded", true);
             }
             else
             {
                 isInAir = true;
+                animComp.SetBool("grounded", false);
             }
+            //this.gameObject.layer = oldlayer;
         }
 
         public void toggleRunning()

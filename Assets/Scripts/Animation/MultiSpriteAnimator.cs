@@ -22,7 +22,7 @@ namespace Assets.Scripts
 
         public bool lookLeft = false;
         protected SpriteAnimation currentAnim;
-        protected EEntityState currentState;
+        protected EMovementState currentState;
         protected int animIndex = 0;
 
         protected float lastFrameUpdateTime; // remember the last time at which we changed
@@ -85,7 +85,7 @@ namespace Assets.Scripts
          * returns "true", if the animation was changed
          * returns "false", if the animation is already playing or not set
          */
-        public virtual bool setCurrentAnimation(EEntityState newState, bool interrupt)
+        public virtual bool setCurrentAnimation(EMovementState newState, bool interrupt)
         {
             if (currentState == newState)
                 return false;
@@ -122,16 +122,16 @@ namespace Assets.Scripts
         }
 
 
-        public SpriteAnimation getSpriteAnimation(EEntityState state)
+        public SpriteAnimation getSpriteAnimation(EMovementState state)
         {
             switch (state)
             {
-                case EEntityState.idle: return IdleAnim;
-                case EEntityState.walking: return WalkAnim;
-                case EEntityState.running: return RunAnim;
-                case EEntityState.jumpUp: return JumpUpAnim;
-                case EEntityState.jumpForward: return JumpForwAnim;
-                case EEntityState.jumpBackward: return JumpBackAnim;
+                case EMovementState.idle: return IdleAnim;
+                case EMovementState.walking: return WalkAnim;
+                case EMovementState.running: return RunAnim;
+                case EMovementState.jumpUp: return JumpUpAnim;
+                case EMovementState.jumpForward: return JumpForwAnim;
+                case EMovementState.jumpBackward: return JumpBackAnim;
                 default:
                     print("Could not set anim for state " + state + " : Did you forget that entry?");
                     return null;

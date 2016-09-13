@@ -75,7 +75,9 @@ namespace Assets.Scripts.Entity
         {
             if (keyID >= 0 && keyID <= 9)
             {
-                testManager.testInstant(0, keybarAbilities[keyID], this, null);
+                int minRP = 0;
+                int version = 0;
+                testManager.testInstant(version, minRP, keybarAbilities[keyID], this, null);
             }
             else
                 throw new ArgumentOutOfRangeException("keyID must be element of [0,9]");

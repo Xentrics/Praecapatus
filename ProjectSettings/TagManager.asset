@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - ChatBox
+  - ChatBoxContent
   - MainCharacter
   layers:
   - Default
@@ -19,7 +20,7 @@ TagManager:
   - Shootable
   - LightMask
   - Invisible
-  - 
+  - PlayerLayer
   - 
   - 
   - 

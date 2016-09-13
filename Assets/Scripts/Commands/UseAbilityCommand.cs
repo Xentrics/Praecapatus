@@ -20,12 +20,12 @@ namespace Assets.Scripts.Commands
             return UseAbilityCommand.cmdName;
         }
 
-        public override bool use(string[] args, PlayerController_Old pc)
+        public override bool use(string[] args, PlayerController pc)
         {
             string abiName = args[0];
             foreach (EAbilities A in Enum.GetValues(typeof(EAbilities)))
             {
-                if (abiName.Equals(A.ToString("G"))) // find the ability to execute
+                if (abiName.Equals(A.ToString())) // find the ability to execute
                 {
                     pc.executeAbilityWith(A); // let the player controller handle the rest
                     return true;
