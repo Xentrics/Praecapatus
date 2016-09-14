@@ -9,7 +9,8 @@ namespace Assets.Scripts.Abilities
 {
     abstract class AbstractAbility
     {
-        public int level = AbilityManager.UNLEARNED; // the base ability level. This is used for dice-rolls
+        public int fw = AbilityManager.UNLEARNED; // 'fertigkeitswert', the base ability level. This is used for dice-rolls
+
         protected EAttrGrp attributeGrp;
         protected EUsageMode usageMode = EUsageMode.none;
         protected bool useableWithoutLearning = true; // if level equals UNLEARNED, shall we still be able to make a test for this ability
@@ -19,19 +20,19 @@ namespace Assets.Scripts.Abilities
         /**
          * test, whether or not this ability can be used by 'user' on 'targets'
          */
-        public abstract bool canUse(int version, EntityController user, List<EntityController> targets);
+        public abstract bool canUse(int version, Interactable user, List<Interactable> targets);
 
         /**
          * TODO: HEADER NEEDS SOME INPUT
          * the returned value will be added to the ability level pool (fw + aw + modifier)
          */
-        public abstract int getTestModifier(int version, EntityController user, List<EntityController> targets);
+        public abstract int getTestModifier(int version, Interactable user, List<Interactable> targets);
 
         /**
          * gets called from the TestManager after rolling some dice
          * rp are the remaining points of the test
          */
-        public abstract void applySuccess(int version, int rp, List<EntityController> targets);
+        public abstract void applySuccess(int version, int rp, List<Interactable> targets);
 
         /**
          * TODO: method header may need some tweaking later on
@@ -41,7 +42,7 @@ namespace Assets.Scripts.Abilities
          * @user: the one using this ability
          * @zargets: any kind of object/entity that is effected by this ability
          */
-        public abstract void applyFailure(int version, int rp, EntityController user, List<EntityController> targets);
+        public abstract void applyFailure(int version, int rp, Interactable user, List<Interactable> targets);
 
         /**
          * TODO: method header may need some tweaking later on
@@ -51,7 +52,7 @@ namespace Assets.Scripts.Abilities
          * @user: the one using this ability
          * @zargets: any kind of object/entity that is effected by this ability
          */
-        public abstract void makeVisuals(int version, int rp, EntityController user, List<EntityController> targets);
+        public abstract void makeVisuals(int version, int rp, Interactable user, List<Interactable> targets);
 
         /**
          * returns the main attribute which adds to the fw during the dice roll
@@ -69,6 +70,16 @@ namespace Assets.Scripts.Abilities
         public EUsageMode getUsageMode()
         {
             return usageMode;
+        }
+
+        public abstract string name
+        {
+            get;
+        }
+
+        public override string ToString()
+        {
+            return "Abi: " + this.name;
         }
     }
 }

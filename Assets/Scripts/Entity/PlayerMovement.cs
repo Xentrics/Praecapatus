@@ -68,7 +68,7 @@ namespace Assets.Scripts.Entity
             if (isInAir)
                 base.Fall();
             else
-                base.Move(inputVelocity.x, inputVelocity.z, bRun);
+                base.Move(inputVelocity.x, inputVelocity.z, _bRun);
 
             // Turn the player to face the mouse cursor.
             base.Turning();

@@ -12,13 +12,17 @@ namespace Assets.Scripts.Entity
     [RequireComponent(typeof(EntityMovement))]
     [RequireComponent(typeof(AbilityManager))]
     [RequireComponent(typeof(TestManager))]
-    class EntityController : MonoBehaviour
+    class EntityController : MonoBehaviour, Interactable
     {
         protected EntityMovement moveComp;
         protected AbilityManager abiCon;
         protected TestManager testManager;
 
-        protected bool bInfight = false;
+        protected bool _bInfight = false;
+
+        protected float _meleeRange = 10f;  // ?
+        protected bool _inanimate = false;
+        protected float _weight = 10f;      // ?
 
         protected virtual void Awake()
         {
@@ -44,34 +48,81 @@ namespace Assets.Scripts.Entity
             testManager.testInstant(version, minRP, abiCon.getAbility(A), this, null);
         }
 
-        public virtual Vector3 getPosition()
-        {
-            return moveComp.getPosition();
-        }
-
-        public virtual float getMeleeRange()
-        {
-            return 10; // 1 meter?
-        }
+        /*********
+         * GETTER AND SETTER
+         ************************/
 
         public void toggleRunning()
         {
             moveComp.toggleRunning();
         }
 
-        public void setIsRunning(bool b)
+        public bool running
         {
-            moveComp.setIsRunning(b);
+            get
+            {
+                return moveComp.running;
+            }
+
+            set
+            {
+                moveComp.running = value;
+            }
         }
 
-        public void setInfight(bool isInfight)
+        public bool bInfight
         {
-            this.bInfight = isInfight;
+            get
+            {
+                return _bInfight;
+            }
+
+            set
+            {
+                _bInfight = value;
+            }
         }
 
-        public bool isInfight()
+        public float weight
         {
-            return this.bInfight;
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool inanimate
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Vector3 position
+        {
+            get
+            {
+                return moveComp.position;
+            }
+        }
+
+        public float MeleeRange
+        {
+            get
+            {
+                return _meleeRange;
+            }
         }
     }
 }

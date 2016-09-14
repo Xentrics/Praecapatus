@@ -9,11 +9,11 @@ using Assets.Scripts.Character;
 
 namespace Assets.Scripts.Managers
 {
-    [RequireComponent(typeof(EntityController))]
+    [RequireComponent(typeof(Interactable))]
     [RequireComponent(typeof(CharInfo))]
     class TestManager : MonoBehaviour
     {
-        EntityController playerC;
+        Interactable playerC;
         CharInfo charInfo;
         ChatManager chatManager;
         GameManager gameManager;
@@ -56,7 +56,7 @@ namespace Assets.Scripts.Managers
          * @user: entity using the ability
          * @targets: potential targets for the ability (if necessary)
          */
-        public void testInstant(int version, AbstractAbility ability, EntityController user, List<EntityController> targets)
+        public void testInstant(int version, AbstractAbility ability, Interactable user, List<Interactable> targets)
         {
             int minRP = 0; //TODO: the GameManager should somehow determine this value
             this.testInstant(version, minRP, ability, user, targets);
@@ -71,13 +71,13 @@ namespace Assets.Scripts.Managers
          * @user: entity using the ability
          * @targets: potential targets for the ability (if necessary)
          */
-        public void testInstant(int version, int minRP, AbstractAbility ability, EntityController user, List<EntityController> targets)
+        public void testInstant(int version, int minRP, AbstractAbility ability, Interactable user, List<Interactable> targets)
         {
             if (ability.canUse(version, user, targets))
             {
                 int c = ability.getTestModifier(version, user, targets);
                 int aw = charInfo.getAttributeValue(ability.getAttributeGroup());
-                int fw = ability.level;
+                int fw = ability.fw;
                 bool failed = false;
 
                 int diceroll = UnityEngine.Random.Range(1, 20);
@@ -102,7 +102,8 @@ namespace Assets.Scripts.Managers
                     } while (!failed && reroll >= 19);
                 }
 
-                print("Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw);
+                print("Ability: " + ability + "| Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw);
+                chatManager.addLine("Ability: " + ability);
                 chatManager.addLine("Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw);
 
                 if (rp >= minRP)

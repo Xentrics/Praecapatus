@@ -36,7 +36,7 @@ namespace Assets.Scripts.Entity
         // character states
         public bool isInAir = false;                       // shall be true, if the player is in the air (for whatever reason)
         protected bool canJump = true;                     // can be false duo to exhaustion and other reasons
-        protected bool bRun = true;
+        protected bool _bRun = true;
         protected bool canRun = true;                      // can be false duo to exhaustion and other reasons
 
         virtual protected void Awake()
@@ -85,7 +85,7 @@ namespace Assets.Scripts.Entity
             if (isInAir)
                 Fall();
             else
-                Move(inputVelocity.x, inputVelocity.z, bRun);
+                Move(inputVelocity.x, inputVelocity.z, _bRun);
 
             // Turn the player to face the mouse cursor.
             Turning();
@@ -109,7 +109,7 @@ namespace Assets.Scripts.Entity
             velocity.Set(h, 0f, v);
 
             // Normalise the movement vector and make it proportional to the speed per second.
-            velocity = velocity.normalized * ((bRun) ? runSpeed : moveSpeed) * Time.deltaTime;
+            velocity = velocity.normalized * ((_bRun) ? runSpeed : moveSpeed) * Time.deltaTime;
 
             // Move the player to it's current position plus the movement.
             rigitBodyComp.MovePosition(transform.position + Quaternion.LookRotation(lookDir * turnSpeed) * velocity);
@@ -135,7 +135,7 @@ namespace Assets.Scripts.Entity
 
             if (walking)
             {
-                if (bRun)
+                if (_bRun)
                 {
                     animComp.SetBool("running", true);
                 } 
@@ -178,19 +178,35 @@ namespace Assets.Scripts.Entity
             //this.gameObject.layer = oldlayer;
         }
 
+
+        /*******
+         * GETTER AND SETTER
+         ***************************/
+
         public void toggleRunning()
         {
-            bRun = !bRun;
+            _bRun = !_bRun;
         }
 
-        public void setIsRunning(bool b)
+        public bool running
         {
-            bRun = b;
+            get
+            {
+                return _bRun;
+            }
+            
+            set
+            {
+                _bRun = value;
+            }
         }
 
-        public virtual Vector3 getPosition()
+        public Vector3 position
         {
-            return rigitBodyComp.position;
+            get
+            {
+                return rigitBodyComp.position;
+            }
         }
     }
 }

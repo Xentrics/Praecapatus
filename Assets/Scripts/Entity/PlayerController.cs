@@ -108,15 +108,5 @@ namespace Assets.Scripts.Entity
         {
             // will be needed for prolonged tests, etc., maybe or so. How knows now?
         }
-
-        public override Vector3 getPosition()
-        {
-            return pMoveComp.getPosition();
-        }
-
-        public override float getMeleeRange()
-        {
-            return 10; // TODO: 1 meter?
-        }
     }
 }

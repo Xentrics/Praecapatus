@@ -61,16 +61,6 @@ namespace Assets.Scripts.Entity
             }
         }
 
-        public override Vector3 getPosition()
-        {
-            return pMoveComp.getPosition();
-        }
-
-        public override float getMeleeRange()
-        {
-            return 10; // 1 meter?
-        }
-
         public void executeKeybarAbility(int keyID)
         {
             if (keyID >= 0 && keyID <= 9)
