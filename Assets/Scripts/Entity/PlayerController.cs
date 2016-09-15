@@ -29,6 +29,8 @@ namespace Assets.Scripts.Entity
 
         protected bool bInstantUseDuringStory = true; // true: do not show ability version selection even during story mode
 
+        protected float interactionRange = 10f;
+
         protected override void Awake()
         {
             base.Awake();
@@ -83,7 +85,7 @@ namespace Assets.Scripts.Entity
             {
                 if (bInstantUseDuringStory || bInfight)
                 {
-                    testManager.testInstant(keybarAbilities[keyID].instant_version, keybarAbilities[keyID].abi, this, null);
+                    DEB_testManager.testInstant(keybarAbilities[keyID].instant_version, keybarAbilities[keyID].abi, praeObject, null);
                 }
                 else
                 {
@@ -93,6 +95,69 @@ namespace Assets.Scripts.Entity
             }
             else
                 throw new ArgumentOutOfRangeException("keyID must be element of [0,9]");
+        }
+
+        /**
+         * func: try to interact with object in line of sight
+         * func: use default interaction range
+         * @RETURN: true, if any interaction was started
+         */
+        public bool tryInteractWith()
+        {
+            return tryInteractWith(interactionRange);
+        }
+
+        public bool tryInteractWith(float maxRange)
+        {
+            // iterative raycast
+            float restRange = maxRange;
+            Vector3 startLoc = transform.position;
+            while (restRange > 0)
+            {
+                RaycastHit hitinfo;
+                if (Physics.Raycast(startLoc, moveComp.lookDir, out hitinfo, maxRange))
+                {
+                    Interactable hit = hitinfo.transform.gameObject.GetComponent<PraeObject>();
+                    if (hit != null)
+                    {
+                        return tryInteractWith(hit); // found our interaction object
+                    }
+                    else
+                    {
+                        // hit something, but not the correct thing. prepare next cast
+                        restRange -= Vector3.Distance(transform.position, hitinfo.point);
+                        startLoc = hitinfo.point; // start from the last hit location
+                    }
+                }
+                else
+                {
+                    Debug.DrawRay(startLoc, moveComp.lookDir, Color.blue, 2f);
+                    return false; // nothing was hit
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         * func: try to interact with given object
+         * @I: object to interact with
+         * return: FALSE, if I does not interact for any reason
+         */
+        public bool tryInteractWith(Interactable I)
+        {
+            Debug.Log("Try interaction with: " + I);
+            if (I.tryInteract(praeObject))
+            {
+                // TODO: do stuff
+                Debug.Log("Start of interaction");
+                return true;
+            }
+            else
+            {
+                Debug.Log("Interaction denied.");
+                return false;
+            }
         }
 
         /**

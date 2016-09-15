@@ -1,34 +1,33 @@
 ﻿using Assets.Scripts.Abilities;
 using Assets.Scripts.Managers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Assets.Scripts.Objects;
 using UnityEngine;
-using UnitySampleAssets.CrossPlatformInput;
 
 namespace Assets.Scripts.Entity
 {
     [RequireComponent(typeof(EntityMovement))]
     [RequireComponent(typeof(AbilityManager))]
     [RequireComponent(typeof(TestManager))]
-    class EntityController : MonoBehaviour, Interactable
+    [RequireComponent(typeof(EntityObject))]
+    class EntityController : MonoBehaviour
     {
-        protected EntityMovement moveComp;
-        protected AbilityManager abiCon;
-        protected TestManager testManager;
+        protected EntityMovement    moveComp;       // physical object in the world
+        protected AbilityManager    abiCon;         // all abilities available
+        protected TestManager       DEB_testManager;    // reference for debugging reasons. TODO: Should be performed by GameLogic later on
+        protected EntityObject      _praeObject;    // standard praecapatus object information. Weight, melee range, etc.
 
-        protected bool _bInfight = false;
+        protected bool  _bInfight   = false;
 
-        protected float _meleeRange = 10f;  // ?
-        protected bool _inanimate = false;
-        protected float _weight = 10f;      // ?
+        protected bool  _inanimate  = false;
+        protected float _weight     = 10f;      // ?
 
         protected virtual void Awake()
         {
             moveComp = GetComponent<EntityMovement>();
             abiCon = GetComponent<AbilityManager>();
-            testManager = GetComponent<TestManager>();
+            DEB_testManager = GetComponent<TestManager>();
+            _praeObject = GetComponent<EntityObject>();
+            praeObject.meleeRange = 10f;    // ?
         }
 
         protected virtual void Start()
@@ -45,7 +44,7 @@ namespace Assets.Scripts.Entity
 
         public virtual void executeAbilityWith(EAbilities A, int version = 0, int minRP = 0)
         {
-            testManager.testInstant(version, minRP, abiCon.getAbility(A), this, null);
+            DEB_testManager.testInstant(version, minRP, abiCon.getAbility(A), praeObject, null);
         }
 
         /*********
@@ -83,45 +82,24 @@ namespace Assets.Scripts.Entity
             }
         }
 
-        public float weight
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool inanimate
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public Vector3 position
         {
+            set
+            {
+                moveComp.position.Set(value.x, value.y, value.z); // use with caution...
+            }
+
             get
             {
                 return moveComp.position;
             }
         }
 
-        public float MeleeRange
+        public PraeObject praeObject
         {
             get
             {
-                return _meleeRange;
+                return _praeObject;
             }
         }
     }

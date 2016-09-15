@@ -67,7 +67,7 @@ namespace Assets.Scripts.Entity
             {
                 int minRP = 0;
                 int version = 0;
-                testManager.testInstant(version, minRP, keybarAbilities[keyID], this, null);
+                // DO NOT USE: DEB_testManager.testInstant(version, minRP, keybarAbilities[keyID], this, null);
             }
             else
                 throw new ArgumentOutOfRangeException("keyID must be element of [0,9]");

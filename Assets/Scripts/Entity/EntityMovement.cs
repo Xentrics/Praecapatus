@@ -21,7 +21,8 @@ namespace Assets.Scripts.Entity
 
         protected Vector3 velocity;                        // The vector to store the direction of the player's movement.
         protected Vector3 inputVelocity;                   // The amount of movement caused by mouse/keyboard input
-        protected Vector3 lookDir;                         // 
+        protected Vector3 _lookDir;                        // sprite look direction. This is independent of the actual transform.rotation
+        protected Quaternion mapRotation;
 
         public float GroundCheckDistance = 0.1f;
         protected float OrigGroundCheckDistance;
@@ -41,9 +42,11 @@ namespace Assets.Scripts.Entity
 
         virtual protected void Awake()
         {
+            mapRotation = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<Managers.GameManager>().worldViewRotation; // grab map rotation and never, ever change it!
+
             // Create a layer mask for the floor layer.
             floorMask = LayerMask.GetMask("Floor");
-            lookDir = new Vector3();
+            _lookDir = new Vector3(1,0,0);
             velocity = new Vector3();
             inputVelocity = new Vector3();
             OrigGroundCheckDistance = GroundCheckDistance;
@@ -88,7 +91,7 @@ namespace Assets.Scripts.Entity
                 Move(inputVelocity.x, inputVelocity.z, _bRun);
 
             // Turn the player to face the mouse cursor.
-            Turning();
+            //Turning();
 
             // Animate the player.
             Animating(inputVelocity.x, inputVelocity.z);
@@ -99,12 +102,21 @@ namespace Assets.Scripts.Entity
             // apply extra gravity from multiplier:
             Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
             rigitBodyComp.AddForce(extraGravityForce);
-            //GroundCheckDistance = rigitBodyComp.velocity.y < 0 ? OrigGroundCheckDistance : 0.01f;
         }
 
 
         protected void Move(float h, float v, bool run)
         {
+            // set correct look direction
+            // NOTE: because of sprites, the player can only look up/down/east or west, even if the is moving diagonal!
+            // NOTE: therefor, horizontal animation is ALWAYS dominant during diagonal movement
+            // NOTE: direction does not change while standing still
+            if (h != 0)
+                _lookDir.Set(Math.Sign(h), 0, 0);
+            else if (v != 0)
+                _lookDir.Set(0, 0, Math.Sign(v));
+
+
             // Set the movement vector based on the axis input.
             velocity.Set(h, 0f, v);
 
@@ -112,13 +124,15 @@ namespace Assets.Scripts.Entity
             velocity = velocity.normalized * ((_bRun) ? runSpeed : moveSpeed) * Time.deltaTime;
 
             // Move the player to it's current position plus the movement.
-            rigitBodyComp.MovePosition(transform.position + Quaternion.LookRotation(lookDir * turnSpeed) * velocity);
+            rigitBodyComp.MovePosition(transform.position + mapRotation * velocity); // Quaternion.LookRotation(mapRotation * turnSpeed) * velocity
         }
 
 
         protected void Turning()
         {
-            transform.rotation = Quaternion.LerpUnclamped(transform.rotation, Quaternion.LookRotation(lookDir), turnSpeed);
+            // transform.rotation = Quaternion.LerpUnclamped(transform.rotation, Quaternion.LookRotation(_lookDir), turnSpeed);
+            // NOTE: should the sprite be rotated here? Better to that from the gamelogic...
+            print("Why do you try turning?");
         }
 
 
@@ -131,6 +145,10 @@ namespace Assets.Scripts.Entity
             {
                 spriteRenderer.flipX = (h > 0) ? false : true;
                 animComp.SetInteger("direction", (h > 0) ? (int)EDirection.EAST : (int)EDirection.WEST); // keep the current look direction if h == 0!
+            }
+            else if (v != 0)
+            {
+                //animComp.SetInteger("direction", (v < 0) ? (int)EDirection.SOUTH : (int)EDirection.NORTH); // TODO: not yet implemented!
             }
 
             if (walking)
@@ -158,7 +176,7 @@ namespace Assets.Scripts.Entity
             RaycastHit hitInfo;
 #if UNITY_EDITOR
             // helper to visualise the ground check ray in the scene view
-            Debug.DrawLine(transform.position + groundCheckOffset + (Vector3.up * 0.1f), transform.position + groundCheckOffset + (Vector3.up * 0.1f) + (Vector3.down * GroundCheckDistance), Color.red, 5f);
+            Debug.DrawLine(transform.position + groundCheckOffset + (Vector3.up * 0.1f), transform.position + groundCheckOffset + (Vector3.up * 0.1f) + (Vector3.down * GroundCheckDistance), Color.red, 1f);
 #endif
             // 0.1f is a small offset to start the ray from inside the character
             // we ignore the entity plane. Come up with a better idea later...
@@ -206,6 +224,14 @@ namespace Assets.Scripts.Entity
             get
             {
                 return rigitBodyComp.position;
+            }
+        }
+
+        public Vector3 lookDir
+        {
+            get
+            {
+                return _lookDir;
             }
         }
     }

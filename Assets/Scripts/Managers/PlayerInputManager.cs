@@ -33,25 +33,28 @@ namespace Assets.Scripts.Managers
             if (Input.anyKeyDown)
             {
                 // handle the numbers 0 to 9 of the upper keyboard bar
-                const int alpha1 = (int)KeyCode.Alpha1; // get the keycode to start from
-                for (int i = 0; i < 10; ++i)
-                    if (Input.GetKeyDown((KeyCode)alpha1 + i))
+                bool used = false;                      // prevent simultanious use of abilities
+                for (int i = 1; i < 11; ++i)
+                {
+                    if (CrossPlatformInputManager.GetButton("Action"+i))
                     {
                         barManager.pressButton(i);
                         pc.executeKeybarAbility(i);
+                        used = true;
+                        break;
                     }
+                }
 
-                if (Input.GetKeyDown(KeyCode.Alpha0))
+                if(!used && CrossPlatformInputManager.GetButton("interact"))
                 {
-                    barManager.pressButton(9);
-                    pc.executeKeybarAbility(9);
+                    if (!pc.tryInteractWith()) // next target in sight
+                        Debug.Log("Found nothing to interact with.");
                 }
 
                 // handle remaining keys
                 if (CrossPlatformInputManager.GetButton("toggleWalk"))
-                {
                     pc.toggleRunning();
-                }
+  
             }
 
             // check if we have do handle key-up events

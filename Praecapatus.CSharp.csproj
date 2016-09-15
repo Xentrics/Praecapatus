@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\EAttrGrp.cs" />
     <Compile Include="Assets\Scripts\ECharClass.cs" />
     <Compile Include="Assets\Scripts\EDirection.cs" />
+    <Compile Include="Assets\Scripts\ELuck.cs" />
     <Compile Include="Assets\Scripts\EMovementState.cs" />
     <Compile Include="Assets\Scripts\ETestMode.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAttack.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ShortKeyBarManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TestManager.cs" />
+    <Compile Include="Assets\Scripts\Objects\EntityObject.cs" />
     <Compile Include="Assets\Scripts\PotentiallyUsefulStuff.cs" />
     <Compile Include="Assets\import\Standard Assets\2D\Scripts\Camera2DFollow.cs" />
     <Compile Include="Assets\import\Standard Assets\2D\Scripts\CameraFollow.cs" />
@@ -250,7 +252,7 @@
     <Compile Include="Assets\import\Standard Assets\Vehicles\Car\Scripts\SkidTrail.cs" />
     <Compile Include="Assets\import\Standard Assets\Vehicles\Car\Scripts\Suspension.cs" />
     <Compile Include="Assets\import\Standard Assets\Vehicles\Car\Scripts\WheelEffects.cs" />
-    <Compile Include="Assets\Scripts\PraeObject.cs" />
+    <Compile Include="Assets\Scripts\Objects\PraeObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />

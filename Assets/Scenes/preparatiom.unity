@@ -751,11 +751,12 @@ GameObject:
   m_Component:
   - 224: {fileID: 220997240}
   - 54: {fileID: 220997237}
-  - 136: {fileID: 220997236}
+  - 65: {fileID: 220997247}
   - 82: {fileID: 220997235}
   - 222: {fileID: 220997239}
   - 212: {fileID: 220997246}
   - 95: {fileID: 220997238}
+  - 114: {fileID: 220997236}
   - 114: {fileID: 220997232}
   - 114: {fileID: 220997243}
   - 114: {fileID: 220997241}
@@ -802,7 +803,7 @@ MonoBehaviour:
   jumpStrength: 12
   gravityMultiplier: 4
   GroundCheckDistance: 0.2
-  groundCheckOffset: {x: 0, y: -0.9, z: 0}
+  groundCheckOffset: {x: 0, y: -0.8, z: 0}
   isInAir: 0
   followCamera: {fileID: 1656042392}
 --- !u!114 &220997234
@@ -894,20 +895,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!136 &220997236
-CapsuleCollider:
+--- !u!114 &220997236
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 13660356, guid: 7030b3bbbe42964459f0e26f3b8604ca,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 220997231}
-  m_Material: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
-  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3
-  m_Height: 0.9
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15196ea97f8f8814dac0bd4476375c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &220997237
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -917,7 +915,7 @@ Rigidbody:
   m_GameObject: {fileID: 220997231}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 1
+  m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1072,6 +1070,18 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!65 &220997247
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 220997231}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6, y: 0.8, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &222662856
 GameObject:
   m_ObjectHideFlags: 0

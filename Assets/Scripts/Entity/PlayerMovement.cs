@@ -39,8 +39,8 @@ namespace Assets.Scripts.Entity
             // correct player mesh rotation based on the camera rotation
             if (followCamera != null)
             {
-                lookDir = transform.position - followCamera.transform.position;
-                lookDir.y = 0; // we don't need y. yet.
+                //_lookDir = transform.position - followCamera.transform.position;
+                //_lookDir.y = 0; // we don't need y. yet.
             }
 
             if (!cinimaticModeOn)
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Entity
                         // we jump - apply some upward velocity + the current planar movement direction
                         print("jumped");
                         animComp.SetTrigger("jump");
-                        Vector3 viewVelocity = Quaternion.LookRotation(lookDir * turnSpeed) * inputVelocity;
+                        Vector3 viewVelocity = Quaternion.LookRotation(_lookDir * turnSpeed) * inputVelocity;
                         rigitBodyComp.velocity = new Vector3(rigitBodyComp.velocity.x + viewVelocity.x * moveSpeed, jumpStrength, rigitBodyComp.velocity.z + viewVelocity.z * moveSpeed);
                         isInAir = true;
                     }
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Entity
                 base.Move(inputVelocity.x, inputVelocity.z, _bRun);
 
             // Turn the player to face the mouse cursor.
-            base.Turning();
+            //base.Turning();
 
             // Animate the player.
             base.Animating(inputVelocity.x, inputVelocity.z);

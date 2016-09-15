@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
-    class PotentiallyUsefulStuff
+    static class PotentiallyUsefulStuff
     {
         /**
          * make animation fróm a list of sprites
          */
-        private AnimationClip CreateSpriteAnimationClip(string name, List<Sprite> sprites, int fps, bool raiseEvent = false)
+        public static AnimationClip CreateSpriteAnimationClip(string name, List<Sprite> sprites, int fps, bool raiseEvent = false)
         {
             int framecount = sprites.Count;
             float frameLength = 1f / 30f;

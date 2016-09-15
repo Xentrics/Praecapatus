@@ -16,12 +16,12 @@ namespace Assets.Scripts.Abilities
             }
         }
 
-        public override void applyFailure(int version, int rp, Interactable user, List<Interactable> targets)
+        public override void applyFailure(int version, int rp, ELuck luck, Interactable user, List<Interactable> targets)
         {
             UnityEngine.MonoBehaviour.print("Ability not assigned");
         }
 
-        public override void applySuccess(int version, int rp, List<Interactable> targets)
+        public override void applySuccess(int version, int rp, ELuck luck, Interactable user, List<Interactable> targets)
         {
             UnityEngine.MonoBehaviour.print("Ability not assigned");
         }
@@ -36,7 +36,7 @@ namespace Assets.Scripts.Abilities
             return 0;
         }
 
-        public override void makeVisuals(int version, int rp, Interactable user, List<Interactable> targets)
+        public override void makeVisuals(int version, int rp, ELuck luck, Interactable user, List<Interactable> targets)
         {
             throw new NotImplementedException();
         }

@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Assets.Scripts.Entity;
 using Assets.Scripts.Abilities;
 using Assets.Scripts.Character;
@@ -13,7 +11,7 @@ namespace Assets.Scripts.Managers
     [RequireComponent(typeof(CharInfo))]
     class TestManager : MonoBehaviour
     {
-        Interactable playerC;
+        PlayerController playerC;
         CharInfo charInfo;
         ChatManager chatManager;
         GameManager gameManager;
@@ -75,46 +73,45 @@ namespace Assets.Scripts.Managers
         {
             if (ability.canUse(version, user, targets))
             {
-                int c = ability.getTestModifier(version, user, targets);
-                int aw = charInfo.getAttributeValue(ability.getAttributeGroup());
-                int fw = ability.fw;
-                bool failed = false;
+                int c = ability.getTestModifier(version, user, targets);            // Erschwernis/Erleichterung
+                int aw = charInfo.getAttributeValue(ability.getAttributeGroup());   // Value of assigned attribute
+                int fw = ability.fw;                                                // Fertigkeitswert of ability
+                ELuck luck = ELuck.normal;
 
-                int diceroll = UnityEngine.Random.Range(1, 20);
+                int diceroll = UnityEngine.Random.Range(1, 21); // [inclusive, exclusive]
                 int rp = fw + aw - c - diceroll;
 
                 if (diceroll == 1)
                 {
-                    // test for critical "luck"
-                    int second_roll = UnityEngine.Random.Range(1, 20);
+                    // test for luck, "Glücksgriff"
+                    int second_roll = UnityEngine.Random.Range(1, 21);
                     if (second_roll <= aw)
-                        rp += 20;
-                }
-                else if (diceroll == 21)
-                {
-                    // test for critical "failure"
-                    int mod = Math.Max(0, fw + aw - 20);
-                    int reroll = UnityEngine.Random.Range(1, 20);
-                    do
                     {
-                        if (reroll > aw + fw + mod)
-                            failed = true; // Patzer
-                    } while (!failed && reroll >= 19);
+                        rp += 20 + second_roll - aw; // normal rp + second_roll rp + 20
+                        luck = ELuck.luck;
+                    }
+                }
+                else if (diceroll == 20)
+                {
+                    // test for slipup "Patzer"
+                    int reroll = UnityEngine.Random.Range(1, 21);
+                    if (reroll > aw + Math.Max(0, rp)) // if aw + fp > 20, we add positive rp to the pool
+                        luck = ELuck.slipup;
                 }
 
-                print("Ability: " + ability + "| Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw);
+                print("Ability: " + ability + "| Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw + " luck: " + luck);
                 chatManager.addLine("Ability: " + ability);
-                chatManager.addLine("Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw);
+                chatManager.addLine("Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw + " luck: " + luck);
 
                 if (rp >= minRP)
                 {
                     chatManager.addLine("Success!");
-                    ability.applySuccess(version, rp, targets);
+                    ability.applySuccess(version, rp, luck, user, targets);
                 }
                 else
                 {
                     chatManager.addLine("Failed!");
-                    ability.applyFailure(version, rp, user, targets);
+                    ability.applyFailure(version, rp, luck, user, targets);
                 }
             }
             else
