@@ -42,7 +42,7 @@ namespace Assets.Scripts.Entity
 
         virtual protected void Awake()
         {
-            mapRotation = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<Managers.GameManager>().worldViewRotation; // grab map rotation and never, ever change it!
+            mapRotation = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<Managers.GameLogic>().worldViewRotation; // grab map rotation and never, ever change it!
 
             // Create a layer mask for the floor layer.
             floorMask = LayerMask.GetMask("Floor");

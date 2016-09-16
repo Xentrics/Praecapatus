@@ -14,7 +14,7 @@ namespace Assets.Scripts.Managers
         PlayerController playerC;
         CharInfo charInfo;
         ChatManager chatManager;
-        GameManager gameManager;
+        GameLogic gameManager;
 
         public void Awake()
         {
@@ -25,7 +25,7 @@ namespace Assets.Scripts.Managers
         public void Start()
         {
             chatManager = GameObject.FindGameObjectWithTag("ChatBox").GetComponent<ChatManager>();
-            gameManager = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<GameManager>();
+            gameManager = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<GameLogic>();
         }
 
         /**
