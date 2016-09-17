@@ -29,7 +29,7 @@ namespace Assets.Scripts.Entity
         public Vector3 groundCheckOffset;
 
         protected Animator animComp;
-        protected Rigidbody rigitBodyComp;                 // Reference to the player's rigidbody.
+        protected Rigidbody rigidBodyComp;                 // Reference to the player's rigidbody.
         protected SpriteRenderer spriteRenderer;           // lets us flit stuff easily
         protected Collider mainCollider;
         protected int floorMask;                           // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
@@ -52,7 +52,7 @@ namespace Assets.Scripts.Entity
             OrigGroundCheckDistance = GroundCheckDistance;
 
             // Set up references. They cannot be null since they are required!
-            rigitBodyComp = GetComponent<Rigidbody>();
+            rigidBodyComp = GetComponent<Rigidbody>();
             animComp = GetComponent<Animator>();
             mainCollider = GetComponent<Collider>();
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -92,7 +92,10 @@ namespace Assets.Scripts.Entity
 
             // Turn the player to face the mouse cursor.
             //Turning();
+        }
 
+        void Update()
+        {
             // Animate the player.
             Animating(inputVelocity.x, inputVelocity.z);
         }
@@ -101,7 +104,7 @@ namespace Assets.Scripts.Entity
         {
             // apply extra gravity from multiplier:
             Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
-            rigitBodyComp.AddForce(extraGravityForce);
+            rigidBodyComp.AddForce(extraGravityForce);
         }
 
 
@@ -124,7 +127,7 @@ namespace Assets.Scripts.Entity
             velocity = velocity.normalized * ((_bRun) ? runSpeed : moveSpeed) * Time.deltaTime;
 
             // Move the player to it's current position plus the movement.
-            rigitBodyComp.MovePosition(transform.position + mapRotation * velocity); // Quaternion.LookRotation(mapRotation * turnSpeed) * velocity
+            rigidBodyComp.MovePosition(transform.position + mapRotation * velocity); // Quaternion.LookRotation(mapRotation * turnSpeed) * velocity
         }
 
 
@@ -171,7 +174,7 @@ namespace Assets.Scripts.Entity
         /**
          * check if the player is still in the air using ray casts
          */
-        protected void CheckGroundStatus()
+        protected void CheckGroundStatus(bool keepVelocity = false)
         {
             RaycastHit hitInfo;
 #if UNITY_EDITOR
@@ -179,21 +182,22 @@ namespace Assets.Scripts.Entity
             Debug.DrawLine(transform.position + groundCheckOffset + (Vector3.up * 0.1f), transform.position + groundCheckOffset + (Vector3.up * 0.1f) + (Vector3.down * GroundCheckDistance), Color.red, 1f);
 #endif
             // 0.1f is a small offset to start the ray from inside the character
-            // we ignore the entity plane. Come up with a better idea later...
             int oldlayer = this.gameObject.layer;
-            //this.gameObject.layer = 2; // temporarily set to "ignore raycast" layer
             if (Physics.Raycast(transform.position + groundCheckOffset + (Vector3.up * 0.1f), Vector3.down, out hitInfo, GroundCheckDistance))
             {
                 // hit something.
-                isInAir = false;
+                isInAir = false;                            // allow input again
                 animComp.SetBool("grounded", true);
+                if (!keepVelocity)
+                    rigidBodyComp.velocity = Vector3.zero;  // prevent sliding from velocity
+
+                //rigidBodyComp.MovePosition(hitInfo.point);  // move player directly onto hit location
             }
             else
             {
-                isInAir = true;
+                isInAir = true;                             // prevent movement input from player
                 animComp.SetBool("grounded", false);
             }
-            //this.gameObject.layer = oldlayer;
         }
 
 
@@ -223,7 +227,7 @@ namespace Assets.Scripts.Entity
         {
             get
             {
-                return rigitBodyComp.position;
+                return rigidBodyComp.position;
             }
         }
 

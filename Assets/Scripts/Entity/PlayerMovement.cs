@@ -57,8 +57,8 @@ namespace Assets.Scripts.Entity
                         // we jump - apply some upward velocity + the current planar movement direction
                         print("jumped");
                         animComp.SetTrigger("jump");
-                        Vector3 viewVelocity = Quaternion.LookRotation(_lookDir * turnSpeed) * inputVelocity;
-                        rigitBodyComp.velocity = new Vector3(rigitBodyComp.velocity.x + viewVelocity.x * moveSpeed, jumpStrength, rigitBodyComp.velocity.z + viewVelocity.z * moveSpeed);
+                        Vector3 viewVelocity = mapRotation * inputVelocity;
+                        rigidBodyComp.velocity = new Vector3(rigidBodyComp.velocity.x + viewVelocity.x * ((_bRun) ? runSpeed : moveSpeed), jumpStrength, rigidBodyComp.velocity.z + viewVelocity.z * ((_bRun) ? runSpeed : moveSpeed));
                         isInAir = true;
                     }
                 }
