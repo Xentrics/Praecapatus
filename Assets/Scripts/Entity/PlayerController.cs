@@ -100,13 +100,18 @@ namespace Assets.Scripts.Entity
         /**
          * func: try to interact with object in line of sight
          * func: use default interaction range
-         * @RETURN: true, if any interaction was started
+         * @RETURN: TRUE, if any continued interaction started
          */
         public bool tryInteractWith()
         {
             return tryInteractWith(interactionRange);
         }
 
+        /**
+         * func: try to interact with object in line of sight
+         * func: use default interaction range
+         * @RETURN: TRUE, if any continued interaction started
+         */
         public bool tryInteractWith(float maxRange)
         {
             // iterative raycast
@@ -142,7 +147,7 @@ namespace Assets.Scripts.Entity
         /**
          * func: try to interact with given object
          * @I: object to interact with
-         * return: FALSE, if I does not interact for any reason
+         * @RETURN: TRUE, if any continued interaction started
          */
         public bool tryInteractWith(Interactable I)
         {
@@ -155,7 +160,8 @@ namespace Assets.Scripts.Entity
             }
             else
             {
-                Debug.Log("Interaction denied.");
+                print(I.description);
+                Debug.Log("No interaction available.");
                 return false;
             }
         }
