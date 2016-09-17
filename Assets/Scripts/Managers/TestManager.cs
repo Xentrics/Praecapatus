@@ -7,7 +7,7 @@ using Assets.Scripts.Character;
 
 namespace Assets.Scripts.Managers
 {
-    [RequireComponent(typeof(Interactable))]
+    [RequireComponent(typeof(PraeObject))]
     [RequireComponent(typeof(CharInfo))]
     class TestManager : MonoBehaviour
     {
@@ -54,7 +54,7 @@ namespace Assets.Scripts.Managers
          * @user: entity using the ability
          * @targets: potential targets for the ability (if necessary)
          */
-        public void testInstant(int version, AbstractAbility ability, Interactable user, List<Interactable> targets)
+        public void testInstant(int version, AbstractAbility ability, PraeObject user, List<PraeObject> targets)
         {
             int minRP = 0; //TODO: the GameManager should somehow determine this value
             this.testInstant(version, minRP, ability, user, targets);
@@ -69,7 +69,7 @@ namespace Assets.Scripts.Managers
          * @user: entity using the ability
          * @targets: potential targets for the ability (if necessary)
          */
-        public void testInstant(int version, int minRP, AbstractAbility ability, Interactable user, List<Interactable> targets)
+        public void testInstant(int version, int minRP, AbstractAbility ability, PraeObject user, List<PraeObject> targets)
         {
             if (ability.canUse(version, user, targets))
             {

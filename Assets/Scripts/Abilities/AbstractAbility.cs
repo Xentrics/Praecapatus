@@ -22,7 +22,7 @@ namespace Assets.Scripts.Abilities
          * @user: the one using this ability
          * @targets: any kind of object/entity that is effected by this ability
          */
-        public abstract bool canUse(int version, Interactable user, List<Interactable> targets);
+        public abstract bool canUse(int version, PraeObject user, List<PraeObject> targets);
 
         /**
          * TODO: HEADER NEEDS SOME INPUT
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Abilities
          * @user: the one using this ability
          * @targets: any kind of object/entity that is effected by this ability
          */
-        public abstract int getTestModifier(int version, Interactable user, List<Interactable> targets);
+        public abstract int getTestModifier(int version, PraeObject user, List<PraeObject> targets);
 
         /**
          * gets called from the TestManager after rolling some dice
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Abilities
          * @user: the one using this ability
          * @targets: any kind of object/entity that is effected by this ability
          */
-        public abstract void applySuccess(int version, int rp, ELuck luck, Interactable user, List<Interactable> targets);
+        public abstract void applySuccess(int version, int rp, ELuck luck, PraeObject user, List<PraeObject> targets);
 
         /**
          * TODO: method header may need some tweaking later on
@@ -53,7 +53,7 @@ namespace Assets.Scripts.Abilities
          * @user: the one using this ability
          * @targets: any kind of object/entity that is effected by this ability
          */
-        public abstract void applyFailure(int version, int rp, ELuck luck, Interactable user, List<Interactable> targets);
+        public abstract void applyFailure(int version, int rp, ELuck luck, PraeObject user, List<PraeObject> targets);
 
         /**
          * TODO:     method header may need some tweaking later on
@@ -64,7 +64,7 @@ namespace Assets.Scripts.Abilities
          * @user:    the one using this ability
          * @targets: any kind of object/entity that is effected by this ability
          */
-        public abstract void makeVisuals(int version, int rp, ELuck luck, Interactable user, List<Interactable> targets);
+        public abstract void makeVisuals(int version, int rp, ELuck luck, PraeObject user, List<PraeObject> targets);
 
         /**
          * returns the main attribute which adds to the fw during the dice roll

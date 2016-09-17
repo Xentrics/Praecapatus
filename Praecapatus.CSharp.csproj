@@ -109,6 +109,7 @@
     <Compile Include="Assets\Scripts\Exception\InvalidAttributeLevelException.cs" />
     <Compile Include="Assets\Scripts\InstantDeleteList.cs" />
     <Compile Include="Assets\Scripts\Interactable.cs" />
+    <Compile Include="Assets\Scripts\InteractionComponent.cs" />
     <Compile Include="Assets\Scripts\Managers\AbilityManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ChatManager.cs" />

@@ -122,7 +122,7 @@ namespace Assets.Scripts.Entity
                 RaycastHit hitinfo;
                 if (Physics.Raycast(startLoc, moveComp.lookDir, out hitinfo, maxRange))
                 {
-                    Interactable hit = hitinfo.transform.gameObject.GetComponent<PraeObject>();
+                    PraeObject hit = hitinfo.transform.gameObject.GetComponent<PraeObject>();
                     if (hit != null)
                     {
                         return tryInteractWith(hit); // found our interaction object
@@ -149,7 +149,7 @@ namespace Assets.Scripts.Entity
          * @I: object to interact with
          * @RETURN: TRUE, if any continued interaction started
          */
-        public bool tryInteractWith(Interactable I)
+        public bool tryInteractWith(PraeObject I)
         {
             Debug.Log("Try interaction with: " + I);
             if (I.tryInteract(praeObject))

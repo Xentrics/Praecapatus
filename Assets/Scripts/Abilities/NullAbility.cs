@@ -16,27 +16,27 @@ namespace Assets.Scripts.Abilities
             }
         }
 
-        public override void applyFailure(int version, int rp, ELuck luck, Interactable user, List<Interactable> targets)
+        public override void applyFailure(int version, int rp, ELuck luck, PraeObject user, List<PraeObject> targets)
         {
             UnityEngine.MonoBehaviour.print("Ability not assigned");
         }
 
-        public override void applySuccess(int version, int rp, ELuck luck, Interactable user, List<Interactable> targets)
+        public override void applySuccess(int version, int rp, ELuck luck, PraeObject user, List<PraeObject> targets)
         {
             UnityEngine.MonoBehaviour.print("Ability not assigned");
         }
 
-        public override bool canUse(int version, Interactable user, List<Interactable> targets)
+        public override bool canUse(int version, PraeObject user, List<PraeObject> targets)
         {
             return false;
         }
 
-        public override int getTestModifier(int version, Interactable user, List<Interactable> targets)
+        public override int getTestModifier(int version, PraeObject user, List<PraeObject> targets)
         {
             return 0;
         }
 
-        public override void makeVisuals(int version, int rp, ELuck luck, Interactable user, List<Interactable> targets)
+        public override void makeVisuals(int version, int rp, ELuck luck, PraeObject user, List<PraeObject> targets)
         {
             throw new NotImplementedException();
         }
