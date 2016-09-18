@@ -9,8 +9,10 @@ namespace Assets.Scripts.Entity
     [RequireComponent(typeof(AbilityManager))]
     [RequireComponent(typeof(TestManager))]
     [RequireComponent(typeof(EntityObject))]
+    [RequireComponent(typeof(EntityInfo))]
     class EntityController : MonoBehaviour
     {
+        protected EntityInfo        entityInfo;
         protected EntityMovement    moveComp;       // physical object in the world
         protected AbilityManager    abiCon;         // all abilities available
         protected TestManager       DEB_testManager;    // reference for debugging reasons. TODO: Should be performed by GameLogic later on
@@ -27,6 +29,7 @@ namespace Assets.Scripts.Entity
             abiCon = GetComponent<AbilityManager>();
             DEB_testManager = GetComponent<TestManager>();
             _praeObject = GetComponent<EntityObject>();
+            entityInfo = GetComponent<EntityInfo>();
             praeObject.meleeRange = 10f;    // ?
         }
 
@@ -44,12 +47,17 @@ namespace Assets.Scripts.Entity
 
         public virtual void executeAbilityWith(EAbilities A, int version = 0, int minRP = 0)
         {
-            DEB_testManager.testInstant(version, minRP, abiCon.getAbility(A), praeObject, null);
+            DEB_testManager.testInstant(version, minRP, abiCon.getAbility(A), this, null);
         }
 
         /*********
          * GETTER AND SETTER
          ************************/
+
+        public void drainMana(int by)
+        {
+            entityInfo.drainMaP(by);
+        }
 
         public void toggleRunning()
         {
@@ -92,6 +100,14 @@ namespace Assets.Scripts.Entity
             get
             {
                 return moveComp.position;
+            }
+        }
+
+        public Vector3 lookDir
+        {
+            get
+            {
+                return moveComp.lookDir;
             }
         }
 

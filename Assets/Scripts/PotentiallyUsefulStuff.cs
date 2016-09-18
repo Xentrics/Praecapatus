@@ -6,6 +6,10 @@ namespace Assets.Scripts
 {
     static class PotentiallyUsefulStuff
     {
+        // static constructor
+        static PotentiallyUsefulStuff()
+        { }
+
         /**
          * func: create a random point within a ring at high y=0
          * func: all point with be created, so that rin < sqrt(x^2+y^2) < rout >

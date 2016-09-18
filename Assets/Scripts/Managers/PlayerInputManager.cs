@@ -14,7 +14,7 @@ namespace Assets.Scripts.Managers
     [RequireComponent(typeof(PlayerController))]
     class PlayerInputManager : MonoBehaviour
     {
-        #pragma warning disable 0169
+        #pragma warning disable 0649
         public Canvas HUDCanvas;
         ShortKeyBarManager barManager;
         PlayerController pc;
@@ -38,8 +38,8 @@ namespace Assets.Scripts.Managers
                 {
                     if (CrossPlatformInputManager.GetButton("Action"+i))
                     {
-                        barManager.pressButton(i);
-                        pc.executeKeybarAbility(i);
+                        barManager.pressButton(i-1);
+                        pc.executeKeybarAbility(i-1);
                         used = true;
                         break;
                     }
@@ -62,17 +62,14 @@ namespace Assets.Scripts.Managers
             {
                 // we only handle the key bar if the bar had any key pressed
                 // if a key is not pressed >anymore<, then we handle this here!
-                const int alpha1 = (int)KeyCode.Alpha1; // get the keycode to start from
-                for (int i = 0; i < 10; ++i)
-                    if (Input.GetKeyUp((KeyCode)alpha1 + i))
-                    {
-                        barManager.releaseButton(i);
-                        pc.releaseKeybarAbility(i);
-                    }
-                if (Input.GetKeyUp(KeyCode.Alpha0))
+                for (int i = 1; i < 11; ++i)
                 {
-                    barManager.releaseButton(9);
-                    pc.releaseKeybarAbility(9);
+                    if (CrossPlatformInputManager.GetButtonUp("Action" + i))
+                    {
+                        barManager.releaseButton(i - 1);
+                        pc.releaseKeybarAbility(i - 1);
+                        break;
+                    }
                 }
 
                 // handle remaining keys

@@ -3,29 +3,26 @@ using System;
 using System.Collections.Generic;
 using Assets.Scripts.Entity;
 using Assets.Scripts.Abilities;
-using Assets.Scripts.Character;
 
 namespace Assets.Scripts.Managers
 {
     [RequireComponent(typeof(PraeObject))]
-    [RequireComponent(typeof(CharInfo))]
+    [RequireComponent(typeof(EntityInfo))]
     class TestManager : MonoBehaviour
     {
         PlayerController playerC;
-        CharInfo charInfo;
+        EntityInfo charInfo;
         ChatManager chatManager;
-        GameLogic gameManager;
 
         public void Awake()
         {
             playerC = GetComponent<PlayerController>();
-            charInfo = GetComponent<CharInfo>();
+            charInfo = GetComponent<EntityInfo>();
         }
 
         public void Start()
         {
             chatManager = GameObject.FindGameObjectWithTag("ChatBox").GetComponent<ChatManager>();
-            gameManager = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<GameLogic>();
         }
 
         /**
@@ -46,18 +43,32 @@ namespace Assets.Scripts.Managers
 
         /*
          * Func: Basic dice roll test function for the use of abilities in the game
-         * Func: this version should be called by entity controller
+         * Func: this version should be called by entity controller for realtime use
          * Func: uses GameManager to determine minimal required RP
          * @version: changes specifics of 'ability'
-         * @minRP: minimum Restpunkte required for a successful test
+         * @ability: the one that will be executed
+         * @user: entity using the ability
+         */
+        public void testInstant(int version, AbstractAbility ability, EntityController user)
+        {
+            int minRP = 0; //TODO: the GameManager should somehow determine this value
+            List<PraeObject> targets = ability.getTargets(version, user);
+            testInstant(version, minRP, ability, user, targets);
+        }
+
+        /*
+         * Func: Basic dice roll test function for the use of abilities in the game
+         * Func: this version should be called by entity controller when using interfaces for targets
+         * Func: uses GameManager to determine minimal required RP
+         * @version: changes specifics of 'ability'
          * @ability: the one that will be executed
          * @user: entity using the ability
          * @targets: potential targets for the ability (if necessary)
          */
-        public void testInstant(int version, AbstractAbility ability, PraeObject user, List<PraeObject> targets)
+        public void testInstant(int version, AbstractAbility ability, EntityController user, List<PraeObject> targets)
         {
             int minRP = 0; //TODO: the GameManager should somehow determine this value
-            this.testInstant(version, minRP, ability, user, targets);
+            testInstant(version, minRP, ability, user, targets);
         }
 
         /**
@@ -69,7 +80,7 @@ namespace Assets.Scripts.Managers
          * @user: entity using the ability
          * @targets: potential targets for the ability (if necessary)
          */
-        public void testInstant(int version, int minRP, AbstractAbility ability, PraeObject user, List<PraeObject> targets)
+        public void testInstant(int version, int minRP, AbstractAbility ability, EntityController user, List<PraeObject> targets)
         {
             if (ability.canUse(version, user, targets))
             {
@@ -116,7 +127,7 @@ namespace Assets.Scripts.Managers
             }
             else
             {
-                Debug.Log("Cannot use ability " + ability.ToString() + " yet.");
+                Debug.Log("Cannot use ability " + ability.ToString() + ".");
             }
         }
 

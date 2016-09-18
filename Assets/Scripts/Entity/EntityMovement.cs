@@ -42,7 +42,7 @@ namespace Assets.Scripts.Entity
 
         virtual protected void Awake()
         {
-            mapRotation = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<Managers.GameLogic>().worldViewRotation; // grab map rotation and never, ever change it!
+            mapRotation = Constants.gameLogic.worldViewRotation; // grab map rotation and never, ever change it!
 
             // Create a layer mask for the floor layer.
             floorMask = LayerMask.GetMask("Floor");
@@ -182,7 +182,6 @@ namespace Assets.Scripts.Entity
             Debug.DrawLine(transform.position + groundCheckOffset + (Vector3.up * 0.1f), transform.position + groundCheckOffset + (Vector3.up * 0.1f) + (Vector3.down * GroundCheckDistance), Color.red, 1f);
 #endif
             // 0.1f is a small offset to start the ray from inside the character
-            int oldlayer = this.gameObject.layer;
             if (Physics.Raycast(transform.position + groundCheckOffset + (Vector3.up * 0.1f), Vector3.down, out hitInfo, GroundCheckDistance))
             {
                 // hit something.

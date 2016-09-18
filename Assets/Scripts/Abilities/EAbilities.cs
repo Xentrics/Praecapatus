@@ -3,6 +3,7 @@
     enum EAbilities
     {
         null_,
-        test
+        test,
+        Astrahlbelebung
     }
 }

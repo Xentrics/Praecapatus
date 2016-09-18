@@ -17,6 +17,7 @@ namespace Assets.Scripts.Entity
     class PlayerController_Old : EntityController
     {
         PlayerMovement_Old pMoveComp;
+        #pragma warning disable 0649
         public ChatManager chatManager;
         bool isChatting = false;
 
@@ -65,8 +66,6 @@ namespace Assets.Scripts.Entity
         {
             if (keyID >= 0 && keyID <= 9)
             {
-                int minRP = 0;
-                int version = 0;
                 // DO NOT USE: DEB_testManager.testInstant(version, minRP, keybarAbilities[keyID], this, null);
             }
             else

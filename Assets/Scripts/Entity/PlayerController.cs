@@ -18,12 +18,13 @@ namespace Assets.Scripts.Entity
     {
         struct KeybarAbility {
             public AbstractAbility abi;
-            public int instant_version; // specific modification of the ability for instant use
+            public int instance_version; // specific modification of the ability for instant use
         };
 
         KeybarAbility[] keybarAbilities;
 
         PlayerMovement pMoveComp;
+        #pragma warning disable 0649
         public ChatManager chatManager;
         bool isChatting = false;
 
@@ -43,10 +44,16 @@ namespace Assets.Scripts.Entity
 
             if (chatManager == null) throw new NullReferenceException("Chracter needs input field!");
             keybarAbilities = new KeybarAbility[10];
-            for (int i = 0; i < 10; ++i)
+            // DEBUG: implemented abilities
+            keybarAbilities[0].abi = abiCon.getAbility(EAbilities.Astrahlbelebung);
+            keybarAbilities[0].instance_version = 0;
+            keybarAbilities[1].abi = abiCon.getAbility(EAbilities.test);
+            keybarAbilities[1].instance_version = 0;
+            // placeholder
+            for (int i = 2; i < 10; ++i)
             {
                 keybarAbilities[i].abi = abiCon.getAbility(EAbilities.null_);
-                keybarAbilities[i].instant_version = 0;
+                keybarAbilities[i].instance_version = 0;
             }
         }
 
@@ -85,7 +92,7 @@ namespace Assets.Scripts.Entity
             {
                 if (bInstantUseDuringStory || bInfight)
                 {
-                    DEB_testManager.testInstant(keybarAbilities[keyID].instant_version, keybarAbilities[keyID].abi, praeObject, null);
+                    DEB_testManager.testInstant(keybarAbilities[keyID].instance_version, keybarAbilities[keyID].abi, this);
                 }
                 else
                 {
