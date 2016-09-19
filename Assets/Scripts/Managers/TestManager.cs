@@ -12,17 +12,11 @@ namespace Assets.Scripts.Managers
     {
         PlayerController playerC;
         EntityInfo charInfo;
-        ChatManager chatManager;
 
         public void Awake()
         {
             playerC = GetComponent<PlayerController>();
             charInfo = GetComponent<EntityInfo>();
-        }
-
-        public void Start()
-        {
-            chatManager = GameObject.FindGameObjectWithTag("ChatBox").GetComponent<ChatManager>();
         }
 
         /**
@@ -41,7 +35,7 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        /*
+        /**
          * Func: Basic dice roll test function for the use of abilities in the game
          * Func: this version should be called by entity controller for realtime use
          * Func: uses GameManager to determine minimal required RP
@@ -56,7 +50,7 @@ namespace Assets.Scripts.Managers
             testInstant(version, minRP, ability, user, targets);
         }
 
-        /*
+        /**
          * Func: Basic dice roll test function for the use of abilities in the game
          * Func: this version should be called by entity controller when using interfaces for targets
          * Func: uses GameManager to determine minimal required RP
@@ -111,17 +105,17 @@ namespace Assets.Scripts.Managers
                 }
 
                 print("Ability: " + ability + "| Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw + " luck: " + luck);
-                chatManager.addLine("Ability: " + ability);
-                chatManager.addLine("Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw + " luck: " + luck);
+                Constants.chatManager.addLine("Ability: " + ability);
+                Constants.chatManager.addLine("Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw + " luck: " + luck);
 
                 if (rp >= minRP)
                 {
-                    chatManager.addLine("Success!");
+                    Constants.chatManager.addLine("Success!");
                     ability.applySuccess(version, rp, luck, user, targets);
                 }
                 else
                 {
-                    chatManager.addLine("Failed!");
+                    Constants.chatManager.addLine("Failed!");
                     ability.applyFailure(version, rp, luck, user, targets);
                 }
             }

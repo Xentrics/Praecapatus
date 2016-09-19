@@ -1,12 +1,7 @@
 ﻿using UnityEngine;
 using UnitySampleAssets.CrossPlatformInput;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine.UI;
 using Assets.Scripts.Managers;
-using Assets.Scripts.Entity;
 using Assets.Scripts.Abilities;
 
 namespace Assets.Scripts.Entity
@@ -24,8 +19,6 @@ namespace Assets.Scripts.Entity
         KeybarAbility[] keybarAbilities;
 
         PlayerMovement pMoveComp;
-        #pragma warning disable 0649
-        public ChatManager chatManager;
         bool isChatting = false;
 
         protected bool bInstantUseDuringStory = true; // true: do not show ability version selection even during story mode
@@ -42,7 +35,7 @@ namespace Assets.Scripts.Entity
         {
             base.Start();
 
-            if (chatManager == null) throw new NullReferenceException("Chracter needs input field!");
+            if (Constants.chatManager == null) throw new NullReferenceException("Chracter needs input field!");
             keybarAbilities = new KeybarAbility[10];
             // DEBUG: implemented abilities
             keybarAbilities[0].abi = abiCon.getAbility(EAbilities.Astrahlbelebung);
@@ -63,7 +56,7 @@ namespace Assets.Scripts.Entity
         protected override void LateUpdate()
         {
             // check whether or not the player opens/cloeses chat
-            if (chatManager.isChatAllowed() && CrossPlatformInputManager.GetButtonDown("OpenChat"))
+            if (Constants.chatManager.isChatAllowed() && CrossPlatformInputManager.GetButtonDown("OpenChat"))
             {
                 if (isChatting)
                 {

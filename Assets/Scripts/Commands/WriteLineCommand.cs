@@ -19,7 +19,7 @@ namespace Assets.Scripts.Commands
 
         public override bool use(string[] args, PlayerController pc)
         {
-            pc.chatManager.addLine( (args == null) ? null : String.Join(" ", args));
+            Constants.chatManager.addLine( (args == null) ? null : String.Join(" ", args));
             return true;
         }
     }

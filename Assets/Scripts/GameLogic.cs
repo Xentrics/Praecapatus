@@ -14,6 +14,7 @@ namespace Assets.Scripts
      * - handles world generation
      * - handles transitions: exploration | fighting | ...
      */
+     [RequireComponent(typeof(SanityChecker))]
     public class GameLogic : MonoBehaviour
     {
         struct timedInteraction

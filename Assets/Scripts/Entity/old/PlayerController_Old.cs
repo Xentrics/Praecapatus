@@ -17,8 +17,6 @@ namespace Assets.Scripts.Entity
     class PlayerController_Old : EntityController
     {
         PlayerMovement_Old pMoveComp;
-        #pragma warning disable 0649
-        public ChatManager chatManager;
         bool isChatting = false;
 
         AbstractAbility[] keybarAbilities;
@@ -33,7 +31,7 @@ namespace Assets.Scripts.Entity
         {
             base.Start();
 
-            if (chatManager == null) throw new NullReferenceException("Chracter needs input field!");
+            if (Constants.chatManager == null) throw new NullReferenceException("Chracter needs input field!");
             keybarAbilities = new AbstractAbility[10];
             for (int i = 0; i < 10; ++i)
                 keybarAbilities[i] = abiCon.getAbility(EAbilities.null_);
@@ -45,7 +43,7 @@ namespace Assets.Scripts.Entity
         protected override void LateUpdate()
         {
             // check whether or not the player opens/cloeses chat
-            if (chatManager.isChatAllowed() && CrossPlatformInputManager.GetButtonDown("OpenChat"))
+            if (Constants.chatManager.isChatAllowed() && CrossPlatformInputManager.GetButtonDown("OpenChat"))
             {
                 if (isChatting)
                 {

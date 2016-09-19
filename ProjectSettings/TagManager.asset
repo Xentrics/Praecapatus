@@ -8,6 +8,7 @@ TagManager:
   - ChatBoxContent
   - MainCharacter
   - GameLogic
+  - HUD
   layers:
   - Default
   - TransparentFX

@@ -16,11 +16,13 @@ namespace Assets.Scripts.Abilities
         public override void applyFailure(int version, int rp, ELuck luck, EntityController user, List<PraeObject> targets)
         {
             UnityEngine.MonoBehaviour.print("Ability not assigned");
+            Constants.chatManager.addLine("Ability not assigned");
         }
 
         public override void applySuccess(int version, int rp, ELuck luck, EntityController user, List<PraeObject> targets)
         {
             UnityEngine.MonoBehaviour.print("Ability not assigned");
+            Constants.chatManager.addLine("Ability not assigned");
         }
 
         public override bool canUse(int version, EntityController user, List<PraeObject> targets)
