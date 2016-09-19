@@ -14,14 +14,12 @@ namespace Assets.Scripts.Managers
     [RequireComponent(typeof(PlayerController))]
     class PlayerInputManager : MonoBehaviour
     {
-        #pragma warning disable 0649
-        public Canvas HUDCanvas;
         ShortKeyBarManager barManager;
         PlayerController pc;
 
-        void Awake()
+        void Start()
         {
-            barManager = HUDCanvas.GetComponentInChildren<ShortKeyBarManager>();
+            barManager = Constants.HUDCanvas.GetComponentInChildren<ShortKeyBarManager>();
             if (!barManager)
                 throw new NullReferenceException("Could not aquire bar manager from given canvas!");
             pc = GetComponent<PlayerController>();
