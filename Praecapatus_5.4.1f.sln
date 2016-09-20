@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Praecapatus_5.4.1f.CSharp", "Praecapatus_5.4.1f.CSharp.csproj", "{9B3C973F-7A9A-B9A0-395C-51A23DD8AC53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Praecapatus_5.4.1f.CSharp.Editor", "Praecapatus_5.4.1f.CSharp.Editor.csproj", "{259ACCC5-9A76-E5C7-8CB9-DBE2E2A38B55}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B3C973F-7A9A-B9A0-395C-51A23DD8AC53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B3C973F-7A9A-B9A0-395C-51A23DD8AC53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B3C973F-7A9A-B9A0-395C-51A23DD8AC53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B3C973F-7A9A-B9A0-395C-51A23DD8AC53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{259ACCC5-9A76-E5C7-8CB9-DBE2E2A38B55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{259ACCC5-9A76-E5C7-8CB9-DBE2E2A38B55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{259ACCC5-9A76-E5C7-8CB9-DBE2E2A38B55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{259ACCC5-9A76-E5C7-8CB9-DBE2E2A38B55}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
