@@ -1,8 +1,6 @@
 ﻿using Assets.Scripts.Conversations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,8 +20,14 @@ namespace Assets.Scripts.Managers
             // get option buttons
             List<Button> optionButtons = new List<Button>(10);
             foreach (var c in GetComponentsInChildren<Button>())
-                if (c.name.StartsWith("Option"))
+                if (c.name.StartsWith("OptionButton"))
+                {
                     optionButtons.Add(c);
+                    print(c.name.Substring("OptionButton".Length));
+                    int id = Int32.Parse(c.name.Substring("OptionButton".Length));
+                    c.onClick.AddListener(() => { ResponseButtonOnClick(id-1); });
+                    c.interactable = true;
+                }
             responseButtons = optionButtons.ToArray();
             // get dialogue text
             foreach (var c in GetComponentsInChildren<Text>())
@@ -34,6 +38,13 @@ namespace Assets.Scripts.Managers
         void Start()
         {
             gameObject.SetActive(false);
+        }
+
+
+        void ResponseButtonOnClick(int id)
+        {
+            currentConversation.chose(id);
+            updateUI();
         }
 
         /**
@@ -78,10 +89,17 @@ namespace Assets.Scripts.Managers
             string[] respTexts = currentConversation.getOptionStrings();
             Debug.Assert(responseButtons.Length >= respTexts.Length, "Too few response buttons or too many options!");
             for (int i = 0; i < respTexts.Length; ++i)
-                responseButtons[i].GetComponentInChildren<Text>().text = "  " + (i+1) + ". " + respTexts[i] + "  ";
+            {
+                responseButtons[i].GetComponentInChildren<Text>().text = "  " + (i + 1) + ". " + respTexts[i] + "  ";
+                responseButtons[i].interactable = true;
+            }
+
             // handle unused buttons
             for (int i = respTexts.Length; i < responseButtons.Length; ++i)
+            {
                 responseButtons[i].GetComponentInChildren<Text>().text = ""; // TODO: make that in a nicer way
+                responseButtons[i].interactable = false;
+            }
         }
 
         /**

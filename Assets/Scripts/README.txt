@@ -7,12 +7,11 @@ NOTES ON NOTES:
  - 3 +: manageable from interface
  
 NEXT SESSION TASKS:
- - finish Astralbelebung (make inanimate objects interactable for some time)
  - implement InteractionObject
-	- basic conversation
+	- basic conversation	+	
  - deal with time mechanics +
- - implement basic talkUI
- - DEBUFF mechanics			+
+ - implement basic talkUI	++
+ - DEBUFF mechanics			
 	- new class DEBUFF
 
 
@@ -41,6 +40,10 @@ NOTES ON GAME MECHANICS
 	- shop UI
 	- Talk UI +
 		- Talk-Class stuff
+- CONVERSATIONS
+	- conversations can be preset using graphml based graphs (i.e. using yEd)
+	- graphml files can be loaded as TextAssets with ending .txt or .xml
+	- the loader can be found as a method inside class 'Conversation'
 - Infamie
 - Ruhm
 
