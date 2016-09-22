@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Conversations;
+﻿using Assets.Scripts;
+using Assets.Scripts.Conversations;
 using UnityEngine;
 
 class ConTester : MonoBehaviour
@@ -7,6 +8,11 @@ class ConTester : MonoBehaviour
 
     void Awake()
     {
+    }
+
+    void Start()
+    {
         Conversation[] con = Conversation.loadFromGraphml(conAsset);
+        Constants.interactionManager.StartInteraction(con[0]);
     }
 }

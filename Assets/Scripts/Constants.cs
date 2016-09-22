@@ -13,6 +13,7 @@ namespace Assets.Scripts
         public static GameObject HUDCanvas;
         public static GameObject StatusUI;
         public static GameObject InteractionUI;
+        public static InteractionManager interactionManager;
 
         public static int NUM_ATTRIBUTE_GROUPS = Enum.GetNames(typeof(EAttributeGroup)).Length;
         public static int NUM_ATTRIBUTE_OTHER = Enum.GetNames(typeof(EAttributeOther)).Length;

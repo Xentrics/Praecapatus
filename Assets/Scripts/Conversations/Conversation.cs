@@ -5,25 +5,26 @@ using System.Xml;
 
 namespace Assets.Scripts.Conversations
 {
+    /**
+         * any kind of event that can be triggered during events
+         */
+    public enum EConOptionType
+    {
+        Normal,
+        Exit
+    }
+
     public class Conversation
     {
         // Conversation related stuff
         public static readonly int MAX_OPTIONS = 5;
 
         /**
-         * any kind of event that can be triggered during events
-         */
-        enum ETriggerTypes
-        {
-            Exit
-        }
-
-        /**
          * container for trigger instances
          */
         struct OptionTrigger
         {
-            public ETriggerTypes type;
+            public EConOptionType type;
             public int optionID;
         }
 
@@ -42,20 +43,31 @@ namespace Assets.Scripts.Conversations
 
             public List<OptionTrigger> conTriggers;
 
-            public void chose(int id)
+            public string[] GetResponseStrings()
             {
-                throw new NotImplementedException();
-            }
-
-            public string[] getOptionStrings()
-            {
+                Debug.Assert(_responses.Count > 0, "No responses set up for conversation node?!");
                 string[] responses = new string[_responses.Count];
                 for (int i = 0; i < _responses.Count; ++i)
                     responses[i] = _responses[i].responseText;
                 return responses;
             }
 
-            public bool hasOptions()
+            public void AddResponse(BasicDialResponse resp)
+            {
+                if (_responses.Count + 1 > MAX_OPTIONS)
+                    throw new System.Exception("To many responses to add!");
+                _responses.Add(resp);
+            }
+
+            public BasicDialResponse RetResponse(int id)
+            {
+                if (id < 0 || id >= _responses.Count)
+                    throw new ArgumentOutOfRangeException("Cannot choose response with invalid id!" + id);
+                else
+                    return _responses[id];
+            }
+
+            public bool HasOptions()
             {
                 return (_responses != null && _responses.Count > 0);
             }
@@ -142,14 +154,36 @@ namespace Assets.Scripts.Conversations
 
 
         /**
+         * func: changes the currentNode state to the next node based on the chosen response with id 'id'
+         * @id: a valid index for the available responses of the current node
+         * @return: special signals like conversation exits
+         */
+        public EConOptionType chose(int id)
+        {
+            BasicDialResponse resp = _currentNode.RetResponse(id);
+            if (resp.nextNode != null)
+            {
+                _currentNode = resp.nextNode;
+                return EConOptionType.Normal;
+            }
+            else
+                return EConOptionType.Exit;
+        }
+
+        public string getDialogue()
+        {
+            return _currentNode.dialogueText;
+        }
+
+        /**
          * func: return all options for the current layer in order
          */
         public string[] getOptionStrings()
         {
-            if (!_currentNode.hasOptions())
+            if (!_currentNode.HasOptions())
                 return null;
 
-            return _currentNode.getOptionStrings();
+            return _currentNode.GetResponseStrings();
         }
 
 
@@ -227,7 +261,6 @@ namespace Assets.Scripts.Conversations
             BasicDialNode lastNode;
             foreach (XmlNode node in conNodeList)
             {
-                Debug.Log("> " + node.Name + " " + node.Attributes["id"].Value);
                 // grouping nodes only indicate
                 string grpLabel = GetGroupNodeLabel(node);
                 if (grpLabel != null)
@@ -241,7 +274,6 @@ namespace Assets.Scripts.Conversations
                 // normal dialogue node
                 lastNode = new BasicDialNode();
                 lastNode.XmlID = node.Attributes["id"].Value;
-                Debug.Log(">> ID: " + lastNode.XmlID);
                 Debug.Assert(!dialNodes.ContainsKey(lastNode.XmlID), "Duplicated nodes entries found in XML!");
                 dialNodes[lastNode.XmlID] = lastNode;
 
@@ -260,13 +292,11 @@ namespace Assets.Scripts.Conversations
                                     if (n.Name.Equals("y:NodeLabel"))
                                     {
                                         labelFound = true;
-                                        Debug.Log(n.InnerText);
                                         lastNode.dialogueText = n.InnerText;
                                         // TODE: set up multi dialogue texts HERE!
                                     }
                                     else if (n.Name.Equals("y:Fill"))
                                     {
-                                        Debug.Log(n.Attributes["color"].Value);
                                         if (n.Attributes["color"].Value.Equals(START_NODE_COLOR))
                                             conStartNodes.Add(lastNode); // found a conversation start node
                                     }
@@ -292,9 +322,9 @@ namespace Assets.Scripts.Conversations
             // TODO: connect stuff here!
             foreach (XmlNode edge in conEdgeList)
             {
-                Debug.Log("> " + edge.Name + " " + edge.Attributes["id"].Value);
                 BasicDialResponse response = new BasicDialResponse();
-                response.nextNode = dialNodes[edge.Attributes["target"].Value];
+                response.nextNode = dialNodes[edge.Attributes["target"].Value];     // set target node link
+                dialNodes[edge.Attributes["source"].Value].AddResponse(response);   // set source node link
 
                 foreach (XmlNode i in edge.ChildNodes)
                 {
@@ -308,7 +338,6 @@ namespace Assets.Scripts.Conversations
                             if (n.Name.Equals("y:EdgeLabel"))
                             {
                                 labelFound = true;
-                                Debug.Log(n.InnerText);
                                 response.responseText = n.InnerText;
                                 // TODO: set up multi response texts HERE
                             }

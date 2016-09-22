@@ -2,7 +2,7 @@
 {
     class BringToFront : UnityEngine.MonoBehaviour
     {
-        void OnEngable()
+        void OnEnable()
         {
             transform.SetAsLastSibling(); // bring element to the front
         }
