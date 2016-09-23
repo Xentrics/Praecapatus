@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\Constants.cs" />
     <Compile Include="Assets\Scripts\Conversations\ConTester.cs" />
     <Compile Include="Assets\Scripts\Conversations\Conversation.cs" />
+    <Compile Include="Assets\Scripts\Conversations\InteractionComponent.cs" />
     <Compile Include="Assets\Scripts\EAttributeGroup.cs" />
     <Compile Include="Assets\Scripts\EAttributeOther.cs" />
     <Compile Include="Assets\Scripts\ECharClass.cs" />
@@ -116,8 +117,6 @@
     <Compile Include="Assets\Scripts\Exception\GameLogicException.cs" />
     <Compile Include="Assets\Scripts\Exception\InvalidAttributeLevelException.cs" />
     <Compile Include="Assets\Scripts\GameLogic.cs" />
-    <Compile Include="Assets\Scripts\Interactable.cs" />
-    <Compile Include="Assets\Scripts\InteractionComponent.cs" />
     <Compile Include="Assets\Scripts\Managers\AbilityManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ConsoleManager.cs" />
@@ -270,7 +269,6 @@
   <ItemGroup>
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
     <None Include="Assets\Resources\Conversations\test_g1.xml" />
-    <None Include="Assets\Scripts\README.txt" />
     <None Include="Assets\import\Standard Assets\Cameras\CameraGuidelines.txt" />
     <None Include="Assets\import\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\import\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />

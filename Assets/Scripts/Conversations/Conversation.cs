@@ -109,7 +109,7 @@ namespace Assets.Scripts.Conversations
         class BasicDialResponse
         {
             protected string _responseText = "";
-            protected BasicDialNode _nextNode;
+            protected BasicDialNode _nextNode = null;
 
             public string responseText
             {
@@ -161,13 +161,16 @@ namespace Assets.Scripts.Conversations
         public EConOptionType chose(int id)
         {
             BasicDialResponse resp = _currentNode.RetResponse(id);
-            if (resp.nextNode != null)
+            if (resp.nextNode.HasOptions())
             {
                 _currentNode = resp.nextNode;
                 return EConOptionType.Normal;
             }
             else
+            {
+                _currentNode = resp.nextNode;
                 return EConOptionType.Exit;
+            }
         }
 
         public string getDialogue()

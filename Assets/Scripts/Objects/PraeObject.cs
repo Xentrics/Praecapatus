@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Conversations;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -101,13 +102,18 @@ namespace Assets.Scripts
             }
         }
 
-        public bool tryInteract(PraeObject caller)
+        public bool TryInteract(PraeObject caller)
         {
-            //TODO: handle InteractionComponent stuff
-            return !disableInteraction && hasInteraction();
+            if (!disableInteraction && HasInteraction())
+            {
+                interComp.StartConversation();
+                return true;
+            }
+            else
+                return !disableInteraction && HasInteraction();
         }
 
-        public bool hasInteraction()
+        public bool HasInteraction()
         {
             return interComp != null;
         }

@@ -152,7 +152,7 @@ namespace Assets.Scripts.Entity
         public bool tryInteractWith(PraeObject I)
         {
             Debug.Log("Try interaction with: " + I);
-            if (I.tryInteract(praeObject))
+            if (I.TryInteract(praeObject))
             {
                 // TODO: do stuff
                 Debug.Log("Start of interaction");

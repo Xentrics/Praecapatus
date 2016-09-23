@@ -40,7 +40,7 @@ namespace Assets.Scripts.Abilities
             Debug.Assert(version == VER_SINGLE_TARGET, "verison bug?");
             int minutes = UnityEngine.Random.Range(1,10) * Constants.gameTimeMultiplier;
             DateTime endtime = DateTime.Now.AddMinutes(minutes);
-            InteractionComponent c = targets[0].AddInteractionComponent();
+            Conversations.InteractionComponent c = targets[0].AddInteractionComponent();
 
             Constants.gameLogic.AddTimedInteraction(c, endtime);
             Debug.Log("Astrahlbelebung. Object will come to life for " + minutes + "minutes: " + targets[0]);
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Abilities
                 if (targets.Count == 1)
                     if (targets[0].inanimate)
                         if (targets[0].weight <= fw)
-                            if (!targets[0].hasInteraction())
+                            if (!targets[0].HasInteraction())
                                 return true; // all conditions met
                             else
                                 Debug.Log("Object already has interaction!");

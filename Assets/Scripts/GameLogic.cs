@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Entity;
+﻿using Assets.Scripts.Conversations;
+using Assets.Scripts.Entity;
 using Assets.Scripts.Objects;
 using System;
 using System.Collections.Generic;

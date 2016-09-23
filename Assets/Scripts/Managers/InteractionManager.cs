@@ -43,8 +43,7 @@ namespace Assets.Scripts.Managers
 
         void ResponseButtonOnClick(int id)
         {
-            currentConversation.chose(id);
-            updateUI();
+            chooseResponse(id);
         }
 
         /**
