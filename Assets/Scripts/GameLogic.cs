@@ -3,8 +3,6 @@ using Assets.Scripts.Entity;
 using Assets.Scripts.Objects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -15,7 +13,7 @@ namespace Assets.Scripts
      * - handles world generation
      * - handles transitions: exploration | fighting | ...
      */
-     [RequireComponent(typeof(SanityChecker))]
+    [RequireComponent(typeof(SanityChecker))]
     public class GameLogic : MonoBehaviour
     {
         struct timedInteraction
@@ -36,9 +34,10 @@ namespace Assets.Scripts
         private Quaternion worldViewBackupReference; // Bug stuff. Leads to critical fail if it becomes a different reference that '_worldViewRotation'
 
         // minor world rotation integration
-        private float worldViewRotationSpeed = 1f; // 1 second?
+        private float worldViewRotationSpeed = 0.2f; // 1 second?
         private bool isRotating = false;
         private Quaternion rotationDestination;
+        List<GameObject> sceneObjects = null;
 
         HashSet<timedInteraction> timedInteractions = new HashSet<timedInteraction>(); // will contain tempoary interactioncomps. Includes those from 'Astralbelebung'
 
@@ -47,7 +46,7 @@ namespace Assets.Scripts
         {
             worldViewBackupReference = _worldViewRotation; // remember reference
 
-            // spawn world here??
+            // TODO: spawn world here??
             Vector3[] treepos = PotentiallyUsefulStuff.RandomPointsInRing(1000, 25, 100);
             foreach (Vector3 v in treepos)
                 TreeFactory.makeRandomTreeAtPos(v, true);
@@ -84,18 +83,31 @@ namespace Assets.Scripts
          */
         public void LateUpdate()
         {
-            // since this one variable is absolutely crucial and can brake up everything,
-            // I even go as far as to ensure this constraint
-            Debug.Assert(worldViewBackupReference == _worldViewRotation, "CRITICAL ERROR: '_worldViewRotation' OBJECT CHANGED REFERENCE!");
+            // this reference must never change!
+            //Debug.Assert(worldViewBackupReference == _worldViewRotation, "CRITICAL ERROR: '_worldViewRotation' OBJECT CHANGED REFERENCE!");
 
             if (isRotating)
             {
+                print(worldViewRotation);
                 worldViewRotation = Quaternion.Lerp(_worldViewRotation, rotationDestination, worldViewRotationSpeed); // remember: we overloaded the setter!
-                if (_worldViewRotation.Equals(rotationDestination))
+                if (_worldViewRotation == rotationDestination)
                 {
                     isRotating = false;
                     Debug.Log("GameManager finished rotating.");
+                    //sceneObjects = GetAllGameObjectsInScene();
                 }
+
+                // update rotation of all game objects in the scene
+                // UI elements are excluded
+                foreach (var o in sceneObjects)
+                {
+                    Rigidbody rb = o.GetComponent<Rigidbody>();
+                    if (rb == null)
+                        o.transform.rotation = worldViewRotation;
+                    else
+                        rb.rotation = worldViewRotation;
+                }
+                
             }
 
             // take care of temporary interactions
@@ -114,19 +126,35 @@ namespace Assets.Scripts
         
 
         /**
-         * SYNCHRONISED! NEVER CALL OUTSIDE!
          * @leftwise: TRUE -> turn 90° leftwise. Else -> turn 90° rightwise
          */
-        private void rotateWorldView(bool leftwise)
+        public void rotateWorldView(bool leftwise)
         {
             if (!isRotating)
             {
                 rotationDestination = _worldViewRotation * Quaternion.Euler(0, (leftwise) ? 90 : -90, 0);
                 isRotating = true;
+                sceneObjects = GetAllGameObjectsInScene();
                 Debug.Log("GameManager starts with map rotation...");
             }
             else
                 Debug.Log("GameManager is already rotating. 'rotateWorldView' ignored.");
+        }
+
+        /**
+         * func: 
+         */
+        List<GameObject> GetAllGameObjectsInScene()
+        {
+            int ignoreLayer = 5;
+            List<GameObject> objects = new List<GameObject>();
+            foreach (var o in FindObjectsOfType<GameObject>())
+            {
+                if (o.layer != ignoreLayer)
+                    objects.Add(o);
+            }
+
+            return objects;
         }
 
 
@@ -134,7 +162,10 @@ namespace Assets.Scripts
         {
             private set
             {
-                _worldViewRotation.Set(value.x, value.y, value.z, value.w); // DO NOT BRAKE ANY REFERENCES!!!!!!!!!
+                _worldViewRotation.x = value.x;
+                _worldViewRotation.y = value.y;
+                _worldViewRotation.z = value.z;
+                _worldViewRotation.w = value.w; // DO NOT BRAKE ANY REFERENCES!
             }
 
             get

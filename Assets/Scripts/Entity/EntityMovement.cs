@@ -22,7 +22,6 @@ namespace Assets.Scripts.Entity
         protected Vector3 velocity;                        // The vector to store the direction of the player's movement.
         protected Vector3 inputVelocity;                   // The amount of movement caused by mouse/keyboard input
         protected Vector3 _lookDir;                        // sprite look direction. This is independent of the actual transform.rotation
-        protected Quaternion mapRotation;
 
         public float GroundCheckDistance = 0.1f;
         protected float OrigGroundCheckDistance;
@@ -42,8 +41,6 @@ namespace Assets.Scripts.Entity
 
         virtual protected void Awake()
         {
-            mapRotation = Constants.gameLogic.worldViewRotation; // grab map rotation and never, ever change it!
-
             // Create a layer mask for the floor layer.
             floorMask = LayerMask.GetMask("Floor");
             _lookDir = new Vector3(1,0,0);
@@ -127,7 +124,7 @@ namespace Assets.Scripts.Entity
             velocity = velocity.normalized * ((_bRun) ? runSpeed : moveSpeed) * Time.deltaTime;
 
             // Move the player to it's current position plus the movement.
-            rigidBodyComp.MovePosition(transform.position + mapRotation * velocity); // Quaternion.LookRotation(mapRotation * turnSpeed) * velocity
+            rigidBodyComp.MovePosition(transform.position + Constants.gameLogic.worldViewRotation * velocity); // Quaternion.LookRotation(mapRotation * turnSpeed) * velocity
         }
 
 

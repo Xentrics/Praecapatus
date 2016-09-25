@@ -52,7 +52,12 @@ namespace Assets.Scripts.Managers
                 // handle remaining keys
                 if (CrossPlatformInputManager.GetButton("toggleWalk"))
                     pc.toggleRunning();
-  
+
+                if (CrossPlatformInputManager.GetButton("RotateRightwise"))
+                    Constants.gameLogic.rotateWorldView(false);
+
+                if (CrossPlatformInputManager.GetButton("RotateLeftwise"))
+                    Constants.gameLogic.rotateWorldView(true);
             }
 
             // check if we have do handle key-up events

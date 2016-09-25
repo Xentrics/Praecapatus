@@ -9,7 +9,7 @@ NOTES ON NOTES:
 NEXT SESSION TASKS:
  - implement InteractionObject
 	- basic conversation	+	
- - deal with time mechanics +
+ - deal with time mechanics 	+
  - implement basic talkUI	++
  - DEBUFF mechanics			
 	- new class DEBUFF
@@ -18,7 +18,7 @@ NEXT SESSION TASKS:
 NOTES ON GAME CONTROL
 - Abilities can be used in 2 major ways:
 	(1) story mode
-		- abis can be called with or without keyboard +
+		- abis can be called with ++ or without keyboard
 		- abis called by keyboard will show version selection screen [by default]
 			- this behaviour should be changeable as an option ('disable version selection from shortkeys outside fights') +
 	(2) fight mode
@@ -41,8 +41,8 @@ NOTES ON GAME MECHANICS
 	- Talk UI +
 		- Talk-Class stuff
 - CONVERSATIONS
-	- conversations can be preset using graphml based graphs (i.e. using yEd)
-	- graphml files can be loaded as TextAssets with ending .txt or .xml
+	- conversations can be preset using graphml based graphs (i.e. using yEd) ++
+	- graphml files can be loaded as TextAssets with ending .txt or .xml	  ++
 	- the loader can be found as a method inside class 'Conversation'
 - Infamie
 - Ruhm

@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Entity;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnitySampleAssets.CrossPlatformInput;
 
 namespace Assets.Scripts.Entity
@@ -57,7 +55,7 @@ namespace Assets.Scripts.Entity
                         // we jump - apply some upward velocity + the current planar movement direction
                         print("jumped");
                         animComp.SetTrigger("jump");
-                        Vector3 viewVelocity = mapRotation * inputVelocity;
+                        Vector3 viewVelocity = Constants.gameLogic.worldViewRotation * inputVelocity;
                         rigidBodyComp.velocity = new Vector3(rigidBodyComp.velocity.x + viewVelocity.x * ((_bRun) ? runSpeed : moveSpeed), jumpStrength, rigidBodyComp.velocity.z + viewVelocity.z * ((_bRun) ? runSpeed : moveSpeed));
                         isInAir = true;
                     }

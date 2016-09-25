@@ -488,15 +488,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011116492172, guid: 600bb05d4ca28a04c9ebc6bd8a03891d, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000011116492172, guid: 600bb05d4ca28a04c9ebc6bd8a03891d, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000011116492172, guid: 600bb05d4ca28a04c9ebc6bd8a03891d, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000011116492172, guid: 600bb05d4ca28a04c9ebc6bd8a03891d, type: 2}
       propertyPath: m_LocalRotation.w
@@ -514,6 +514,14 @@ Prefab:
     - target: {fileID: 1000014132367680, guid: 600bb05d4ca28a04c9ebc6bd8a03891d, type: 2}
       propertyPath: m_TagString
       value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011116492172, guid: 600bb05d4ca28a04c9ebc6bd8a03891d, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000014132367680, guid: 600bb05d4ca28a04c9ebc6bd8a03891d, type: 2}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 600bb05d4ca28a04c9ebc6bd8a03891d, type: 2}

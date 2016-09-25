@@ -36,7 +36,7 @@ public class SideWiseCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.position = target.position + offset; // adjust world position
+        transform.position = target.position + Assets.Scripts.Constants.gameLogic.worldViewRotation * offset; // adjust world position
         transform.LookAt(target.position + lookUpOffset * Vector3.up, Vector3.up); // adjust rotation
     }
 }
