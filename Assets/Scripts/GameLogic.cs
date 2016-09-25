@@ -34,7 +34,7 @@ namespace Assets.Scripts
         private Quaternion worldViewBackupReference; // Bug stuff. Leads to critical fail if it becomes a different reference that '_worldViewRotation'
 
         // minor world rotation integration
-        private float worldViewRotationSpeed = 0.2f; // 1 second?
+        private float worldViewRotationSpeed = 0.3f; // 1 second?
         private bool isRotating = false;
         private Quaternion rotationDestination;
         List<GameObject> sceneObjects = null;
@@ -105,7 +105,7 @@ namespace Assets.Scripts
                     if (rb == null)
                         o.transform.rotation = worldViewRotation;
                     else
-                        rb.rotation = worldViewRotation;
+                        rb.rotation = worldViewRotation; // it is better to let the rigidbody handle rotation, if present
                 }
                 
             }

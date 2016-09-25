@@ -11,6 +11,8 @@ NEXT SESSION TASKS:
 	- basic conversation	+	
  - deal with time mechanics 	+
  - implement basic talkUI	++
+ - implement shop
+ - implement Quest Mechanics
  - DEBUFF mechanics			
 	- new class DEBUFF
 

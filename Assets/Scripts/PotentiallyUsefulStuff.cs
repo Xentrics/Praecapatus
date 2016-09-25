@@ -96,5 +96,34 @@ namespace Assets.Scripts
             //clip.AddEvent(e);
             return clip;
         }
+
+        public static readonly float boxTime = 5f;
+        public static readonly Color boxColor = Color.red;
+        public static void DrawDebugBox(Vector3 v3Center, Vector3 v3Extents)
+        {
+            Vector3 v3FrontTopLeft = new Vector3(v3Center.x - v3Extents.x, v3Center.y + v3Extents.y, v3Center.z - v3Extents.z);  // Front top left corner
+            Vector3 v3FrontTopRight = new Vector3(v3Center.x + v3Extents.x, v3Center.y + v3Extents.y, v3Center.z - v3Extents.z);  // Front top right corner
+            Vector3 v3FrontBottomLeft = new Vector3(v3Center.x - v3Extents.x, v3Center.y - v3Extents.y, v3Center.z - v3Extents.z);  // Front bottom left corner
+            Vector3 v3FrontBottomRight = new Vector3(v3Center.x + v3Extents.x, v3Center.y - v3Extents.y, v3Center.z - v3Extents.z);  // Front bottom right corner
+            Vector3 v3BackTopLeft = new Vector3(v3Center.x - v3Extents.x, v3Center.y + v3Extents.y, v3Center.z + v3Extents.z);  // Back top left corner
+            Vector3 v3BackTopRight = new Vector3(v3Center.x + v3Extents.x, v3Center.y + v3Extents.y, v3Center.z + v3Extents.z);  // Back top right corner
+            Vector3 v3BackBottomLeft = new Vector3(v3Center.x - v3Extents.x, v3Center.y - v3Extents.y, v3Center.z + v3Extents.z);  // Back bottom left corner
+            Vector3 v3BackBottomRight = new Vector3(v3Center.x + v3Extents.x, v3Center.y - v3Extents.y, v3Center.z + v3Extents.z);  // Back bottom right corner
+
+            Debug.DrawLine(v3FrontTopLeft, v3FrontTopRight, boxColor, boxTime);
+            Debug.DrawLine(v3FrontTopRight, v3FrontBottomRight, boxColor, boxTime);
+            Debug.DrawLine(v3FrontBottomRight, v3FrontBottomLeft, boxColor, boxTime);
+            Debug.DrawLine(v3FrontBottomLeft, v3FrontTopLeft, boxColor, boxTime);
+
+            Debug.DrawLine(v3BackTopLeft, v3BackTopRight, boxColor, boxTime);
+            Debug.DrawLine(v3BackTopRight, v3BackBottomRight, boxColor, boxTime);
+            Debug.DrawLine(v3BackBottomRight, v3BackBottomLeft, boxColor, boxTime);
+            Debug.DrawLine(v3BackBottomLeft, v3BackTopLeft, boxColor, boxTime);
+
+            Debug.DrawLine(v3FrontTopLeft, v3BackTopLeft, boxColor, boxTime);
+            Debug.DrawLine(v3FrontTopRight, v3BackTopRight, boxColor, boxTime);
+            Debug.DrawLine(v3FrontBottomRight, v3BackBottomRight, boxColor, boxTime);
+            Debug.DrawLine(v3FrontBottomLeft, v3BackBottomLeft, boxColor, boxTime);
+        }
     }
 }

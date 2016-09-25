@@ -13,31 +13,31 @@ namespace Assets.Scripts.Entity
     [RequireComponent(typeof(Collider))]
     public class EntityMovement : MonoBehaviour
     {
-        public float moveSpeed = 6f;            // The speed that the player will move at
-        public float runSpeed = 24f;    // The speed that the player will move at.
-        public float turnSpeed = 0.25f;         // The rate at which the player can turn around (independent of the camera)
-        public float jumpStrength = 12f;        // This values defines with respect to the characters weight how high he can jump
-        public float gravityMultiplier = 4f;    // Additional gravity that can be applied
+        [SerializeField] protected float moveSpeed = 6f;            // The speed that the player will move at
+        [SerializeField] protected float runSpeed = 24f;            // The speed that the player will move at.
+        [SerializeField] protected float turnSpeed = 0.25f;         // The rate at which the player can turn around (independent of the camera)
+        [SerializeField] protected float jumpStrength = 12f;        // This values defines with respect to the characters weight how high he can jump
+        [SerializeField] protected float gravityMultiplier = 4f;    // Additional gravity that can be applied
 
         protected Vector3 velocity;                        // The vector to store the direction of the player's movement.
         protected Vector3 inputVelocity;                   // The amount of movement caused by mouse/keyboard input
         protected Vector3 _lookDir;                        // sprite look direction. This is independent of the actual transform.rotation
 
-        public float GroundCheckDistance = 0.1f;
-        protected float OrigGroundCheckDistance;
-        public Vector3 groundCheckOffset;
+        [SerializeField] protected float GroundCheckDistance = 0.01f;
+        [SerializeField] protected Vector3 groundCheckOffset;
+        [SerializeField] protected Vector3 groundCheckBoxExtent;
 
         protected Animator animComp;
         protected Rigidbody rigidBodyComp;                 // Reference to the player's rigidbody.
         protected SpriteRenderer spriteRenderer;           // lets us flit stuff easily
-        protected Collider mainCollider;
+        protected BoxCollider mainCollider;
         protected int floorMask;                           // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
 
         // character states
-        public bool isInAir = false;                       // shall be true, if the player is in the air (for whatever reason)
-        protected bool canJump = true;                     // can be false duo to exhaustion and other reasons
-        protected bool _bRun = true;
-        protected bool canRun = true;                      // can be false duo to exhaustion and other reasons
+        [SerializeField] protected bool isInAir = false;   // shall be true, if the player is in the air (for whatever reason)
+        [SerializeField] protected bool canJump = true;    // can be false duo to exhaustion and other reasons
+        [SerializeField] protected bool _bRun   = true;
+        [SerializeField] protected bool canRun  = true;    // can be false duo to exhaustion and other reasons
 
         virtual protected void Awake()
         {
@@ -46,13 +46,14 @@ namespace Assets.Scripts.Entity
             _lookDir = new Vector3(1,0,0);
             velocity = new Vector3();
             inputVelocity = new Vector3();
-            OrigGroundCheckDistance = GroundCheckDistance;
 
             // Set up references. They cannot be null since they are required!
             rigidBodyComp = GetComponent<Rigidbody>();
             animComp = GetComponent<Animator>();
-            mainCollider = GetComponent<Collider>();
+            mainCollider = GetComponent<BoxCollider>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+
+            groundCheckBoxExtent = new Vector3(mainCollider.size.x, GroundCheckDistance, mainCollider.size.z);
         }
 
 
@@ -176,23 +177,25 @@ namespace Assets.Scripts.Entity
             RaycastHit hitInfo;
 #if UNITY_EDITOR
             // helper to visualise the ground check ray in the scene view
-            Debug.DrawLine(transform.position + groundCheckOffset + (Vector3.up * 0.1f), transform.position + groundCheckOffset + (Vector3.up * 0.1f) + (Vector3.down * GroundCheckDistance), Color.red, 1f);
+            //Debug.DrawLine(transform.position + groundCheckOffset + (Vector3.up * 0.1f), transform.position + groundCheckOffset + (Vector3.up * 0.1f) + (Vector3.down * GroundCheckDistance), Color.red, 1f);
+            PotentiallyUsefulStuff.DrawDebugBox(transform.position + groundCheckOffset, groundCheckBoxExtent);
 #endif
             // 0.1f is a small offset to start the ray from inside the character
-            if (Physics.Raycast(transform.position + groundCheckOffset + (Vector3.up * 0.1f), Vector3.down, out hitInfo, GroundCheckDistance))
-            {
-                // hit something.
-                isInAir = false;                            // allow input again
-                animComp.SetBool("grounded", true);
-                if (!keepVelocity)
-                    rigidBodyComp.velocity = Vector3.zero;  // prevent sliding from velocity
 
-                //rigidBodyComp.MovePosition(hitInfo.point);  // move player directly onto hit location
-            }
-            else
+            //if (Physics.Raycast(transform.position + groundCheckOffset + (Vector3.up * 0.1f), Vector3.down, out hitInfo, GroundCheckDistance))
+            isInAir = true;
+            Collider[] hits = Physics.OverlapBox(transform.position + groundCheckOffset, groundCheckBoxExtent, Constants.gameLogic.worldViewRotation);
+            foreach (Collider c in hits)
             {
-                isInAir = true;                             // prevent movement input from player
-                animComp.SetBool("grounded", false);
+                if (c.gameObject != gameObject)
+                {
+                    // hit something.
+                    isInAir = false;                            // allow input again
+                    animComp.SetBool("grounded", true);
+                    if (!keepVelocity)
+                        rigidBodyComp.velocity = Vector3.zero;  // prevent sliding from velocity
+                    break;
+                }
             }
         }
 

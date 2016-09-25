@@ -912,6 +912,21 @@ Prefab:
       propertyPath: followCamera
       value: 
       objectReference: {fileID: 1862616368}
+    - target: {fileID: 82000013570614224, guid: 0ff439864495b67419562b69dffaa027,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011655028544, guid: 0ff439864495b67419562b69dffaa027,
+        type: 2}
+      propertyPath: GroundCheckDistance
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011655028544, guid: 0ff439864495b67419562b69dffaa027,
+        type: 2}
+      propertyPath: groundCheckOffset.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ff439864495b67419562b69dffaa027, type: 2}
   m_IsPrefabParent: 0
