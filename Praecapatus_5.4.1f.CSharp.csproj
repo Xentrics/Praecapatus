@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.4.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -93,6 +95,8 @@
     <Compile Include="Assets\Scripts\Conversations\ConTester.cs" />
     <Compile Include="Assets\Scripts\Conversations\Conversation.cs" />
     <Compile Include="Assets\Scripts\Conversations\InteractionComponent.cs" />
+    <Compile Include="Assets\Scripts\Exception\ItemStackException.cs" />
+    <Compile Include="Assets\Scripts\Objects\Currency.cs" />
     <Compile Include="Assets\Scripts\EAttributeGroup.cs" />
     <Compile Include="Assets\Scripts\EAttributeOther.cs" />
     <Compile Include="Assets\Scripts\ECharClass.cs" />
@@ -117,6 +121,7 @@
     <Compile Include="Assets\Scripts\Exception\GameLogicException.cs" />
     <Compile Include="Assets\Scripts\Exception\InvalidAttributeLevelException.cs" />
     <Compile Include="Assets\Scripts\GameLogic.cs" />
+    <Compile Include="Assets\Scripts\Items\Inventory.cs" />
     <Compile Include="Assets\Scripts\Managers\AbilityManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ConsoleManager.cs" />
@@ -132,6 +137,7 @@
     <Compile Include="Assets\Scripts\Objects\PraeTree.cs" />
     <Compile Include="Assets\Scripts\Objects\TreeFactory.cs" />
     <Compile Include="Assets\Scripts\PotentiallyUsefulStuff.cs" />
+    <Compile Include="Assets\Scripts\Items\PraeItem.cs" />
     <Compile Include="Assets\Scripts\SanityChecker.cs" />
     <Compile Include="Assets\import\Standard Assets\2D\Scripts\Camera2DFollow.cs" />
     <Compile Include="Assets\import\Standard Assets\2D\Scripts\CameraFollow.cs" />
@@ -368,5 +374,6 @@
     <None Include="Assets\import\Standard Assets\Vehicles\Car\Shaders\ReflectiveDiffuseSpec.shader" />
     <None Include="Assets\import\Standard Assets\Vehicles\Car\Shaders\ReflectiveDiffuseSpecTransp.shader" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
