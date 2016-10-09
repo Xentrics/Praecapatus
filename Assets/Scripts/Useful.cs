@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
-    static class PotentiallyUsefulStuff
+    static class Useful
     {
         // static constructor
-        static PotentiallyUsefulStuff()
+        static Useful()
         { }
 
         /**
@@ -124,6 +126,38 @@ namespace Assets.Scripts
             Debug.DrawLine(v3FrontTopRight, v3BackTopRight, boxColor, boxTime);
             Debug.DrawLine(v3FrontBottomRight, v3BackBottomRight, boxColor, boxTime);
             Debug.DrawLine(v3FrontBottomLeft, v3BackBottomLeft, boxColor, boxTime);
+        }
+
+        public static string Encrypt(string toEncrypt)
+        {
+            byte[] keyArray = UTF8Encoding.UTF8.GetBytes("12345678901234567890123456789012");
+            // 256-AES key
+            byte[] toEncryptArray = UTF8Encoding.UTF8.GetBytes(toEncrypt);
+            RijndaelManaged rDel = new RijndaelManaged();
+            rDel.Key = keyArray;
+            rDel.Mode = CipherMode.ECB;
+            // http://msdn.microsoft.com/en-us/library/system.security.cryptography.ciphermode.aspx
+            rDel.Padding = PaddingMode.PKCS7;
+            // better lang support
+            ICryptoTransform cTransform = rDel.CreateEncryptor();
+            byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+            return System.Convert.ToBase64String(resultArray, 0, resultArray.Length);
+        }
+
+        public static string Decrypt(string toDecrypt)
+        {
+            byte[] keyArray = UTF8Encoding.UTF8.GetBytes("12345678901234567890123456789012");
+            // AES-256 key
+            byte[] toEncryptArray = System.Convert.FromBase64String(toDecrypt);
+            RijndaelManaged rDel = new RijndaelManaged();
+            rDel.Key = keyArray;
+            rDel.Mode = CipherMode.ECB;
+            // http://msdn.microsoft.com/en-us/library/system.security.cryptography.ciphermode.aspx
+            rDel.Padding = PaddingMode.PKCS7;
+            // better lang support
+            ICryptoTransform cTransform = rDel.CreateDecryptor();
+            byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+            return UTF8Encoding.UTF8.GetString(resultArray);
         }
     }
 }

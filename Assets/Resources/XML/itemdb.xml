@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<ItemCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Items>
+    <Item name="TestItem" amount="0" stackSize="10" weight="1">
+      <desc>UNKNOWN</desc>
+      <value G="1" K="2" T="3" />
+      <iconPath>Assets/Resources/Icons/NotSetIcon.png</iconPath>
+    </Item>
+    <Item name="FailItem" amount="-1" stackSize="0" weight="-1">
+      <desc>Used to test sanity checks.</desc>
+      <value G="-1" K="-1" T="-1" />
+      <iconPath>Assets/Resources/Icons/NotSetIcon.png</iconPath>
+    </Item>
+  </Items>
+</ItemCollection>

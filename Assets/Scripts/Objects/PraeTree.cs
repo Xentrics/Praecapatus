@@ -22,7 +22,7 @@ namespace Assets.Scripts.Objects
         void Start()
         {
             if (_descriptionId < 0 || _descriptionId >= treeDescriptions.Length)
-                throw new ArgumentOutOfRangeException("_descriptionId out of bounds!");
+                throw new System.ArgumentOutOfRangeException("_descriptionId out of bounds!");
             _description = treeDescriptions[_descriptionId];
         }
 
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Objects
             set
             {
                 if (_descriptionId < 0 || _descriptionId >= treeDescriptions.Length)
-                    throw new ArgumentOutOfRangeException("_descriptionId out of bounds!");
+                    throw new System.ArgumentOutOfRangeException("_descriptionId out of bounds!");
                 _descriptionId = value;
             }
 

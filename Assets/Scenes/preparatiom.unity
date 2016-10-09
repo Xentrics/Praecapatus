@@ -4757,6 +4757,7 @@ GameObject:
   - 114: {fileID: 1703666192}
   - 114: {fileID: 1703666194}
   - 114: {fileID: 1703666195}
+  - 114: {fileID: 1703666196}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: GameLogic
@@ -4811,6 +4812,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   conAsset: {fileID: 4900000, guid: 970ff1493f04a6b42afe7a682c27d890, type: 3}
+--- !u!114 &1703666196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1703666191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d510399ee8ea5447b5868d2039e55d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDB:
+    items:
+    - name: TestItem
+      desc: UNKNOWN
+      _weightSingle: 1
+      _amount: 0
+      _stackSize: 10
+      value:
+        _G: 1
+        _K: 2
+        _T: 3
+      _icon: {fileID: 21300000, guid: ac62a82fc25eabe499fb0414eda2d633, type: 3}
 --- !u!1 &1706313862
 GameObject:
   m_ObjectHideFlags: 0

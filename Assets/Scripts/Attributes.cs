@@ -38,7 +38,7 @@ namespace Assets.Scripts
         public void setAttributeTo(EAttributeOther A, int value)
         {
             if (value < minLevel)
-                throw new ArgumentOutOfRangeException("You attempted to set an attribute to high or to low! Value: " + value);
+                throw new System.ArgumentOutOfRangeException("You attempted to set an attribute to high or to low! Value: " + value);
             else
                 attributesOther[A] = value; // update to new level
         }
@@ -49,7 +49,7 @@ namespace Assets.Scripts
         public void setAttributeTo(EAttributeGroup A, int value)
         {
             if (value < minLevel || value > maxLevel)
-                throw new ArgumentOutOfRangeException("You attempted to set an attribute to high or to low! Value: " + value);
+                throw new System.ArgumentOutOfRangeException("You attempted to set an attribute to high or to low! Value: " + value);
             else
                 attributeGroups[A] = value; // update to new level
         }

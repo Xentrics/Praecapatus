@@ -94,7 +94,7 @@ namespace Assets.Scripts.Entity
                 }
             }
             else
-                throw new ArgumentOutOfRangeException("keyID must be element of [0,9]");
+                throw new System.ArgumentOutOfRangeException("keyID must be element of [0,9]");
         }
 
         /**

@@ -67,7 +67,7 @@ namespace Assets.Scripts.Entity
                 // DO NOT USE: DEB_testManager.testInstant(version, minRP, keybarAbilities[keyID], this, null);
             }
             else
-                throw new ArgumentOutOfRangeException("keyID must be element of [0,9]");
+                throw new System.ArgumentOutOfRangeException("keyID must be element of [0,9]");
         }
 
         public void releaseKeybarAbility(int keyID)

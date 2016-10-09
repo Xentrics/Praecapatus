@@ -23,7 +23,6 @@ namespace Assets.Scripts.Managers
                 if (c.name.StartsWith("OptionButton"))
                 {
                     optionButtons.Add(c);
-                    print(c.name.Substring("OptionButton".Length));
                     int id = Int32.Parse(c.name.Substring("OptionButton".Length));
                     c.onClick.AddListener(() => { ResponseButtonOnClick(id-1); });
                     c.interactable = true;

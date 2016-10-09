@@ -62,7 +62,7 @@ namespace Assets.Scripts.Conversations
             public BasicDialResponse RetResponse(int id)
             {
                 if (id < 0 || id >= _responses.Count)
-                    throw new ArgumentOutOfRangeException("Cannot choose response with invalid id!" + id);
+                    throw new System.ArgumentOutOfRangeException("Cannot choose response with invalid id!" + id);
                 else
                     return _responses[id];
             }

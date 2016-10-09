@@ -47,7 +47,7 @@ namespace Assets.Scripts
             worldViewBackupReference = _worldViewRotation; // remember reference
 
             // TODO: spawn world here??
-            Vector3[] treepos = PotentiallyUsefulStuff.RandomPointsInRing(1000, 25, 100);
+            Vector3[] treepos = Useful.RandomPointsInRing(1000, 25, 100);
             foreach (Vector3 v in treepos)
                 TreeFactory.makeRandomTreeAtPos(v, true);
 

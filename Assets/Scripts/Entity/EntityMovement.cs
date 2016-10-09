@@ -178,7 +178,7 @@ namespace Assets.Scripts.Entity
 #if UNITY_EDITOR
             // helper to visualise the ground check ray in the scene view
             //Debug.DrawLine(transform.position + groundCheckOffset + (Vector3.up * 0.1f), transform.position + groundCheckOffset + (Vector3.up * 0.1f) + (Vector3.down * GroundCheckDistance), Color.red, 1f);
-            PotentiallyUsefulStuff.DrawDebugBox(transform.position + groundCheckOffset, groundCheckBoxExtent);
+            Useful.DrawDebugBox(transform.position + groundCheckOffset, groundCheckBoxExtent);
 #endif
             // 0.1f is a small offset to start the ray from inside the character
 

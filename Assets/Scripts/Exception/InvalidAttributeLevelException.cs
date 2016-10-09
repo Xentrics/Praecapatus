@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Exception
 {
-    class InvalidAttributeLevelException : ArgumentOutOfRangeException
+    class InvalidAttributeLevelException : System.ArgumentOutOfRangeException
     {
         public InvalidAttributeLevelException(string cause) : base(cause, "Attribute level out of bounds caused by: " + cause)
         { }

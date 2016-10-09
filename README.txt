@@ -7,10 +7,11 @@ NOTES ON NOTES:
  - 3 +: manageable from interface
  
 NEXT SESSION TASKS:
- - implement InteractionObject
-	- basic conversation	+	
+ - implement InteractionObject	+
+	- basic conversation		++	
  - deal with time mechanics 	+
- - implement basic talkUI	++
+ - implement basic talkUI		++
+ - implement XML database		++
  - implement shop
  - implement Quest Mechanics
  - DEBUFF mechanics			
@@ -34,20 +35,26 @@ NOTES ON GAME CONTROL
 NOTES ON GAME MECHANICS
 - Realtime vs. Gametime ???											+
 ~ any valid object in the screne contains a PraeObject component	+
-- INTERACTIONS
-	- interactions are controlled by 'InteractionComponents'		+
-		-> any object with this component are subject to interaction
-		- any object can become/loose interaction by adding/removing this component
-	~ praeobjects are not PraeObject by default		++
+- INTERACTIONS																		+
+	- interactions are controlled by 'InteractionComponents'						+
+		-> any object with this component are subject to interaction				
+		- any object can become/loose interaction by adding/removing this component	
+	~ praeobjects are not PraeObject by default										++
 	- shop UI
-	- Talk UI +
-		- Talk-Class stuff
+	- Talk UI 																		+
+		- basic conversation														++
+		- interaction events														+
+			- open shopUI															
 - CONVERSATIONS
 	- conversations can be preset using graphml based graphs (i.e. using yEd) ++
 	- graphml files can be loaded as TextAssets with ending .txt or .xml	  ++
 	- the loader can be found as a method inside class 'Conversation'
-- Infamie
-- Ruhm
+- INFAMIE
+- RUHM
+- ITEMS
+	- items can be saved and loaded as xml					++
+	- items can be added to /removed from the inventory
+	- items of a certain class can be equipped
 
 
 NOTES ON STORY

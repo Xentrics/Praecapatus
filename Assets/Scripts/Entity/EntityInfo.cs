@@ -96,7 +96,7 @@ namespace Assets.Scripts.Entity
             set
             {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException("Mapmax cannot be negative!");
+                    throw new System.ArgumentOutOfRangeException("Mapmax cannot be negative!");
                 else
                     attr.setAttributeTo(EAttributeOther.MaP, value);
             }
@@ -112,7 +112,7 @@ namespace Assets.Scripts.Entity
             set
             {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException("Mapmax cannot be negative!");
+                    throw new System.ArgumentOutOfRangeException("Mapmax cannot be negative!");
                 else
                     attr.setAttributeTo(EAttributeOther.MaPmax, value);
             }

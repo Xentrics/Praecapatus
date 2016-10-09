@@ -95,8 +95,6 @@
     <Compile Include="Assets\Scripts\Conversations\ConTester.cs" />
     <Compile Include="Assets\Scripts\Conversations\Conversation.cs" />
     <Compile Include="Assets\Scripts\Conversations\InteractionComponent.cs" />
-    <Compile Include="Assets\Scripts\Exception\ItemStackException.cs" />
-    <Compile Include="Assets\Scripts\Objects\Currency.cs" />
     <Compile Include="Assets\Scripts\EAttributeGroup.cs" />
     <Compile Include="Assets\Scripts\EAttributeOther.cs" />
     <Compile Include="Assets\Scripts\ECharClass.cs" />
@@ -120,24 +118,29 @@
     <Compile Include="Assets\Scripts\Exception\CommandNotFoundException.cs" />
     <Compile Include="Assets\Scripts\Exception\GameLogicException.cs" />
     <Compile Include="Assets\Scripts\Exception\InvalidAttributeLevelException.cs" />
+    <Compile Include="Assets\Scripts\Exception\InvalidPathException.cs" />
+    <Compile Include="Assets\Scripts\Exception\ItemDBException.cs" />
+    <Compile Include="Assets\Scripts\Exception\ItemStackException.cs" />
     <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\Items\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Items\PraeItem.cs" />
     <Compile Include="Assets\Scripts\Managers\AbilityManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ConsoleManager.cs" />
     <Compile Include="Assets\Scripts\Managers\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameOverManager.cs" />
     <Compile Include="Assets\Scripts\Managers\InteractionManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\ItemDBManager.cs" />
     <Compile Include="Assets\Scripts\Managers\PlayerInputManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ShortKeyBarManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TestManager.cs" />
+    <Compile Include="Assets\Scripts\Items\Currency.cs" />
     <Compile Include="Assets\Scripts\Objects\EntityObject.cs" />
     <Compile Include="Assets\Scripts\Objects\PraeObject.cs" />
     <Compile Include="Assets\Scripts\Objects\PraeTree.cs" />
     <Compile Include="Assets\Scripts\Objects\TreeFactory.cs" />
-    <Compile Include="Assets\Scripts\PotentiallyUsefulStuff.cs" />
-    <Compile Include="Assets\Scripts\Items\PraeItem.cs" />
+    <Compile Include="Assets\Scripts\Useful.cs" />
     <Compile Include="Assets\Scripts\SanityChecker.cs" />
     <Compile Include="Assets\import\Standard Assets\2D\Scripts\Camera2DFollow.cs" />
     <Compile Include="Assets\import\Standard Assets\2D\Scripts\CameraFollow.cs" />
@@ -275,6 +278,7 @@
   <ItemGroup>
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
     <None Include="Assets\Resources\Conversations\test_g1.xml" />
+    <None Include="Assets\Resources\XML\itemdb.xml" />
     <None Include="Assets\import\Standard Assets\Cameras\CameraGuidelines.txt" />
     <None Include="Assets\import\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\import\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
@@ -374,6 +378,5 @@
     <None Include="Assets\import\Standard Assets\Vehicles\Car\Shaders\ReflectiveDiffuseSpec.shader" />
     <None Include="Assets\import\Standard Assets\Vehicles\Car\Shaders\ReflectiveDiffuseSpecTransp.shader" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
