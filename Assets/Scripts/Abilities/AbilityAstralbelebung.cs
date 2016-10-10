@@ -38,7 +38,7 @@ namespace Assets.Scripts.Abilities
             Debug.Assert(version == VER_SINGLE_TARGET, "verison bug?");
             int minutes = UnityEngine.Random.Range(1,10) * Constants.gameTimeMultiplier;
             DateTime endtime = DateTime.Now.AddMinutes(minutes);
-            Conversations.InteractionComponent c = targets[0].AddInteractionComponent();
+            Interactions.InteractionComponent c = targets[0].AddInteractionComponent();
 
             Constants.gameLogic.AddTimedInteraction(c, endtime);
             Debug.Log("Astrahlbelebung. Object will come to life for " + minutes + "minutes: " + targets[0]);

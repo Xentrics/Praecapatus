@@ -63,6 +63,7 @@ namespace Assets.Scripts.Managers
             entData.abiList = ec.abiList;
             entData.attrGrpList = ec.attrGrpList;
             entData.attrOtherList = ec.attrOtherList;
+            entData.inventory = ec.inventory;
             // TODO: fill entData here
 
             XmlSerializer serializer = new XmlSerializer(typeof(EntitySaveData));
@@ -90,6 +91,7 @@ namespace Assets.Scripts.Managers
             ec.abiList = entSave.abiList;
             ec.attrGrpList = entSave.attrGrpList;
             ec.attrOtherList = entSave.attrOtherList;
+            ec.inventory = entSave.inventory;
             // TODO: read entData here
 
             if (Object.ReferenceEquals(ec, Constants.gameLogic.pc))
@@ -205,5 +207,7 @@ namespace Assets.Scripts.Managers
         [XmlArray("AttrOther")]
         [XmlArrayItem("Attr")]
         public List<AttributeOtherSaveData> attrOtherList;
+        [XmlElement("Inventory")]
+        public Inventory inventory;
     }
 }

@@ -1,20 +1,22 @@
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Assets.Scripts.Items
 {
+    [System.Serializable]
     public class Inventory
     {
-        float _weight;
-        float _maxWeight;
-        Items.Currency _money;
-        List<PraeItem> items;
+        [UnityEngine.SerializeField] float _weight;
+        [UnityEngine.SerializeField] float _maxWeight = 20f;
+        [UnityEngine.SerializeField] Currency _money;
+        [UnityEngine.SerializeField] List<PraeItem> _items;
 
         public PraeItem GetItem(int id)
         {
-            if (id < 0 || id >= items.Count)
+            if (id < 0 || id >= _items.Count)
                 throw new System.ArgumentOutOfRangeException();
             else
-                return items[id];
+                return _items[id];
         }
 
         /**
@@ -29,7 +31,7 @@ namespace Assets.Scripts.Items
                 if (fitAmount > 0)
                 {
                     itemCopy.amount = fitAmount;
-                    items.Add(itemCopy);
+                    _items.Add(itemCopy);
                     _weight += itemCopy.weight;
                     return itemCopy.amount - fitAmount;
                 }
@@ -39,7 +41,7 @@ namespace Assets.Scripts.Items
             else
             {
                 // item fits completely
-                items.Add(itemCopy);
+                _items.Add(itemCopy);
                 _weight += itemCopy.weight;
                 return 0;
             }
@@ -64,7 +66,7 @@ namespace Assets.Scripts.Items
                 {
                     /* iterate all items and add 'item' until its amount is zero or weight constraint is reached */
                     int rest = itemCopy.amount;
-                    foreach (PraeItem i in items)
+                    foreach (PraeItem i in _items)
                     {
                         // item names must match and stacksize not reached
                         if (i.name.Equals(itemCopy.name) && i.amount < i.stackSize)
@@ -117,7 +119,7 @@ namespace Assets.Scripts.Items
                     else
                     {
                         // item fits completely
-                        items.Add(itemCopy);
+                        _items.Add(itemCopy);
                         _weight += itemCopy.weight;
                         return 0;
                     }
@@ -127,15 +129,58 @@ namespace Assets.Scripts.Items
 
         public void RemoveItem(int id)
         {
-            if (id < 0 || id >= items.Count)
+            if (id < 0 || id >= _items.Count)
                 throw new System.ArgumentOutOfRangeException();
             else
-                items.RemoveAt(id);
+                _items.RemoveAt(id);
         }
 
         public bool RemoveItem(PraeItem d)
         {
             throw new System.NotImplementedException();
+        }
+
+        /**
+         * GETTER AND SETTER
+         *********************/
+
+        public float weight
+        {
+            get { return _weight; }
+            set
+            {
+                if (value < 0)
+                    UnityEngine.Debug.LogError("Cannot set inventory weight: value is negative!");
+                _weight = value;
+            }
+        }
+
+        public float maxWeight
+        {
+            get { return _maxWeight; }
+            set
+            {
+                if (value < 0)
+                    UnityEngine.Debug.LogError("Cannot set inventory maxWeight: value is negative!");
+                _maxWeight = value;
+            }
+        }
+
+        public int itemCount
+        {
+            get { return items.Count; }
+        }
+
+        public List<PraeItem> items
+        {
+            get { return _items; }
+            protected set
+            {
+                if (value == null)
+                    UnityEngine.Debug.LogError("Inventory items set to NULL!");
+                else
+                    _items = value;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abilities;
+using Assets.Scripts.Items;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Objects;
 using UnityEngine;
@@ -12,11 +13,12 @@ namespace Assets.Scripts.Entity
     [RequireComponent(typeof(EntityInfo))]
     public class EntityController : MonoBehaviour
     {
-        protected EntityInfo        entityInfo;
-        protected EntityMovement    moveComp;       // physical object in the world
         protected AbilityManager    abiCon;         // all abilities available
-        protected TestManager       DEB_testManager;// reference for debugging reasons. TODO: Should be performed by GameLogic later on
+        protected EntityInfo        entityInfo;     // basic attributes
+        protected EntityMovement    moveComp;       // physical object in the world
         protected EntityObject      _praeObject;    // standard praecapatus object information. Weight, melee range, etc.
+        [SerializeField] protected Inventory         _inventory;
+        protected TestManager       DEB_testManager;// reference for debugging reasons. TODO: Should be performed by GameLogic later on
 
         protected bool  _bInfight   = false;
 
@@ -56,19 +58,49 @@ namespace Assets.Scripts.Entity
         public System.Collections.Generic.List<AbilitySaveData> abiList
         {
             get { return abiCon.abiList; }
-            set { abiCon.abiList = value; }
+            set
+            {
+                if (value == null)
+                    Debug.LogError("abiList cannot be set to NULL!");
+                else
+                    abiCon.abiList = value;
+            }
         }
 
         public System.Collections.Generic.List<AttributeGroupSaveData> attrGrpList
         {
             get { return entityInfo.attrGrpList; }
-            set { entityInfo.attrGrpList = value; }
+            set
+            {
+                if (value == null)
+                    Debug.LogError("attrGrpList cannot be set to NULL!");
+                else
+                    entityInfo.attrGrpList = value;
+            }
         }
 
         public System.Collections.Generic.List<AttributeOtherSaveData> attrOtherList
         {
             get { return entityInfo.attrOtherList; }
-            set { entityInfo.attrOtherList = value; }
+            set
+            {
+                if (value == null)
+                    Debug.LogError("attrOtherList cannot be set to NULL!");
+                else
+                    entityInfo.attrOtherList = value;
+            }
+        }
+
+        public Inventory inventory
+        {
+            get { return _inventory; }
+            set
+            {
+                if (value == null)
+                    Debug.LogError("inventory cannot be set to NULL!");
+                else
+                    _inventory = value;
+            }
         }
 
         /*********

@@ -72,7 +72,7 @@ namespace Assets.Scripts.Items
             {
                 if (value < 0)
                     Debug.LogError("Item " + name + " : amount negative!");
-                else if (value > _stackSize)
+                else if (_stackSize > 0 && value > _stackSize)
                     Debug.LogError("Item " + name + " : amount exceeds stackSize!");
                 _amount = value;
             }
@@ -118,8 +118,8 @@ namespace Assets.Scripts.Items
             get { return _stackSize; }
             protected set
             {
-                if (value <= 0)
-                    Debug.LogError("Item " + name + " : stackSize negative or zero!");
+                if (value <= 0 || value < _amount)
+                    Debug.LogError("Item " + name + " : stackSize negative,zero or lower than amount!");
                 _stackSize = value;
             }
         }

@@ -90,9 +90,6 @@
     <Compile Include="Assets\Scripts\Commands\UseAbilityCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\WriteLineCommand.cs" />
     <Compile Include="Assets\Scripts\Constants.cs" />
-    <Compile Include="Assets\Scripts\Conversations\ConTester.cs" />
-    <Compile Include="Assets\Scripts\Conversations\Conversation.cs" />
-    <Compile Include="Assets\Scripts\Conversations\InteractionComponent.cs" />
     <Compile Include="Assets\Scripts\EAttributeGroup.cs" />
     <Compile Include="Assets\Scripts\EAttributeOther.cs" />
     <Compile Include="Assets\Scripts\ECharClass.cs" />
@@ -117,6 +114,10 @@
     <Compile Include="Assets\Scripts\Exception\ItemDBException.cs" />
     <Compile Include="Assets\Scripts\Exception\ItemStackException.cs" />
     <Compile Include="Assets\Scripts\GameLogic.cs" />
+    <Compile Include="Assets\Scripts\Interactions\ConTester.cs" />
+    <Compile Include="Assets\Scripts\Interactions\Conversation.cs" />
+    <Compile Include="Assets\Scripts\Interactions\InteractionComponent.cs" />
+    <Compile Include="Assets\Scripts\Interactions\ShopUI.cs" />
     <Compile Include="Assets\Scripts\Items\Currency.cs" />
     <Compile Include="Assets\Scripts\Items\Inventory.cs" />
     <Compile Include="Assets\Scripts\Items\PraeItem.cs" />

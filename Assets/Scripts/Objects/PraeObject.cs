@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Conversations;
+﻿using Assets.Scripts.Interactions;
 using System;
 using UnityEngine;
 
