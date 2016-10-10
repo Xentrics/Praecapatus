@@ -8,7 +8,7 @@ namespace Assets.Scripts.Managers
 {
     [RequireComponent(typeof(PraeObject))]
     [RequireComponent(typeof(EntityInfo))]
-    class TestManager : MonoBehaviour
+    public class TestManager : MonoBehaviour
     {
         PlayerController playerC;
         EntityInfo charInfo;
@@ -79,7 +79,7 @@ namespace Assets.Scripts.Managers
             if (ability.canUse(version, user, targets))
             {
                 int c = ability.getTestModifier(version, user, targets);            // Erschwernis/Erleichterung
-                int aw = charInfo.getAttributeValue(ability.getAttributeGroup());   // Value of assigned attribute
+                int aw = charInfo.getAttributeValue(ability.attributeGroup);   // Value of assigned attribute
                 int fw = ability.fw;                                                // Fertigkeitswert of ability
                 ELuck luck = ELuck.normal;
 

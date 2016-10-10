@@ -1,18 +1,18 @@
 ﻿using Assets.Scripts.Entity;
 using Assets.Scripts.Managers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Xml.Serialization;
 
 namespace Assets.Scripts.Abilities
 {
-    abstract class AbstractAbility
+    [System.Serializable]
+    public abstract class AbstractAbility
     {
+        [XmlAttribute]
         public int fw = AbilityManager.UNLEARNED; // 'fertigkeitswert', the base ability level. This is used for dice-rolls
 
-        protected EAttributeGroup attributeGrp;
-        protected EUsageMode usageMode = EUsageMode.none;
+        protected EAttributeGroup _attributeGrp;
+        protected EUsageMode _usageMode = EUsageMode.none;
         protected bool useableWithoutLearning = true; // if level equals UNLEARNED, shall we still be able to make a test for this ability
 
         public abstract void useOverride();
@@ -78,18 +78,22 @@ namespace Assets.Scripts.Abilities
          * returns the main attribute which adds to the fw during the dice roll
          * see EAttrGrp for all attributes available
          */
-        public EAttributeGroup getAttributeGroup()
+        [XmlAttribute("attrGrp")]
+        public EAttributeGroup attributeGroup
         {
-            return attributeGrp;
+            get { return _attributeGrp; }
+            protected set { _attributeGrp = value; }
         }
 
         /**
          * return the state the ability is currently used
          * see EUsageMode for possible states
          */
-        public EUsageMode getUsageMode()
+        [XmlAttribute("mode")]
+        public EUsageMode usageMode
         {
-            return usageMode;
+            get { return _usageMode; }
+            set { _usageMode = value; }
         }
 
         public abstract string name
@@ -99,7 +103,7 @@ namespace Assets.Scripts.Abilities
 
         public override string ToString()
         {
-            return "Abi: " + this.name;
+            return "Abi: " + name;
         }
     }
 }

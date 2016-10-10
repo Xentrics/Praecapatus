@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts
 {
-    enum ETestMode
+    public enum ETestMode
     {
         instant,
         prolonged,

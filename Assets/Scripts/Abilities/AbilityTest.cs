@@ -12,8 +12,8 @@ namespace Assets.Scripts.Abilities
     {
         public AbilityTest()
         {
-            this.attributeGrp = EAttributeGroup.KO;
-            this.usageMode = EUsageMode.instant;
+            this._attributeGrp = EAttributeGroup.KO;
+            this._usageMode = EUsageMode.instant;
         }
 
         public override string name

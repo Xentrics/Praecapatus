@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Abilities
 {
-    enum EAbilities
+    public enum EAbilities
     {
         null_,
         test,

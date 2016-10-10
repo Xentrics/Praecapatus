@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<EntityData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Abilities>
+    <Abi abi="null_" fw="0" mode="none" />
+    <Abi abi="test" fw="0" mode="instant" />
+    <Abi abi="Astrahlbelebung" fw="0" mode="none" />
+  </Abilities>
+  <AttrGrp>
+    <Attr attr="AU" val="10" />
+    <Attr attr="GE" val="10" />
+    <Attr attr="IN" val="10" />
+    <Attr attr="KO" val="10" />
+    <Attr attr="LO" val="10" />
+    <Attr attr="MO" val="10" />
+    <Attr attr="MA" val="10" />
+  </AttrGrp>
+  <AttrOther>
+    <Attr attr="BaseIni" val="20" />
+    <Attr attr="MaP" val="147" />
+    <Attr attr="MaPmax" val="20" />
+    <Attr attr="Wundschwelle" val="20" />
+    <Attr attr="SmP" val="20" />
+  </AttrOther>
+</EntityData>

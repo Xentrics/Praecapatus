@@ -9,7 +9,7 @@ namespace Assets.Scripts.Entity
     [RequireComponent(typeof(PlayerMovement))]
     [RequireComponent(typeof(AbilityManager))]
     [RequireComponent(typeof(TestManager))]
-    class PlayerController : EntityController
+    public class PlayerController : EntityController
     {
         struct KeybarAbility {
             public AbstractAbility abi;

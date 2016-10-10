@@ -37,7 +37,7 @@ namespace Assets.Scripts.Items
             this.value = value;
             this.amount = amount;
             this.stackSize = stackSize;
-            this._icon = (icon) ? icon : Managers.ItemDBManager.NotSetIcon;
+            this._icon = (icon) ? icon : Managers.XmlDBManager.NotSetIcon;
         }
 
 
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Items
             get { return _icon; }
             set
             {
-                _icon = (value) ? value : Managers.ItemDBManager.NotSetIcon; ;
+                _icon = (value) ? value : Managers.XmlDBManager.NotSetIcon; ;
             }
         }
 

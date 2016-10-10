@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Entity
@@ -18,7 +17,7 @@ namespace Assets.Scripts.Entity
 
         Animator anim;
         AudioSource playerAudio;
-        PlayerMovement_Old playerMovement;
+        PlayerMovement playerMovement;
         //PlayerShooting playerShooting;
         bool isDead;
         bool damaged;
@@ -28,7 +27,7 @@ namespace Assets.Scripts.Entity
         {
             anim = GetComponent<Animator>();
             playerAudio = GetComponent<AudioSource>();
-            playerMovement = GetComponent<PlayerMovement_Old>();
+            playerMovement = GetComponent<PlayerMovement>();
             //playerShooting = GetComponentInChildren <PlayerShooting> ();
             currentHealth = startingHealth;
         }

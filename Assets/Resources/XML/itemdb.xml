@@ -6,10 +6,5 @@
       <value G="1" K="2" T="3" />
       <iconPath>Assets/Resources/Icons/NotSetIcon.png</iconPath>
     </Item>
-    <Item name="FailItem" amount="-1" stackSize="0" weight="-1">
-      <desc>Used to test sanity checks.</desc>
-      <value G="-1" K="-1" T="-1" />
-      <iconPath>Assets/Resources/Icons/NotSetIcon.png</iconPath>
-    </Item>
   </Items>
 </ItemCollection>

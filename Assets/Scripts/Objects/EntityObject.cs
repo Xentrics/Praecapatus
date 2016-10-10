@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Assets.Scripts.Objects
+﻿namespace Assets.Scripts.Objects
 {
-    class EntityObject : PraeObject
+    public class EntityObject : PraeObject
     {
     }
 }

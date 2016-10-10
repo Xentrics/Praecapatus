@@ -17,6 +17,7 @@ namespace Assets.Scripts
 
         public static int NUM_ATTRIBUTE_GROUPS = Enum.GetNames(typeof(EAttributeGroup)).Length;
         public static int NUM_ATTRIBUTE_OTHER = Enum.GetNames(typeof(EAttributeOther)).Length;
+        public static int NUM_ABILITIES = Enum.GetNames(typeof(Abilities.EAbilities)).Length;
 
         public static Vector3 dirToVec(EDirection dir)
         {

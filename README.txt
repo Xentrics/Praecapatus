@@ -11,7 +11,13 @@ NEXT SESSION TASKS:
 	- basic conversation		++	
  - deal with time mechanics 	+
  - implement basic talkUI		++
- - implement XML database		++
+ - implement GameSaver			+
+	- item database				++
+	- per character saved		+
+		- save abilities		++
+		- save attributes		++
+		- save character states	
+			- debuffs			
  - implement shop
  - implement Quest Mechanics
  - DEBUFF mechanics			

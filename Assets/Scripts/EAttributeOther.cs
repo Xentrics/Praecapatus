@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts
 {
-    enum EAttributeOther
+    public enum EAttributeOther
     {
         BaseIni,
         MaP,

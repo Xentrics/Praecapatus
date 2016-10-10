@@ -10,12 +10,12 @@ namespace Assets.Scripts.Entity
     [RequireComponent(typeof(TestManager))]
     [RequireComponent(typeof(EntityObject))]
     [RequireComponent(typeof(EntityInfo))]
-    class EntityController : MonoBehaviour
+    public class EntityController : MonoBehaviour
     {
         protected EntityInfo        entityInfo;
         protected EntityMovement    moveComp;       // physical object in the world
         protected AbilityManager    abiCon;         // all abilities available
-        protected TestManager       DEB_testManager;    // reference for debugging reasons. TODO: Should be performed by GameLogic later on
+        protected TestManager       DEB_testManager;// reference for debugging reasons. TODO: Should be performed by GameLogic later on
         protected EntityObject      _praeObject;    // standard praecapatus object information. Weight, melee range, etc.
 
         protected bool  _bInfight   = false;
@@ -34,9 +34,8 @@ namespace Assets.Scripts.Entity
         }
 
         protected virtual void Start()
-        {
+        {}
 
-        }
 
         /*
          * handle correct key input across multiple scripts & mechanics
@@ -51,31 +50,30 @@ namespace Assets.Scripts.Entity
         }
 
         /*********
-         * GETTER AND SETTER
+         * XML INTERFACE
          ************************/
 
-        public void drainMana(int by)
+        public System.Collections.Generic.List<AbilitySaveData> abiList
         {
-            entityInfo.drainMaP(by);
+            get { return abiCon.abiList; }
+            set { abiCon.abiList = value; }
         }
 
-        public void toggleRunning()
+        public System.Collections.Generic.List<AttributeGroupSaveData> attrGrpList
         {
-            moveComp.toggleRunning();
+            get { return entityInfo.attrGrpList; }
+            set { entityInfo.attrGrpList = value; }
         }
 
-        public bool running
+        public System.Collections.Generic.List<AttributeOtherSaveData> attrOtherList
         {
-            get
-            {
-                return moveComp.running;
-            }
-
-            set
-            {
-                moveComp.running = value;
-            }
+            get { return entityInfo.attrOtherList; }
+            set { entityInfo.attrOtherList = value; }
         }
+
+        /*********
+         * GETTER AND SETTER
+         ************************/
 
         public bool bInfight
         {
@@ -87,6 +85,19 @@ namespace Assets.Scripts.Entity
             set
             {
                 _bInfight = value;
+            }
+        }
+
+        public void drainMana(int by)
+        {
+            entityInfo.drainMaP(by);
+        }
+
+        public Vector3 lookDir
+        {
+            get
+            {
+                return moveComp.lookDir;
             }
         }
 
@@ -103,20 +114,30 @@ namespace Assets.Scripts.Entity
             }
         }
 
-        public Vector3 lookDir
-        {
-            get
-            {
-                return moveComp.lookDir;
-            }
-        }
-
         public PraeObject praeObject
         {
             get
             {
                 return _praeObject;
             }
+        }
+
+        public bool running
+        {
+            get
+            {
+                return moveComp.running;
+            }
+
+            set
+            {
+                moveComp.running = value;
+            }
+        }
+
+        public void toggleRunning()
+        {
+            moveComp.toggleRunning();
         }
     }
 }

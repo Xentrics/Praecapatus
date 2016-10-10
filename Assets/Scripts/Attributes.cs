@@ -9,7 +9,7 @@ namespace Assets.Scripts
      * a component that contains all basic attributes and methods to modify them
      * may be attached to any character or entity
      */
-    class Attributes : MonoBehaviour
+    public class Attributes : MonoBehaviour
     { 
         public static readonly int minLevel = 0;
         // these are only valid for attribute groups
@@ -31,6 +31,65 @@ namespace Assets.Scripts
                 attributesOther.Add(A, 20);
         }
 
+        /**
+         * XML INTERFACE
+         ********************/
+
+        public List<Managers.AttributeGroupSaveData> attrGrpList
+        {
+            get
+            {
+                List<Managers.AttributeGroupSaveData> ret = new List<Managers.AttributeGroupSaveData>(attributeGroups.Count+1);
+                int i = 0;
+                foreach (EAttributeGroup a in attributeGroups.Keys)
+                {
+                    ret.Add(new Managers.AttributeGroupSaveData());
+                    ret[i].attr = a;
+                    ret[i].val = attributeGroups[a];
+                    ++i;
+                }
+
+                return ret;
+            }
+
+            set
+            { 
+                foreach (Managers.AttributeGroupSaveData a in value)
+                {
+                    attributeGroups[a.attr] = a.val;
+                }
+            }
+        }
+
+        public List<Managers.AttributeOtherSaveData> attrOtherList
+        {
+            get
+            {
+                List<Managers.AttributeOtherSaveData> ret = new List<Managers.AttributeOtherSaveData>(attributeGroups.Count + 1);
+                int i = 0;
+                foreach (EAttributeOther a in attributesOther.Keys)
+                {
+                    ret.Add(new Managers.AttributeOtherSaveData());
+                    ret[i].attr = a;
+                    ret[i].val = attributesOther[a];
+                    ++i;
+                }
+
+                return ret;
+            }
+
+            set
+            {
+                foreach (Managers.AttributeOtherSaveData a in value)
+                {
+                    attributesOther[a.attr] = a.val;
+                }
+            }
+        }
+
+        /**
+         * GETTER AND SETTER
+         ***********************/
 
         /*
          * change the level of the given attribute to 'value' for this instance
@@ -38,7 +97,7 @@ namespace Assets.Scripts
         public void setAttributeTo(EAttributeOther A, int value)
         {
             if (value < minLevel)
-                throw new System.ArgumentOutOfRangeException("You attempted to set an attribute to high or to low! Value: " + value);
+                throw new ArgumentOutOfRangeException("You attempted to set an attribute to high or to low! Value: " + value);
             else
                 attributesOther[A] = value; // update to new level
         }
@@ -49,7 +108,7 @@ namespace Assets.Scripts
         public void setAttributeTo(EAttributeGroup A, int value)
         {
             if (value < minLevel || value > maxLevel)
-                throw new System.ArgumentOutOfRangeException("You attempted to set an attribute to high or to low! Value: " + value);
+                throw new ArgumentOutOfRangeException("You attempted to set an attribute to high or to low! Value: " + value);
             else
                 attributeGroups[A] = value; // update to new level
         }

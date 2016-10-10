@@ -28,8 +28,8 @@ namespace Assets.Scripts
             }
         };
 
-        GameObject mainChar;
-        PlayerController pc;
+        GameObject _mainChar;
+        PlayerController _pc;
         private Quaternion _worldViewRotation = Quaternion.Euler(0, 0, 0); // THIS REFERENCE SHOULD NEVER CHANGE
         private Quaternion worldViewBackupReference; // Bug stuff. Leads to critical fail if it becomes a different reference that '_worldViewRotation'
 
@@ -56,10 +56,10 @@ namespace Assets.Scripts
 
         public void Start()
         {
-            mainChar = GameObject.FindGameObjectWithTag("MainCharacter");
-            pc = mainChar.GetComponent<PlayerController>();
+            _mainChar = GameObject.FindGameObjectWithTag("MainCharacter");
+            _pc = _mainChar.GetComponent<PlayerController>();
 
-            if (!mainChar || !pc)
+            if (!_mainChar || !_pc)
                 //TODO: LOAD CHARACTER FORM PRESET!
                 throw new NullReferenceException("GameManager could not find mainCharacter or his attached controller!!!!");
         }
@@ -157,6 +157,19 @@ namespace Assets.Scripts
             return objects;
         }
 
+        /**
+         * GETTER AND SETTER
+         ***************************/
+        
+        public PlayerController pc
+        {
+            get { return _pc; }
+        }
+
+        public GameObject mainChar
+        {
+            get { return _mainChar; }
+        }
 
         public Quaternion worldViewRotation
         {

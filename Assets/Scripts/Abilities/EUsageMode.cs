@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Abilities
 {
-    enum EUsageMode
+    public enum EUsageMode
     {
         none,
         instant,
