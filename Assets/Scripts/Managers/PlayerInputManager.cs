@@ -1,8 +1,5 @@
 ﻿using Assets.Scripts.Entity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnitySampleAssets.CrossPlatformInput;
 
@@ -11,7 +8,7 @@ namespace Assets.Scripts.Managers
     /**
      * ADD THIS COMPONENT TO THE PLAYER
      */
-    [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(EntityController))]
     class PlayerInputManager : MonoBehaviour
     {
         ShortKeyBarManager barManager;

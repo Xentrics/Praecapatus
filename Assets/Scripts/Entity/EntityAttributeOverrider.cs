@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Assets.Scripts.Entity
 {
     /**
      * this class allows an easy way to set attribute using the unity editor while maining the clean code (using dictionaries)
      */
+    [RequireComponent(typeof(EntityController))]
     class EntityAttributeOverrider : MonoBehaviour
     {
         public static readonly int NO_OVERRIDE = -1;
@@ -33,7 +32,7 @@ namespace Assets.Scripts.Entity
             // get CharAttributes component if not defined in unity editor
             if (attrToOverride == null)
             {
-                EntityInfo info = GetComponent<EntityInfo>();
+                EntityInfo info = GetComponent<EntityController>().entityInfo;
                 if (info != null)
                     attrToOverride = info.attr;
                 else

@@ -16,7 +16,7 @@
   </AttrGrp>
   <AttrOther>
     <Attr attr="BaseIni" val="20" />
-    <Attr attr="MaP" val="150" />
+    <Attr attr="MaP" val="5" />
     <Attr attr="MaPmax" val="20" />
     <Attr attr="Wundschwelle" val="20" />
     <Attr attr="SmP" val="20" />
@@ -25,8 +25,8 @@
     <weight>0</weight>
     <maxWeight>20</maxWeight>
     <items>
-      <PraeItem name="Test" amount="1" stackSize="1" weight="1">
-        <desc>lalu</desc>
+      <PraeItem name="TestItem" amount="1" stackSize="1" weight="1">
+        <desc>nothing</desc>
         <value G="1" K="2" T="3" />
         <iconPath />
       </PraeItem>

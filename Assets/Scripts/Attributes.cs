@@ -9,7 +9,7 @@ namespace Assets.Scripts
      * a component that contains all basic attributes and methods to modify them
      * may be attached to any character or entity
      */
-    public class Attributes : MonoBehaviour
+    public class Attributes
     { 
         public static readonly int minLevel = 0;
         // these are only valid for attribute groups
@@ -20,7 +20,7 @@ namespace Assets.Scripts
         Dictionary<EAttributeGroup, int> attributeGroups;
         Dictionary<EAttributeOther, int> attributesOther;
 
-        void Awake()
+        public Attributes()
         {
             attributeGroups = new Dictionary<EAttributeGroup, int>(Constants.NUM_ATTRIBUTE_GROUPS);
             foreach (EAttributeGroup A in Enum.GetValues(typeof(EAttributeGroup)))

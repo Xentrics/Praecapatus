@@ -7,18 +7,15 @@ using UnityEngine;
 namespace Assets.Scripts.Entity
 {
     [RequireComponent(typeof(EntityMovement))]
-    [RequireComponent(typeof(AbilityManager))]
-    [RequireComponent(typeof(TestManager))]
     [RequireComponent(typeof(EntityObject))]
-    [RequireComponent(typeof(EntityInfo))]
     public class EntityController : MonoBehaviour
     {
-        protected AbilityManager    abiCon;         // all abilities available
-        protected EntityInfo        entityInfo;     // basic attributes
-        protected EntityMovement    moveComp;       // physical object in the world
-        protected EntityObject      _praeObject;    // standard praecapatus object information. Weight, melee range, etc.
-        [SerializeField] protected Inventory         _inventory;
-        protected TestManager       DEB_testManager;// reference for debugging reasons. TODO: Should be performed by GameLogic later on
+        protected EntityMovement moveComp;        // physical object in the world
+        protected EntityObject   _praeObject;     // standard praecapatus object information. Weight, melee range, etc.
+        protected AbilityManager abiCon;          // all abilities available
+        protected TestManager    DEB_testManager; // reference for debugging reasons. TODO: Should be performed by GameLogic later on
+        protected EntityInfo     _entityInfo;     // basic attributes
+        [SerializeField] protected Inventory _inventory;
 
         protected bool  _bInfight   = false;
 
@@ -28,10 +25,10 @@ namespace Assets.Scripts.Entity
         protected virtual void Awake()
         {
             moveComp = GetComponent<EntityMovement>();
-            abiCon = GetComponent<AbilityManager>();
-            DEB_testManager = GetComponent<TestManager>();
             _praeObject = GetComponent<EntityObject>();
-            entityInfo = GetComponent<EntityInfo>();
+            abiCon = new AbilityManager(this);
+            DEB_testManager = new TestManager(this);
+            _entityInfo = new EntityInfo();
             praeObject.meleeRange = 10f;    // ?
         }
 
@@ -69,25 +66,25 @@ namespace Assets.Scripts.Entity
 
         public System.Collections.Generic.List<AttributeGroupSaveData> attrGrpList
         {
-            get { return entityInfo.attrGrpList; }
+            get { return _entityInfo.attrGrpList; }
             set
             {
                 if (value == null)
                     Debug.LogError("attrGrpList cannot be set to NULL!");
                 else
-                    entityInfo.attrGrpList = value;
+                    _entityInfo.attrGrpList = value;
             }
         }
 
         public System.Collections.Generic.List<AttributeOtherSaveData> attrOtherList
         {
-            get { return entityInfo.attrOtherList; }
+            get { return _entityInfo.attrOtherList; }
             set
             {
                 if (value == null)
                     Debug.LogError("attrOtherList cannot be set to NULL!");
                 else
-                    entityInfo.attrOtherList = value;
+                    _entityInfo.attrOtherList = value;
             }
         }
 
@@ -120,9 +117,14 @@ namespace Assets.Scripts.Entity
             }
         }
 
+        public EntityInfo entityInfo
+        {
+            get { return _entityInfo; }
+        }
+
         public void drainMana(int by)
         {
-            entityInfo.drainMaP(by);
+            _entityInfo.drainMaP(by);
         }
 
         public Vector3 lookDir

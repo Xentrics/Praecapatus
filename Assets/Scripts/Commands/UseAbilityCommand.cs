@@ -20,7 +20,7 @@ namespace Assets.Scripts.Commands
             return UseAbilityCommand.cmdName;
         }
 
-        public override bool use(string[] args, PlayerController pc)
+        public override bool use(string[] args, EntityController pc)
         {
             string abiName = args[0];
             foreach (EAbilities A in Enum.GetValues(typeof(EAbilities)))

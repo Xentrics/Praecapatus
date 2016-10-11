@@ -6,18 +6,22 @@ using Assets.Scripts.Entity;
 namespace Assets.Scripts.Managers
 {
     [System.Serializable]
-    public class AbilityManager : MonoBehaviour
+    public class AbilityManager
     {
         public static readonly int DEFAULT_ABILITY_LEVEL = 0;
         public static readonly int UNLEARNED = 0;
 
-        PlayerController playerC;
-        Dictionary<EAbilities, AbstractAbility> abilities;
+        [SerializeField] EntityController entityC;
+        [SerializeField] Dictionary<EAbilities, AbstractAbility> abilities;
 
-        public void Awake()
+        /**
+         * @ec: controller which uses this manager
+         */
+        public AbilityManager(EntityController ec)
         {
-            if (playerC == null)
-                playerC = GetComponent<PlayerController>();
+            if (ec == null)
+                throw new System.NullReferenceException("AbilityManager cannot be instantiated without an appropriate entitycontroller!");
+            entityC = ec;
 
             abilities = new Dictionary<EAbilities, AbstractAbility>();
             abilities.Add(EAbilities.null_, new NullAbility());

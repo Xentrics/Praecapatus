@@ -6,17 +6,18 @@ using Assets.Scripts.Abilities;
 
 namespace Assets.Scripts.Managers
 {
+    [RequireComponent(typeof(EntityController))]
     [RequireComponent(typeof(PraeObject))]
-    [RequireComponent(typeof(EntityInfo))]
-    public class TestManager : MonoBehaviour
+    [Serializable]
+    public class TestManager
     {
-        PlayerController playerC;
-        EntityInfo charInfo;
+        [SerializeField] EntityController entityC;
+        [SerializeField] EntityInfo charInfo;
 
-        public void Awake()
+        public TestManager(EntityController ec)
         {
-            playerC = GetComponent<PlayerController>();
-            charInfo = GetComponent<EntityInfo>();
+            entityC = ec;
+            charInfo = entityC.entityInfo;
         }
 
         /**
@@ -104,7 +105,7 @@ namespace Assets.Scripts.Managers
                         luck = ELuck.slipup;
                 }
 
-                print("Ability: " + ability + "| Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw + " luck: " + luck);
+                Debug.Log("Ability: " + ability + "| Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw + " luck: " + luck);
                 Constants.chatManager.addLine("Ability: " + ability);
                 Constants.chatManager.addLine("Dice: " + diceroll + " rp: " + rp + " fw: " + fw + " aw: " + aw + " luck: " + luck);
 

@@ -17,7 +17,7 @@ namespace Assets.Scripts.Commands
             return WriteLineCommand.cmdName;
         }
 
-        public override bool use(string[] args, PlayerController pc)
+        public override bool use(string[] args, EntityController pc)
         {
             Constants.chatManager.addLine( (args == null) ? null : String.Join(" ", args));
             return true;

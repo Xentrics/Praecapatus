@@ -27,12 +27,9 @@ GameObject:
   - 95: {fileID: 95000010121242054}
   - 114: {fileID: 114000011939320146}
   - 114: {fileID: 114000012825497820}
-  - 114: {fileID: 114000012394677622}
   - 114: {fileID: 114000012483117974}
-  - 114: {fileID: 114000010028175138}
   - 114: {fileID: 114000011655028544}
   - 114: {fileID: 114000012646790850}
-  - 114: {fileID: 114000011192066202}
   - 114: {fileID: 114000013524255328}
   - 114: {fileID: 114000010551888700}
   m_Layer: 0
@@ -161,17 +158,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000010028175138
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010669102300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db6e26e49e97f0a469c9121b11994a5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114000010551888700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,18 +167,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2d8b3a1b1c066d4ca8d17c379c13903, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HUDCanvas: {fileID: 0}
---- !u!114 &114000011192066202
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010669102300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f4ba6fc4c1c1f40b329b8c8698cf16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114000011655028544
@@ -213,7 +187,11 @@ MonoBehaviour:
   gravityMultiplier: 4
   GroundCheckDistance: 0.2
   groundCheckOffset: {x: 0, y: 0.1, z: 0}
+  groundCheckBoxExtent: {x: 0, y: 0, z: 0}
   isInAir: 0
+  canJump: 1
+  _bRun: 1
+  canRun: 1
   followCamera: {fileID: 0}
 --- !u!114 &114000011939320146
 MonoBehaviour:
@@ -234,18 +212,6 @@ MonoBehaviour:
   _description: 
   interComp: {fileID: 114000012825497820}
   disableInteraction: 0
---- !u!114 &114000012394677622
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010669102300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f1be474b845e9947b1505e6a670f862, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attr: {fileID: 0}
 --- !u!114 &114000012483117974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -263,7 +229,6 @@ MonoBehaviour:
   AU: -1
   IN: -1
   LO: -1
-  attrToOverride: {fileID: 0}
 --- !u!114 &114000012646790850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -275,7 +240,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a525dee73c87afa448ad56db53bcad2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatManager: {fileID: 0}
+  abiCon:
+    entityC: {fileID: 0}
+  DEB_testManager:
+    entityC: {fileID: 0}
+  _inventory:
+    _weight: 0
+    _maxWeight: 20
+    _money:
+      _G: 0
+      _K: 0
+      _T: 0
+    _items: []
 --- !u!114 &114000012825497820
 MonoBehaviour:
   m_ObjectHideFlags: 1

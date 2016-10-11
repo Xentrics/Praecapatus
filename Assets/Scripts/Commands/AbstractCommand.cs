@@ -21,7 +21,7 @@ namespace Assets.Scripts.Commands
          * returns TRUE, if the command was useable
          * returns FALSE, if any issue occured
          */
-        abstract public bool use(string[] args, PlayerController pc);
+        abstract public bool use(string[] args, EntityController pc);
 
         abstract public string getCommandName();
     }

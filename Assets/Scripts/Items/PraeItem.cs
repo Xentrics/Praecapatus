@@ -100,8 +100,9 @@ namespace Assets.Scripts.Items
             {
                 // HACK: i load icon here instead of setting iconpath
                 //       this is just to make XML load and save this stuff automatically
-                if (value != null)
+                if (value != null && value.Trim() != "")
                 {
+                    Debug.Log("iconPath: <" + value.Trim() + ">.");
                     Sprite s = (Sprite)UnityEditor.AssetDatabase.LoadAssetAtPath(value, typeof(Sprite));
                     icon = s;
                     if (!s)

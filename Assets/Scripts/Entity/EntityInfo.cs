@@ -5,18 +5,16 @@ namespace Assets.Scripts.Entity
 {
     [System.Serializable]
     [XmlRoot("EntityInfo")]
-    public class EntityInfo : MonoBehaviour
+    public class EntityInfo
     {
         public Attributes attr; // container for all basic 
         ECharClass _charClass;
         EAttributeGroup primaryAttr;
         EAttributeGroup secondaryAttr;
 
-        void Awake()
+        public EntityInfo()
         {
-            attr = GetComponent<Attributes>();
-            if (attr == null)
-                attr = gameObject.AddComponent<Attributes>();
+            attr = new Attributes();
         }
 
         void Start()

@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using UnitySampleAssets.CrossPlatformInput;
 using System;
-using Assets.Scripts.Managers;
 using Assets.Scripts.Abilities;
+using Assets.Scripts.Objects;
 
 namespace Assets.Scripts.Entity
 {
     [RequireComponent(typeof(PlayerMovement))]
-    [RequireComponent(typeof(AbilityManager))]
-    [RequireComponent(typeof(TestManager))]
+    [RequireComponent(typeof(EntityObject))]
     public class PlayerController : EntityController
     {
         struct KeybarAbility {

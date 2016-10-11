@@ -29,7 +29,7 @@ namespace Assets.Scripts
         };
 
         GameObject _mainChar;
-        PlayerController _pc;
+        EntityController _pc;
         private Quaternion _worldViewRotation = Quaternion.Euler(0, 0, 0); // THIS REFERENCE SHOULD NEVER CHANGE
         private Quaternion worldViewBackupReference; // Bug stuff. Leads to critical fail if it becomes a different reference that '_worldViewRotation'
 
@@ -57,7 +57,7 @@ namespace Assets.Scripts
         public void Start()
         {
             _mainChar = GameObject.FindGameObjectWithTag("MainCharacter");
-            _pc = _mainChar.GetComponent<PlayerController>();
+            _pc = _mainChar.GetComponent<EntityController>();
 
             if (!_mainChar || !_pc)
                 //TODO: LOAD CHARACTER FORM PRESET!
@@ -161,7 +161,7 @@ namespace Assets.Scripts
          * GETTER AND SETTER
          ***************************/
         
-        public PlayerController pc
+        public EntityController pc
         {
             get { return _pc; }
         }

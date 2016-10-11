@@ -17,7 +17,7 @@ namespace Assets.Scripts.Managers
         bool allowChat = true;
         bool isChatting = false;
         CommandParser cmdParser;
-        PlayerController playerC;
+        EntityController playerC;
         Text contentText;
         public InputField chatInputField;
 
@@ -64,7 +64,7 @@ namespace Assets.Scripts.Managers
 
         void Start()
         {
-            playerC = GameObject.FindGameObjectWithTag("MainCharacter").GetComponent<PlayerController>();
+            playerC = GameObject.FindGameObjectWithTag("MainCharacter").GetComponent<EntityController>();
             foreach (var g in GameObject.FindGameObjectsWithTag("MainCharacter"))
             {
                 print(g.name);
