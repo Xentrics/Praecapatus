@@ -6,27 +6,20 @@ using System.Xml;
 namespace Assets.Scripts.Interactions
 {
     /**
-         * any kind of event that can be triggered during events
-         */
+     * any kind of event that can be triggered during events
+     */
     public enum EConOptionType
     {
-        Normal,
-        Exit
+        UNSET,
+        NORMAL,
+        EXIT,
+        OPEN_SHOP
     }
 
     public class Conversation
     {
         // Conversation related stuff
         public static readonly int MAX_OPTIONS = 5;
-
-        /**
-         * container for trigger instances
-         */
-        struct OptionTrigger
-        {
-            public EConOptionType type;
-            public int optionID;
-        }
 
 
         /**
@@ -40,8 +33,6 @@ namespace Assets.Scripts.Interactions
             protected string _XmlID;
             protected string _dialogueText = null;
             protected List<BasicDialResponse> _responses = new List<BasicDialResponse>(MAX_OPTIONS);
-
-            public List<OptionTrigger> conTriggers;
 
             public string[] GetResponseStrings()
             {
@@ -62,7 +53,7 @@ namespace Assets.Scripts.Interactions
             public BasicDialResponse RetResponse(int id)
             {
                 if (id < 0 || id >= _responses.Count)
-                    throw new System.ArgumentOutOfRangeException("Cannot choose response with invalid id!" + id);
+                    throw new ArgumentOutOfRangeException("Cannot choose response with invalid id!" + id);
                 else
                     return _responses[id];
             }
@@ -79,24 +70,13 @@ namespace Assets.Scripts.Interactions
 
             public string XmlID
             {
-                get
-                {
-                    return _XmlID;
-                }
-
-                set
-                {
-                    _XmlID = value;
-                }
+                get { return _XmlID;  }
+                set { _XmlID = value; }
             }
 
             public string dialogueText
             {
-                get
-                {
-                    return _dialogueText;
-                }
-
+                get { return _dialogueText; }
                 set
                 {
                     if (value == null)
@@ -109,14 +89,12 @@ namespace Assets.Scripts.Interactions
         class BasicDialResponse
         {
             protected string _responseText = "";
-            protected BasicDialNode _nextNode = null;
+            public BasicDialNode nextNode = null;
+            public EConOptionType optionType = EConOptionType.UNSET;
 
             public string responseText
             {
-                get
-                {
-                    return _responseText;
-                }
+                get { return _responseText; }
 
                 set
                 {
@@ -126,22 +104,9 @@ namespace Assets.Scripts.Interactions
                 }
             }
 
-            public BasicDialNode nextNode
-            {
-                get
-                {
-                    return _nextNode;
-                }
-
-                set
-                {
-                    _nextNode = value;
-                }
-            }
-
             public bool isExitResponse()
             {
-                return _nextNode == null;
+                return nextNode == null;
             }
         }
 
@@ -161,16 +126,24 @@ namespace Assets.Scripts.Interactions
         public EConOptionType chose(int id)
         {
             BasicDialResponse resp = _currentNode.RetResponse(id);
-            if (resp.nextNode.HasOptions())
+            switch(resp.optionType)
             {
-                _currentNode = resp.nextNode;
-                return EConOptionType.Normal;
+                case EConOptionType.UNSET:
+                    if (resp.nextNode.HasOptions())
+                    {
+                        _currentNode = resp.nextNode;
+                        return EConOptionType.NORMAL;
+                    }
+                    else
+                    {
+                        _currentNode = resp.nextNode;
+                        return EConOptionType.EXIT;
+                    }
+
+                default:
+                    return resp.optionType;
             }
-            else
-            {
-                _currentNode = resp.nextNode;
-                return EConOptionType.Exit;
-            }
+            
         }
 
         public string getDialogue()
@@ -231,13 +204,12 @@ namespace Assets.Scripts.Interactions
         static readonly string EDGE_PLAYER_EVENT = "d12";
         static readonly string EDGE_GRAPHICS_KEY = "d15";
 
-        static readonly string START_NODE_COLOR = "#00CCFF"; // each conversation needs a node with a certain color code
+        static readonly string START_NODE_COLOR = "#00CCFF";    // each conversation needs a node with a certain color code
+
+        static readonly string OPENSHOP_EDGE_COLOR = "#993366"; // a open shop node may never be a start node
 
 
         /**
-         * TODO: make start node maker
-         * TODO: start nodes indicate new conversation, because they (can) share the same nodes and do not use up more memory
-         * 
          * func: loads a conversion saved as a graphml file
          * the expected graphml syntax is as follows:
          * 
@@ -338,12 +310,18 @@ namespace Assets.Scripts.Interactions
                         Debug.Assert(PolyLineEdge.Name.Equals("y:PolyLineEdge"), "Unexpected edge structure!");
                         bool labelFound = false;
                         foreach (XmlNode n in PolyLineEdge.ChildNodes)
-                            if (n.Name.Equals("y:EdgeLabel"))
+                            if (n.Name.Equals("y:LineStyle"))
+                            {
+                                if (n.Attributes["color"].Value.Equals(OPENSHOP_EDGE_COLOR))
+                                    response.optionType = EConOptionType.OPEN_SHOP;
+                            }
+                            else if (n.Name.Equals("y:EdgeLabel"))
                             {
                                 labelFound = true;
                                 response.responseText = n.InnerText;
                                 // TODO: set up multi response texts HERE
                             }
+
                         Debug.Assert(labelFound, "Found a response edge, but no response message??");
                     }
 

@@ -12,12 +12,41 @@ namespace Assets.Scripts
         public static ConsoleManager chatManager;      // fast reference. Set by instances of ChatManager during Awake()
         public static GameObject HUDCanvas;
         public static GameObject StatusUI;
+        public static GameObject ShopUI;
         public static GameObject InteractionUI;
         public static InteractionManager interactionManager;
 
         public static int NUM_ATTRIBUTE_GROUPS = Enum.GetNames(typeof(EAttributeGroup)).Length;
         public static int NUM_ATTRIBUTE_OTHER = Enum.GetNames(typeof(EAttributeOther)).Length;
         public static int NUM_ABILITIES = Enum.GetNames(typeof(Abilities.EAbilities)).Length;
+
+        /**
+         * func: disable all UI windows except the one given
+         * @m: the UI window to activate
+         */
+        public static void ActivateUI(EUIMode m)
+        {
+            StatusUI.SetActive(false);
+            ShopUI.SetActive(false);
+            InteractionUI.SetActive(false);
+
+            switch(m)
+            {
+                case EUIMode.NONE:
+                    break;
+                case EUIMode.INTERACTION_UI:
+                    InteractionUI.SetActive(true);
+                    break;
+                case EUIMode.SHOP_UI:
+                    ShopUI.SetActive(true);
+                    break;
+                case EUIMode.STATUS_UI:
+                    StatusUI.SetActive(true);
+                    break;
+                default:
+                    throw new NotImplementedException("UIMode not set yet!");
+            }
+        }
 
         public static Vector3 dirToVec(EDirection dir)
         {
@@ -35,5 +64,13 @@ namespace Assets.Scripts
                     return new Vector3();
             }
         }
+    }
+
+    public enum EUIMode
+    {
+        NONE,
+        STATUS_UI,
+        INTERACTION_UI,
+        SHOP_UI
     }
 }

@@ -8,8 +8,8 @@ namespace Assets.Scripts.Items
     {
         [UnityEngine.SerializeField] float _weight;
         [UnityEngine.SerializeField] float _maxWeight = 20f;
-        [UnityEngine.SerializeField] Currency _money;
-        [UnityEngine.SerializeField] List<PraeItem> _items;
+        [UnityEngine.SerializeField] Currency _money = new Currency();
+        [UnityEngine.SerializeField] List<PraeItem> _items = new List<PraeItem>();
 
         public PraeItem GetItem(int id)
         {
@@ -143,6 +143,31 @@ namespace Assets.Scripts.Items
         /**
          * GETTER AND SETTER
          *********************/
+
+        public Currency currency
+        {
+            get { return _money; }
+            set
+            {
+                if (value != null)
+                    _money.Set(value);
+            }
+        }
+
+        public int G
+        {
+            get { return _money.G; }
+        }
+
+        public int K
+        {
+            get { return _money.K; }
+        }
+
+        public int T
+        {
+            get { return _money.T; }
+        }
 
         public float weight
         {

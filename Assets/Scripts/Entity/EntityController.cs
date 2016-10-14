@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abilities;
+using Assets.Scripts.Interactions;
 using Assets.Scripts.Items;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Objects;
@@ -8,6 +9,7 @@ namespace Assets.Scripts.Entity
 {
     [RequireComponent(typeof(EntityMovement))]
     [RequireComponent(typeof(EntityObject))]
+    [RequireComponent(typeof(InteractionComponent))]
     public class EntityController : MonoBehaviour
     {
         protected EntityMovement moveComp;        // physical object in the world
@@ -15,6 +17,7 @@ namespace Assets.Scripts.Entity
         protected AbilityManager abiCon;          // all abilities available
         protected TestManager    DEB_testManager; // reference for debugging reasons. TODO: Should be performed by GameLogic later on
         protected EntityInfo     _entityInfo;     // basic attributes
+        protected InteractionComponent _interComp;
         [SerializeField] protected Inventory _inventory;
 
         protected bool  _bInfight   = false;
@@ -26,9 +29,10 @@ namespace Assets.Scripts.Entity
         {
             moveComp = GetComponent<EntityMovement>();
             _praeObject = GetComponent<EntityObject>();
+            _interComp = GetComponent<InteractionComponent>();
             abiCon = new AbilityManager(this);
-            DEB_testManager = new TestManager(this);
             _entityInfo = new EntityInfo();
+            DEB_testManager = new TestManager(this);
             praeObject.meleeRange = 10f;    // ?
         }
 
@@ -117,14 +121,19 @@ namespace Assets.Scripts.Entity
             }
         }
 
+        public void drainMana(int by)
+        {
+            _entityInfo.drainMaP(by);
+        }
+
         public EntityInfo entityInfo
         {
             get { return _entityInfo; }
         }
 
-        public void drainMana(int by)
+        public InteractionComponent interComp
         {
-            _entityInfo.drainMaP(by);
+            get { return _interComp; }
         }
 
         public Vector3 lookDir

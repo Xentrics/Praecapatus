@@ -11,6 +11,7 @@ namespace Assets.Scripts.Managers
         Text dialogueText = null;
         Button[] responseButtons;
         Conversation currentConversation;
+        InteractionComponent questioner, responder;
 
         void Awake()
         {
@@ -46,15 +47,17 @@ namespace Assets.Scripts.Managers
         }
 
         /**
+         * TODO: InterComponent can also be replaced by the moore generell 'PraeObject' class
          * func: sets up first dialogue message and responses
          */
-        public void StartInteraction(Conversation con)
+        public void StartInteraction(InteractionComponent questioner, InteractionComponent responder, Conversation con)
         {
-            if (con == null)
-                throw new NullReferenceException("Cannot start interaction: con reference not set!");
+            if (con == null || questioner == null || responder == null)
+                throw new NullReferenceException("Cannot start interaction: con, questioner or responder reference not set!");
             currentConversation = con;
-            Constants.StatusUI.SetActive(false); // hide standard ui
-            Constants.InteractionUI.SetActive(true);
+            this.questioner = questioner;
+            this.responder = responder;
+            Constants.ActivateUI(EUIMode.INTERACTION_UI);
 
             updateUI();
         }
@@ -65,11 +68,16 @@ namespace Assets.Scripts.Managers
 
             switch (signal)
             {
-                case EConOptionType.Normal:
-                    break;
-                case EConOptionType.Exit:
+                case EConOptionType.EXIT:
                     EndInteraction();
                     return;
+                case EConOptionType.OPEN_SHOP:
+                    Debug.Log("r: " + responder + " q: " + questioner);
+                    Constants.ShopUI.GetComponent<ShopUI>().SetInventories(responder.inventory, questioner.inventory);
+                    Constants.ActivateUI(EUIMode.SHOP_UI);
+                    break;
+                default:
+                    break;
             }
 
             updateUI();
@@ -105,13 +113,12 @@ namespace Assets.Scripts.Managers
          */
         public void EndInteraction()
         {
-            Constants.StatusUI.SetActive(true);
-            Constants.InteractionUI.SetActive(false);
+            Constants.ActivateUI(EUIMode.STATUS_UI);
         }
 
         void SetCorrectFontSize(int screenWidth, int screenHeight)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

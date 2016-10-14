@@ -17,12 +17,14 @@ NEXT SESSION TASKS:
 		- save abilities		++
 		- save attributes		++
 		- save inventory		+
+		- save interactions		
 		- save character states	
 			- debuffs			
- - implement shop
- - implement Quest Mechanics
- - DEBUFF mechanics			
-	- new class DEBUFF
+ - implement shop				+
+	- ShopUI					+
+ - implement Quest Mechanics	
+ - DEBUFF mechanics				
+	- new class DEBUFF			
 
 
 NOTES ON GAME CONTROL

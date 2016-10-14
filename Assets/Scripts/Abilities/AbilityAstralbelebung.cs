@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Entity;
 using UnityEngine;
+using Assets.Scripts.Interactions;
 
 namespace Assets.Scripts.Abilities
 {
@@ -13,10 +14,7 @@ namespace Assets.Scripts.Abilities
 
         public override string name
         {
-            get
-            {
-                return "Astralbelebung";
-            }
+            get { return "Astralbelebung"; }
         }
 
         public override void applyFailure(int version, int rp, ELuck luck, EntityController user, List<PraeObject> targets)
@@ -38,7 +36,7 @@ namespace Assets.Scripts.Abilities
             Debug.Assert(version == VER_SINGLE_TARGET, "verison bug?");
             int minutes = UnityEngine.Random.Range(1,10) * Constants.gameTimeMultiplier;
             DateTime endtime = DateTime.Now.AddMinutes(minutes);
-            Interactions.InteractionComponent c = targets[0].AddInteractionComponent();
+            InteractionComponent c = targets[0].AddInteractionComponent();
 
             Constants.gameLogic.AddTimedInteraction(c, endtime);
             Debug.Log("Astrahlbelebung. Object will come to life for " + minutes + "minutes: " + targets[0]);

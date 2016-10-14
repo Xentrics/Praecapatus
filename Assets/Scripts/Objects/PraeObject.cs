@@ -102,11 +102,11 @@ namespace Assets.Scripts
             }
         }
 
-        public bool TryInteract(PraeObject caller)
+        public bool TryInteract(PraeObject target)
         {
             if (!disableInteraction && HasInteraction())
             {
-                interComp.StartConversation();
+                interComp.StartConversation(target.interComp);
                 return true;
             }
             else

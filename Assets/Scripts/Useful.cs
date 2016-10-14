@@ -3,6 +3,8 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace Assets.Scripts
 {
@@ -97,6 +99,16 @@ namespace Assets.Scripts
             }
             //clip.AddEvent(e);
             return clip;
+        }
+
+        public static void AddTriggerEvent(GameObject g, EventTriggerType type, UnityAction<BaseEventData> action)
+        {
+            EventTrigger trigger = g.AddComponent<EventTrigger>();
+            trigger.triggers = new List<EventTrigger.Entry>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = type;
+            entry.callback.AddListener(action);
+            trigger.triggers.Add(entry);
         }
 
         public static readonly float boxTime = 5f;

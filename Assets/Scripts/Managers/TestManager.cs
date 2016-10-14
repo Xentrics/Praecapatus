@@ -80,7 +80,8 @@ namespace Assets.Scripts.Managers
             if (ability.canUse(version, user, targets))
             {
                 int c = ability.getTestModifier(version, user, targets);            // Erschwernis/Erleichterung
-                int aw = charInfo.getAttributeValue(ability.attributeGroup);   // Value of assigned attribute
+                Debug.Log(charInfo);
+                int aw = charInfo.getAttributeValue(ability.attributeGroup);        // Value of assigned attribute
                 int fw = ability.fw;                                                // Fertigkeitswert of ability
                 ELuck luck = ELuck.normal;
 
