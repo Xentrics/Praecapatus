@@ -27,17 +27,19 @@ namespace Assets.Scripts.Entity
 
         protected virtual void Awake()
         {
+            //TODO: make loading procedure here!
             moveComp = GetComponent<EntityMovement>();
             _praeObject = GetComponent<EntityObject>();
+            _entityInfo = new EntityInfo();
             _interComp = GetComponent<InteractionComponent>();
             abiCon = new AbilityManager(this);
-            _entityInfo = new EntityInfo();
             DEB_testManager = new TestManager(this);
             praeObject.meleeRange = 10f;    // ?
         }
 
         protected virtual void Start()
-        {}
+        {
+        }
 
 
         /*
@@ -100,7 +102,7 @@ namespace Assets.Scripts.Entity
                 if (value == null)
                     Debug.LogError("inventory cannot be set to NULL!");
                 else
-                    _inventory = value;
+                    _inventory.Set(value);
             }
         }
 
@@ -110,15 +112,8 @@ namespace Assets.Scripts.Entity
 
         public bool bInfight
         {
-            get
-            {
-                return _bInfight;
-            }
-
-            set
-            {
-                _bInfight = value;
-            }
+            get { return _bInfight; }
+            set { _bInfight = value; }
         }
 
         public void drainMana(int by)
@@ -138,44 +133,24 @@ namespace Assets.Scripts.Entity
 
         public Vector3 lookDir
         {
-            get
-            {
-                return moveComp.lookDir;
-            }
+            get { return moveComp.lookDir; }
         }
 
         public Vector3 position
         {
-            set
-            {
-                moveComp.position.Set(value.x, value.y, value.z); // use with caution...
-            }
-
-            get
-            {
-                return moveComp.position;
-            }
+            set { moveComp.position.Set(value.x, value.y, value.z); }
+            get { return moveComp.position; }
         }
 
         public PraeObject praeObject
         {
-            get
-            {
-                return _praeObject;
-            }
+            get { return _praeObject; }
         }
 
         public bool running
         {
-            get
-            {
-                return moveComp.running;
-            }
-
-            set
-            {
-                moveComp.running = value;
-            }
+            get { return moveComp.running; }
+            set { moveComp.running = value; }
         }
 
         public void toggleRunning()

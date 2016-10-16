@@ -12,14 +12,18 @@ namespace Assets.Scripts.Interactions
      */
     public class InteractionComponent : MonoBehaviour
     {
-        EntityController _ec;
-        Inventory _inv;
+        public EntityController _ec;
+        public Inventory _inv;
         List<TextAsset> conversations;
 
         void Awake()
         {
+            Debug.Log("inter comp");
             _ec = GetComponent<EntityController>();
             _inv = (_ec) ? _ec.inventory : null;
+
+            //Debug.Log("inter: " + _ec.praeObject.name);
+            _inv.AddItem(new PraeItem("hala", 1.0f, new Currency(1, 2, 3), 1, 2, null));
         }
 
         public void addInteractionOption(object inter)
@@ -32,7 +36,7 @@ namespace Assets.Scripts.Interactions
             TextAsset conAsset = Resources.Load<TextAsset>("Conversations/test_g1"); // just for testing!
             Conversation[] con = Conversation.loadFromGraphml(conAsset);
             Debug.Assert(target != null);
-            Constants.interactionManager.StartInteraction(target, this, con[0]);
+            Constants.interactionManager.StartInteraction(this, target, con[0]);
         }
 
         /**

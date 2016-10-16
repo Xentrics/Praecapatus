@@ -19,11 +19,11 @@
     <Attr attr="MaP" val="0" />
     <Attr attr="MaPmax" val="20" />
     <Attr attr="Wundschwelle" val="20" />
-    <Attr attr="SmP" val="60" />
+    <Attr attr="SmP" val="156" />
   </AttrOther>
   <Inventory>
     <currency G="0" K="0" T="0" />
-    <weight>0</weight>
+    <weight>7</weight>
     <maxWeight>20</maxWeight>
     <items>
       <PraeItem name="TestItem" amount="1" stackSize="1" weight="1">

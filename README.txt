@@ -7,8 +7,10 @@ NOTES ON NOTES:
  - 3 +: manageable from interface
  
 NEXT SESSION TASKS:
+ - implement PraeObject.Equals
+  - Fix Inventory.AddItem (72)
  - implement InteractionObject	+
-	- basic conversation		++	
+	- basic conversation		++
  - deal with time mechanics 	+
  - implement basic talkUI		++
  - implement GameSaver			+

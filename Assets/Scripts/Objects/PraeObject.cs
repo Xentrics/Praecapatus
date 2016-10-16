@@ -14,6 +14,7 @@ namespace Assets.Scripts
             "Nothing interesting."
         };
 
+        [SerializeField] protected string _name          = "UNNAMED";
         [SerializeField] protected float _weight         = 0f;    // metrical, kg
         [SerializeField] protected bool  _inanimate      = true;  // FALSE: the object is not a living being with any regard
         [SerializeField] protected float _meleeRange     = 0f;
@@ -42,6 +43,11 @@ namespace Assets.Scripts
         /****
          * GETTER AND SETTER
          *******************/
+
+        public string name
+        {
+            get { return _name; }
+        }
         
         public float weight
         {

@@ -27,6 +27,11 @@ namespace Assets.Scripts.Items
             _icon = copy._icon;
         }
 
+        public PraeItem(PraeItem copy, int newAmount) : this(copy)
+        {
+            _amount = newAmount;
+        }
+
         /**
          * create items outside the database, if necessary
          */
@@ -156,6 +161,11 @@ namespace Assets.Scripts.Items
         public bool SanityCheck()
         {
             return (name != null && value.SanityCheck() && _amount >= 0 && _amount <= stackSize && _stackSize > 0 && _weightSingle >= 0) ? true : false;
+        }
+
+        public override string ToString()
+        {
+            return "ITEM: " + name + " [" + _amount + "/" + _stackSize + "]";
         }
     }
 }

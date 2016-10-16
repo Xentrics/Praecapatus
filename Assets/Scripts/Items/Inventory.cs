@@ -11,6 +11,11 @@ namespace Assets.Scripts.Items
         [UnityEngine.SerializeField] Currency _money = new Currency();
         [UnityEngine.SerializeField] List<PraeItem> _items = new List<PraeItem>();
 
+        public Inventory()
+        {
+            UnityEngine.Debug.Log("inv!");
+        }
+
         public PraeItem GetItem(int id)
         {
             if (id < 0 || id >= _items.Count)
@@ -22,7 +27,7 @@ namespace Assets.Scripts.Items
         /**
          * 
          */
-        private int AddPartial(ref PraeItem itemCopy)
+        private int AddPartial(PraeItem itemCopy)
         {
             if (itemCopy.weight + _weight > _maxWeight)
             {
@@ -62,7 +67,7 @@ namespace Assets.Scripts.Items
 
             if (stack)
             {
-                if (addPartial || (itemCopy.weight + _weight < _maxWeight))
+                if (addPartial || (itemCopy.weight + _weight <= _maxWeight))
                 {
                     /* iterate all items and add 'item' until its amount is zero or weight constraint is reached */
                     int rest = itemCopy.amount;
@@ -90,7 +95,7 @@ namespace Assets.Scripts.Items
                     {
                         // all items in inventory checked. Add a new item, if weight constraint not violated
                         itemCopy.amount = rest;
-                        return AddPartial(ref itemCopy);
+                        return AddPartial(itemCopy);
                     }
                     else
                         return 0;
@@ -109,7 +114,7 @@ namespace Assets.Scripts.Items
                 if (addPartial)
                 {
                     /* add as much as can still fit */
-                    return AddPartial(ref itemCopy);
+                    return AddPartial(itemCopy);
                 }
                 else
                 {
@@ -143,6 +148,15 @@ namespace Assets.Scripts.Items
         /**
          * GETTER AND SETTER
          *********************/
+
+        public void Set(Inventory inv)
+        {
+            _weight = inv.weight;
+            _maxWeight = inv.maxWeight;
+            _money = inv.currency;
+            _items = inv._items;
+
+        }
 
         public Currency currency
         {
@@ -206,6 +220,15 @@ namespace Assets.Scripts.Items
                 else
                     _items = value;
             }
+        }
+
+        public override string ToString()
+        {
+            string str = "weight: [" + _weight + "/" + _maxWeight + "\n";
+            foreach (PraeItem i in _items)
+                str = str + i.ToString();
+
+            return str;
         }
     }
 }
