@@ -153,12 +153,12 @@ namespace Assets.Scripts.Items
         {
             _weight = inv.weight;
             _maxWeight = inv.maxWeight;
-            _money = inv.currency;
+            _money = inv.money;
             _items = inv._items;
 
         }
 
-        public Currency currency
+        public Currency money
         {
             get { return _money; }
             set

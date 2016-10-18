@@ -25,6 +25,7 @@ namespace Assets.Scripts.Managers
             public Component _itemElem;
             Image _itemElemBorderImage;
             Color _origColor;
+            public int id;
             public Button   _but;
             public PraeItem _item;
             public Sprite   _icon;
@@ -172,13 +173,14 @@ namespace Assets.Scripts.Managers
         Color mouseOverColor = Color.yellow;
 
         Component panelTop;
-        UIButton buttonBuy, buttonSell, buttonRebuy, buttonClose;
+        UIButton buttonSelectBuy, buttonSell, buttonRebuy, buttonClose;
         UIButton mouseOverModeButton, selectedModeButton;
 
         Component panelPageSetter;
         Text textPage;
 
         Component panelBottom;
+        Button buttonBuy;
         UICurrency UIbuyerMoney;
 
         /* variables */
@@ -209,6 +211,7 @@ namespace Assets.Scripts.Managers
                 if (g.name.StartsWith("ItemElem") && !addedList.Contains(g.name))
                 {
                     UIItems[i] = new UIItem(g);
+                    UIItems[i].id = i;
                     addedList.Add(g.name);
                     ++i;
                 }
@@ -238,7 +241,7 @@ namespace Assets.Scripts.Managers
                 else if (g.name.Equals("ButtonClose"))
                     buttonClose = new UIButton(g, mouseOverColor, mouseSelectColor, mouseSelectOverColor);
                 else if (g.name.Equals("ButtonSelectBuy"))
-                    buttonBuy = new UIButton(g, mouseOverColor, mouseSelectColor, mouseSelectOverColor);
+                    buttonSelectBuy = new UIButton(g, mouseOverColor, mouseSelectColor, mouseSelectOverColor);
                 else if (g.name.Equals("ButtonSelectSell"))
                     buttonSell = new UIButton(g, mouseOverColor, mouseSelectColor, mouseSelectOverColor);
                 else if (g.name.Equals("ButtonSelectRebuy"))
@@ -265,14 +268,26 @@ namespace Assets.Scripts.Managers
                 }
                 else if (g.name.Equals("ButtonBuy"))
                 {
+                    buttonBuy = g.GetComponent<Button>();
                     g.GetComponent<Button>().onClick.RemoveAllListeners(); // the buttons are found multiple times in the list of child components
                     g.GetComponent<Button>().onClick.AddListener(() =>
                     {
-                        if (selectedUIItem != null) // an item icon can only be selected if a valid item is presend
-                            if (Input.GetKey(KeyCode.LeftControl))
-                                tryBuy(selectedUIItem, true);
-                            else
-                                tryBuy(selectedUIItem, false);
+                        switch(userMode)
+                        {
+                            case EShopMode.buy:
+                                if (selectedUIItem != null) // an item icon can only be selected if a valid item is presend
+                                    if (Input.GetKey(KeyCode.LeftControl))
+                                        tryBuy(selectedUIItem, true);
+                                    else
+                                        tryBuy(selectedUIItem, false);
+                                break;
+                            case EShopMode.sell:
+                                throw new System.NotImplementedException();
+                            case EShopMode.rebuy:
+                                throw new System.NotImplementedException();
+                            default:
+                                throw new System.NotImplementedException();
+                        }
 
                         //TODO: apply amount selection screen during leftshift-click!
                     });
@@ -353,14 +368,14 @@ namespace Assets.Scripts.Managers
                         else
                             mouseOverModeButton = buttonClose;
                     }
-                    else if (RectTransformUtility.RectangleContainsScreenPoint((RectTransform)buttonBuy.button.transform, Input.mousePosition))
+                    else if (RectTransformUtility.RectangleContainsScreenPoint((RectTransform)buttonSelectBuy.button.transform, Input.mousePosition))
                     {
                         if (Input.GetMouseButton(0))
                             ChangeModeTo(EShopMode.buy);
-                        else if (selectedModeButton == buttonBuy)
+                        else if (selectedModeButton == buttonSelectBuy)
                             selectedModeButton.butImage.color = selectedModeButton.selectedOverColor;
                         else
-                            mouseOverModeButton = buttonBuy;
+                            mouseOverModeButton = buttonSelectBuy;
                     }
                     else if (RectTransformUtility.RectangleContainsScreenPoint((RectTransform)buttonSell.button.transform, Input.mousePosition))
                     {
@@ -398,31 +413,40 @@ namespace Assets.Scripts.Managers
             if (newMode == userMode)
                 return;
 
-            switch(newMode)
+            userMode = newMode;
+            switch (newMode)
             {
                 case EShopMode.buy:
-                    selectedModeButton = buttonBuy;
-                    if (_seller.itemCount != 0)
-                        pagedItems = new PraeItem[(_seller.itemCount / numElemsPerPage) + 1, numElemsPerPage];
-                    else
-                        pagedItems = new PraeItem[1, numElemsPerPage];
-                    maxPage = pagedItems.Length / numElemsPerPage;
-
-                    for (int i = 0; i < _seller.itemCount; ++i)
-                        pagedItems[i / 10, i % 10] = _seller.items[i];
+                    buttonBuy.GetComponentInChildren<Text>().text = "Buy";
+                    selectedModeButton = buttonSelectBuy;
+                    calcPagedItems();
                     break;
                 case EShopMode.sell:
+                    buttonBuy.GetComponentInChildren<Text>().text = "Sell";
                     selectedModeButton = buttonSell;
                     Debug.LogError("Feature not implemented!");
                     break;
                 case EShopMode.rebuy:
+                    buttonBuy.GetComponentInChildren<Text>().text = "Buys";
                     selectedModeButton = buttonRebuy;
                     Debug.LogError("Feature not implemented!");
                     break;
                 default:
                     Debug.LogError("Feature not implemented!");
                     break;
-            }
+            }            
+        }
+
+        void calcPagedItems()
+        {
+            if(_seller.itemCount != 0)
+                        pagedItems = new PraeItem[(_seller.itemCount / numElemsPerPage) + 1, numElemsPerPage];
+                    else
+                        pagedItems = new PraeItem[1, numElemsPerPage];
+            maxPage = pagedItems.Length / numElemsPerPage;
+
+            for (int i = 0; i < _seller.itemCount; ++i)
+                pagedItems[i / 10, i % 10] = _seller.items[i];
         }
 
         bool tryBuy(UIItem uitem, bool stack)
@@ -430,9 +454,18 @@ namespace Assets.Scripts.Managers
             PraeItem pitem = uitem._item;
             int amount = (stack) ? System.Math.Min(pitem.amount, pitem.stackSize) : 1;
             float itemWeight = pitem.weightSingle * amount;
+
+            // weight constraint
             if (_buyer.weight + itemWeight > _buyer.maxWeight)
             {
                 Debug.Log("Cannot add item: inventory weight constraint violated!");
+                return false;
+            }
+
+            // money constraint
+            if (!_buyer.money.CanPay(uitem._item.value))
+            {
+                Debug.Log("Insufficient money!");
                 return false;
             }
 
@@ -442,9 +475,21 @@ namespace Assets.Scripts.Managers
             uitem._item.amount -= (amount - rest);
             uitem.Set(uitem._item); // update labels
             if (uitem._item.amount <= 0)
-                selectedUIItem = null; // deselect item. TODO: auto remove empty items!
+            {
+                selectedUIItem = null; // deselect item
+                // NOTE: this is by far not the most efficient way of doing this - but whats the point in optimising shops anyway
+                _seller.RemoveItem(page * 10 + uitem.id);
+                calcPagedItems();
+                if (page > maxPage)
+                    page = maxPage;
+                SetUpPage(page);
+            }
 
-            //TODO: remove the item and its info 
+            // pay
+            _buyer.money.Pay(uitem._item.value);
+            _seller.money.Add(uitem._item.value);
+            UIbuyerMoney.Set(_buyer.G, _buyer.K, _buyer.T);
+
             return true;
         }
 

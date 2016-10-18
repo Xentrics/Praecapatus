@@ -1,3 +1,4 @@
+using System;
 using System.Xml.Serialization;
 
 namespace Assets.Scripts.Items
@@ -90,6 +91,7 @@ namespace Assets.Scripts.Items
         public int relative
         {
             get { return 100 * _G + 10 * _K + _T; }
+            set { Normalize(value); }
         }
 
         /**
@@ -151,12 +153,18 @@ namespace Assets.Scripts.Items
         {
             if (CanPay(a))
             {
+                /*
                 _G = System.Math.Max(_G - a.G, 0);
                 a.K += System.Math.Max((a.G - _G) * 10, 0); // add the excess if a.G was greater than _G | if (G-a.G) < 0 -> -10*(G-a.G) = 10*(a.G-G)
                 _K = System.Math.Max(_K - a.K, 0);
                 a.T += System.Math.Max((a.K - _K) * 10, 0); // add the excess if a.K was greater than _K
                 _T -= a.T;
                 System.Diagnostics.Debug.Assert(_T >= 0, "CanPay or Pay calculation invalid!");
+                */
+                // partition based on relative
+                relative -= a.relative;
+                UnityEngine.Debug.Assert(relative >= 0, "something went wring during pay calculation!");
+
                 return true;
             }
             else
@@ -180,10 +188,17 @@ namespace Assets.Scripts.Items
          */
         public void Normalize()
         {
-            _K += (_T / 10) * 10;
-            _T -= (_T / 10) * 10; // 3rd constraint applied
-            _G += (_K / 10) * 10;
-            _K -= (_K / 10) * 10; // 2nd and 1st constraint applied
+            Normalize(relative);
+        }
+
+        public void Normalize(int newRelative)
+        {
+            _G = newRelative / 100;
+            newRelative -= _G * 100;
+            _K = newRelative / 10;
+            newRelative -= _K * 10;
+            _T = newRelative;
+            UnityEngine.Debug.Assert(_T >= 0 && _T < 10 && _K >= 0 && _K < 10 && _G >= 0, "currency normalization failed!");
         }
 
         public bool SanityCheck()
