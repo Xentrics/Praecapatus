@@ -74,7 +74,7 @@ namespace Assets.Scripts.Managers
                 case EConOptionType.OPEN_SHOP:
                     Debug.Log("r: " + responder + " q: " + questioner);
                     Constants.ShopUI.GetComponent<ShopManager>().currendManager = this;
-                    Constants.ShopUI.GetComponent<ShopManager>().SetInventories(responder.inventory, questioner.inventory);
+                    Constants.ShopUI.GetComponent<ShopManager>().SetInventories(responder.inventory, questioner.shop);
                     Constants.ActivateUI(EUIMode.SHOP_UI);
                     break;
                 default:

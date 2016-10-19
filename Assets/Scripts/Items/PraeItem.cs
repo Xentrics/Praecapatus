@@ -20,6 +20,7 @@ namespace Assets.Scripts.Items
         public PraeItem(PraeItem copy)
         {
             name = copy.name;
+            desc = copy.desc;
             _weightSingle = copy._weightSingle;
             value = copy.value;
             _amount = copy._amount;
@@ -161,6 +162,16 @@ namespace Assets.Scripts.Items
         public bool SanityCheck()
         {
             return (name != null && value.SanityCheck() && _amount >= 0 && _amount <= stackSize && _stackSize > 0 && _weightSingle >= 0) ? true : false;
+        }
+
+        public bool Equals(PraeItem i)
+        {
+            return name.Equals(i.name) &&
+                desc.Equals(i.desc) &&
+                _weightSingle == i._weightSingle &&
+                _stackSize == i._stackSize &&
+                value.Equals(i.value);
+            // TODO: icon equals?
         }
 
         public override string ToString()

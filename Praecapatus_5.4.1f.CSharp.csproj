@@ -119,6 +119,7 @@
     <Compile Include="Assets\Scripts\Interactions\ConTester.cs" />
     <Compile Include="Assets\Scripts\Interactions\Conversation.cs" />
     <Compile Include="Assets\Scripts\Interactions\InteractionComponent.cs" />
+    <Compile Include="Assets\Scripts\Items\Shop.cs" />
     <Compile Include="Assets\Scripts\Managers\ShopManager.cs" />
     <Compile Include="Assets\Scripts\Items\Currency.cs" />
     <Compile Include="Assets\Scripts\Items\Inventory.cs" />

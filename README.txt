@@ -7,14 +7,11 @@ NOTES ON NOTES:
  - 3 +: manageable from interface
  
 NEXT SESSION TASKS:
- - implement PraeObject.Equals
-  - Fix Inventory.AddItem (72)
  - implement InteractionObject	+
 	- basic conversation		++
  - deal with time mechanics 	+
- - implement basic talkUI		++
  - implement GameSaver			+
-	- item database				++
+	- item database				+
 	- per character saved		+
 		- save abilities		++
 		- save attributes		++
@@ -22,8 +19,6 @@ NEXT SESSION TASKS:
 		- save interactions		
 		- save character states	
 			- debuffs			
- - implement shop				+
-	- ShopUI					+
  - implement Quest Mechanics	
  - DEBUFF mechanics				
 	- new class DEBUFF			
@@ -51,11 +46,11 @@ NOTES ON GAME MECHANICS
 		-> any object with this component are subject to interaction				
 		- any object can become/loose interaction by adding/removing this component	
 	~ praeobjects are not PraeObject by default										++
-	- shop UI
+	- shop UI																		++
 	- Talk UI 																		+
 		- basic conversation														++
 		- interaction events														+
-			- open shopUI															
+			- open shopUI															++
 - CONVERSATIONS
 	- conversations can be preset using graphml based graphs (i.e. using yEd) ++
 	- graphml files can be loaded as TextAssets with ending .txt or .xml	  ++

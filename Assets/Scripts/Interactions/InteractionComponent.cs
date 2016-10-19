@@ -14,16 +14,14 @@ namespace Assets.Scripts.Interactions
     {
         public EntityController _ec;
         public Inventory _inv;
+        public Shop _shop;      // the shop should go lost if the component is lost. Can be changed later on
         List<TextAsset> conversations;
 
         void Awake()
         {
-            Debug.Log("inter comp");
             _ec = GetComponent<EntityController>();
             _inv = (_ec) ? _ec.inventory : null;
-
-            //Debug.Log("inter: " + _ec.praeObject.name);
-            _inv.AddItem(new PraeItem("hala", 1.0f, new Currency(1, 2, 3), 1, 2, null));
+            _shop = GetComponent<Shop>();
         }
 
         public void addInteractionOption(object inter)
@@ -51,6 +49,29 @@ namespace Assets.Scripts.Interactions
             get
             {
                 return (_inv != null) ? _inv : new Inventory(); // return empty inventory
+            }
+        }
+
+        public Shop shop
+        {
+            get
+            {
+                if (_shop != null)
+                    return _shop;
+                else
+                {
+                    if (_inv == null)
+                    {
+                        _shop = gameObject.AddComponent<Shop>();
+                        return _shop;
+                    }
+                    else
+                    {
+                        _shop = gameObject.AddComponent<Shop>();
+                        _shop.Set(_inv);
+                        return _shop;
+                    }
+                }
             }
         }
 

@@ -193,7 +193,7 @@ namespace Assets.Scripts.Managers
         List<PraeItem> soldItems;
 
         Inventory _buyer;
-        Inventory _seller;
+        Shop _seller;
 
         public void Awake()
         {
@@ -282,9 +282,19 @@ namespace Assets.Scripts.Managers
                                         tryBuy(selectedUIItem, false);
                                 break;
                             case EShopMode.sell:
-                                throw new System.NotImplementedException();
+                                if (selectedUIItem != null)
+                                    if (Input.GetKey(KeyCode.LeftControl))
+                                        trySell(selectedUIItem, true);
+                                    else
+                                        trySell(selectedUIItem, false);
+                                break;
                             case EShopMode.rebuy:
-                                throw new System.NotImplementedException();
+                                if (selectedUIItem != null)
+                                    if (Input.GetKey(KeyCode.LeftControl))
+                                        tryBuy(selectedUIItem, true);
+                                    else
+                                        tryBuy(selectedUIItem, false);
+                                break;
                             default:
                                 throw new System.NotImplementedException();
                         }
@@ -419,34 +429,62 @@ namespace Assets.Scripts.Managers
                 case EShopMode.buy:
                     buttonBuy.GetComponentInChildren<Text>().text = "Buy";
                     selectedModeButton = buttonSelectBuy;
-                    calcPagedItems();
                     break;
                 case EShopMode.sell:
                     buttonBuy.GetComponentInChildren<Text>().text = "Sell";
                     selectedModeButton = buttonSell;
-                    Debug.LogError("Feature not implemented!");
                     break;
                 case EShopMode.rebuy:
                     buttonBuy.GetComponentInChildren<Text>().text = "Buys";
                     selectedModeButton = buttonRebuy;
-                    Debug.LogError("Feature not implemented!");
                     break;
                 default:
                     Debug.LogError("Feature not implemented!");
                     break;
-            }            
+            }
+
+            calcPagedItems();
+            SetUpPage(0);
         }
 
         void calcPagedItems()
         {
-            if(_seller.itemCount != 0)
+            switch(userMode)
+            {
+                case EShopMode.buy:
+                    if (_seller.itemCount != 0)
                         pagedItems = new PraeItem[(_seller.itemCount / numElemsPerPage) + 1, numElemsPerPage];
                     else
                         pagedItems = new PraeItem[1, numElemsPerPage];
-            maxPage = pagedItems.Length / numElemsPerPage;
+                    maxPage = pagedItems.Length / numElemsPerPage;
 
-            for (int i = 0; i < _seller.itemCount; ++i)
-                pagedItems[i / 10, i % 10] = _seller.items[i];
+                    for (int i = 0; i < _seller.itemCount; ++i)
+                        pagedItems[i / 10, i % 10] = _seller.items[i];
+                    break;
+                case EShopMode.sell:
+                    if (_buyer.itemCount != 0)
+                        pagedItems = new PraeItem[(_buyer.itemCount / numElemsPerPage) + 1, numElemsPerPage];
+                    else
+                        pagedItems = new PraeItem[1, numElemsPerPage];
+                    maxPage = pagedItems.Length / numElemsPerPage;
+
+                    for (int i = 0; i < _buyer.itemCount; ++i)
+                        pagedItems[i / 10, i % 10] = _buyer.items[i];
+                    break;
+                case EShopMode.rebuy:
+                    if (_seller.boughtItemCount != 0)
+                        pagedItems = new PraeItem[(_seller.boughtItemCount / numElemsPerPage) + 1, numElemsPerPage];
+                    else
+                        pagedItems = new PraeItem[1, numElemsPerPage];
+                    maxPage = pagedItems.Length / numElemsPerPage;
+
+                    for (int i = 0; i < _seller.boughtItemCount; ++i)
+                        pagedItems[i / 10, i % 10] = _seller.bougthItems[i];
+                    break;
+                default:
+                    Debug.LogError("Feature not implemented!");
+                    break;
+            }
         }
 
         bool tryBuy(UIItem uitem, bool stack)
@@ -476,13 +514,20 @@ namespace Assets.Scripts.Managers
             uitem.Set(uitem._item); // update labels
             if (uitem._item.amount <= 0)
             {
+                selectedUIItem.ResetColor();
                 selectedUIItem = null; // deselect item
                 // NOTE: this is by far not the most efficient way of doing this - but whats the point in optimising shops anyway
-                _seller.RemoveItem(page * 10 + uitem.id);
-                calcPagedItems();
+                if (userMode == EShopMode.buy)
+                    _seller.RemoveItem(page * 10 + uitem.id);
+                else if (userMode == EShopMode.rebuy)
+                    _seller.RemoveBoughtItem(page * 10 + uitem.id);
+                else
+                    Debug.LogError("Cannot buy item in wrong mode: " + userMode);
+
+                calcPagedItems();   // refresh PagedItems
                 if (page > maxPage)
                     page = maxPage;
-                SetUpPage(page);
+                SetUpPage(page);    // update UI
             }
 
             // pay
@@ -493,7 +538,43 @@ namespace Assets.Scripts.Managers
             return true;
         }
 
-        public void SetInventories(Inventory buyer, Inventory seller)
+        bool trySell(UIItem uitem, bool stack)
+        {
+            PraeItem pitem = uitem._item;
+            int amount = (stack) ? System.Math.Min(pitem.amount, pitem.stackSize) : 1;
+            float itemWeight = pitem.weightSingle * amount;
+
+            // money constraint of shop
+            if (!_seller.money.CanPay(uitem._item.value))
+            {
+                Debug.Log("Shop has insufficient money!");
+                return false;
+            }
+
+            _seller.AddBoughtItem(new PraeItem(pitem, amount));
+            uitem._item.amount -= amount;
+            uitem.Set(uitem._item); // update labels
+            if (uitem._item.amount <= 0)
+            {
+                selectedUIItem.ResetColor();
+                selectedUIItem = null; // deselect item
+                // NOTE: this is by far not the most efficient way of doing this - but whats the point in optimising shops anyway
+                _buyer.RemoveItem(page * 10 + uitem.id);
+                calcPagedItems();
+                if (page > maxPage)
+                    page = maxPage;
+                SetUpPage(page);
+            }
+
+            // gain
+            _seller.money.Pay(uitem._item.value);
+            _buyer.money.Add(uitem._item.value);
+            UIbuyerMoney.Set(_buyer.G, _buyer.K, _buyer.T);
+
+            return true;
+        }
+
+        public void SetInventories(Inventory buyer, Shop seller)
         {
             if (buyer == null || seller == null)
                 throw new System.NullReferenceException("buyer or seller inventory set to NULL!");

@@ -22,34 +22,16 @@
     <Attr attr="SmP" val="156" />
   </AttrOther>
   <Inventory>
-    <money G="93" K="2" T="0">
-      <relative>9320</relative>
+    <money G="85" K="21" T="7">
+      <relative>8717</relative>
     </money>
-    <weight>9</weight>
+    <weight>6</weight>
     <maxWeight>20</maxWeight>
     <items>
-      <PraeItem name="TestItem" amount="1" stackSize="1" weight="1">
+      <PraeItem name="TestItem" amount="43" stackSize="100" weight="0.1">
         <desc>nothing</desc>
-        <value G="1" K="2" T="3">
-          <relative>123</relative>
-        </value>
-        <iconPath />
-      </PraeItem>
-      <PraeItem name="MagnoNI" amount="10" stackSize="10" weight="0.5">
-        <value G="0" K="2" T="0">
-          <relative>20</relative>
-        </value>
-        <iconPath />
-      </PraeItem>
-      <PraeItem name="MagnoNI" amount="10" stackSize="10" weight="0.5">
-        <value G="0" K="2" T="0">
-          <relative>20</relative>
-        </value>
-        <iconPath />
-      </PraeItem>
-      <PraeItem name="MagnoNI" amount="2" stackSize="10" weight="0.5">
-        <value G="0" K="2" T="0">
-          <relative>20</relative>
+        <value G="0" K="0" T="2">
+          <relative>2</relative>
         </value>
         <iconPath />
       </PraeItem>

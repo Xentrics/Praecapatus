@@ -1,4 +1,3 @@
-using System;
 using System.Xml.Serialization;
 
 namespace Assets.Scripts.Items
@@ -204,6 +203,11 @@ namespace Assets.Scripts.Items
         public bool SanityCheck()
         {
             return (_G >= 0 && _K >= 0 && _T >= 0) ? true : false;
+        }
+
+        public bool Equals(Currency c)
+        {
+            return _G == c._G && _K == c._K && _T == c._T;
         }
     }
 }

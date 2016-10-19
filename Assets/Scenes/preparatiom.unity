@@ -2666,6 +2666,15 @@ MonoBehaviour:
       _K: 0
       _T: 0
     _items: []
+  _shop:
+    _weight: 0
+    _maxWeight: 20
+    _money:
+      _G: 0
+      _K: 0
+      _T: 0
+    _items: []
+    _boughtItems: []
 --- !u!114 &376593756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6265,7 +6274,7 @@ MonoBehaviour:
     - name: Astra
       desc: Not to sell!
       _weightSingle: 5
-      _amount: 0
+      _amount: 2
       _stackSize: 2
       value:
         _G: 1
@@ -6330,6 +6339,15 @@ MonoBehaviour:
       _K: 0
       _T: 0
     _items: []
+  _shop:
+    _weight: 0
+    _maxWeight: 20
+    _money:
+      _G: 0
+      _K: 0
+      _T: 0
+    _items: []
+    _boughtItems: []
 --- !u!114 &820001303
 MonoBehaviour:
   m_ObjectHideFlags: 0

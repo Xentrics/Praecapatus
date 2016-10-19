@@ -49,6 +49,15 @@ namespace Assets.Scripts
             get { return _name; }
         }
         
+        public bool Equals(PraeObject obj)
+        {
+            return (_name.Equals(obj._name) && 
+                _weight == obj._weight && 
+                _inanimate == obj.inanimate &&
+                _meleeRange == obj._meleeRange &&
+                _description.Equals(obj._description));
+        }
+
         public float weight
         {
             get

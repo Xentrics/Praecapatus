@@ -1,25 +1,24 @@
 using System.Collections.Generic;
-using System.Xml.Serialization;
+using System;
 
 namespace Assets.Scripts.Items
 {
-    [System.Serializable]
+    [Serializable]
     public class Inventory
     {
         [UnityEngine.SerializeField] float _weight;
         [UnityEngine.SerializeField] float _maxWeight = 20f;
-        [UnityEngine.SerializeField] Currency _money = new Currency();
-        [UnityEngine.SerializeField] List<PraeItem> _items = new List<PraeItem>();
+        [UnityEngine.SerializeField] protected Currency _money = new Currency();
+        [UnityEngine.SerializeField] protected List<PraeItem> _items = new List<PraeItem>();
 
         public Inventory()
         {
-            UnityEngine.Debug.Log("inv!");
         }
 
         public PraeItem GetItem(int id)
         {
             if (id < 0 || id >= _items.Count)
-                throw new System.ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             else
                 return _items[id];
         }
@@ -27,7 +26,7 @@ namespace Assets.Scripts.Items
         /**
          * 
          */
-        private int AddPartial(PraeItem itemCopy)
+        protected int AddPartial(PraeItem itemCopy)
         {
             if (itemCopy.weight + _weight > _maxWeight)
             {
@@ -74,7 +73,7 @@ namespace Assets.Scripts.Items
                     foreach (PraeItem i in _items)
                     {
                         // item names must match and stacksize not reached
-                        if (i.name.Equals(itemCopy.name) && i.amount < i.stackSize)
+                        if (i.Equals(itemCopy) && i.amount < i.stackSize)
                         {
                             if (i.stackSize - i.amount > rest)
                             {
@@ -135,14 +134,14 @@ namespace Assets.Scripts.Items
         public void RemoveItem(int id)
         {
             if (id < 0 || id >= _items.Count)
-                throw new System.ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             else
                 _items.RemoveAt(id);
         }
 
         public bool RemoveItem(PraeItem d)
         {
-            throw new System.NotImplementedException();
+            return _items.Remove(d);
         }
 
         /**
