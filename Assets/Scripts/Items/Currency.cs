@@ -87,6 +87,7 @@ namespace Assets.Scripts.Items
          * return the relative value of this currency as single int
          * relative := 100 * G + 10 * K + T
          */
+        [XmlIgnore]
         public int relative
         {
             get { return 100 * _G + 10 * _K + _T; }

@@ -12,9 +12,9 @@ namespace Assets.Scripts.Interactions
      */
     public class InteractionComponent : MonoBehaviour
     {
-        public EntityController _ec;
-        public Inventory _inv;
-        public Shop _shop;      // the shop should go lost if the component is lost. Can be changed later on
+        EntityController _ec;
+        Inventory _inv;
+        Shop _shop = null;      // the shop should go lost if the component is lost. Can be changed later on
         List<TextAsset> conversations;
 
         void Awake()
@@ -22,6 +22,9 @@ namespace Assets.Scripts.Interactions
             _ec = GetComponent<EntityController>();
             _inv = (_ec) ? _ec.inventory : null;
             _shop = GetComponent<Shop>();
+
+            if (_shop != null)
+                _ec.shopID = _shop.shopID;
         }
 
         public void addInteractionOption(object inter)

@@ -3,9 +3,7 @@
   <Items>
     <Item name="TestItem" amount="0" stackSize="10" weight="1">
       <desc>UNKNOWN</desc>
-      <value G="0" K="0" T="5">
-        <relative>5</relative>
-      </value>
+      <value G="0" K="0" T="5" />
       <iconPath>Assets/Resources/Icons/NotSetIcon.png</iconPath>
     </Item>
   </Items>

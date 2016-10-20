@@ -1,10 +1,29 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using Assets.Scripts.Exception;
 
 namespace Assets.Scripts
 {
+    public enum EAttributeGroup
+    {
+        AU,
+        GE,
+        IN,
+        KO,
+        LO,
+        MO,
+        MA
+    }
+
+    public enum EAttributeOther
+    {
+        BaseIni,
+        MaP,
+        MaPmax,
+        Wundschwelle,
+        SmP
+    }
+
     /**
      * a component that contains all basic attributes and methods to modify them
      * may be attached to any character or entity

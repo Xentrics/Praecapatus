@@ -15,10 +15,16 @@ NEXT SESSION TASKS:
 	- per character saved		+
 		- save abilities		++
 		- save attributes		++
-		- save inventory		+
+		- save inventory		++
 		- save interactions		
 		- save character states	
 			- debuffs			
+ - improve loading/saving		+
+	- shop						
+		- handle uniq id mechanics	+
+		- load and save shops		++
+	- characters				+
+	- map						
  - implement Quest Mechanics	
  - DEBUFF mechanics				
 	- new class DEBUFF			

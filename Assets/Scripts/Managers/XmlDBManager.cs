@@ -19,10 +19,16 @@ namespace Assets.Scripts.Managers
         public ItemDB itemDB;
 
         public static string mainPlayerPath = "/Resources/XML/mainPlayer.xml";
+        public static string generalInformationPrefix = "/Resources/XML/GeneralInformation.xml";
+        public static string charXMLPrefix = "/Resources/XML/char_";
+        public static string shopXMLPrefix = "/Resources/XML/shop_";
 
         void Awake()
         {
-            
+            Constants.xmlHandler = this;
+
+            /* general information */
+            LoadGeneralInformation();
         }
 
         void Start()
@@ -35,6 +41,7 @@ namespace Assets.Scripts.Managers
             if (NotSetIcon)
                 throw new System.NullReferenceException("NotSetIcon asset not found!");
 
+            /* item db */
             LoadItemDB();
 
             /* main character */
@@ -45,18 +52,42 @@ namespace Assets.Scripts.Managers
 
         void OnApplicationQuit()
         {
-            Debug.Log("Saving data ...");
+            if (Constants.gameLogic.shouldSaveData)
+            {
+                Debug.Log("Saving data ...");
 
-            /* item db related */
-            SaveItemDB();
-            /* main character */
-            SaveEntityData(Constants.gameLogic.pc, mainPlayerPath);
+                /* general information */
+                SaveGeneralInformation();
+                /* item db related */
+                SaveItemDB();
+                /* main character */
+                SaveEntityData(Constants.gameLogic.pc, mainPlayerPath);
 
-            Debug.Log("Finished saving.");
+                Debug.Log("Finished saving.");
+            }
+            else
+                Debug.Log("No data saved.");
+        }
+
+        /***
+         * ENTITIES
+         ***********/
+
+        int latestCharID;
+        HashSet<int> lockedCharIDs;
+
+        public int GetUniqCharID()
+        {
+            while (lockedCharIDs.Contains(++latestCharID)) { }
+            return latestCharID;
         }
 
 
-        // save character data
+        public void SaveEntityData(EntityController ec, int charid)
+        {
+            SaveEntityData(ec, charXMLPrefix + charid + ".xml");
+        }
+
         public void SaveEntityData(EntityController ec, string path)
         {
             EntitySaveData entData = new EntitySaveData();
@@ -77,30 +108,49 @@ namespace Assets.Scripts.Managers
                 Debug.Log("Entity loaded.");
         }
 
-        // load character data
-        public void LoadEntityData(EntityController ec, string path)
+        public void LoadEntityData(EntityController ec, int charid)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(EntitySaveData));
-            FileStream stream = new FileStream(Application.dataPath + path, FileMode.Open);
-            EntitySaveData entSave = serializer.Deserialize(stream) as EntitySaveData;
-            stream.Close();
-
-            if (entSave == null)
-                throw new FileNotFoundException("entSave was not loaded. SaveFile not present at: " + path);
-
-            ec.abiList = entSave.abiList;
-            ec.attrGrpList = entSave.attrGrpList;
-            ec.attrOtherList = entSave.attrOtherList;
-            ec.inventory = entSave.inventory;
-            // TODO: read entData here
-
-            if (Object.ReferenceEquals(ec, Constants.gameLogic.pc))
-                Debug.Log("Main Character loaded.");
-            else
-                Debug.Log("Entity loaded.");
+            LoadEntityData(ec, charXMLPrefix + charid + ".xml");
         }
 
-        // save items
+        // load character data
+        public bool LoadEntityData(EntityController ec, string path)
+        {
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(EntitySaveData));
+                FileStream stream = new FileStream(Application.dataPath + path, FileMode.Open);
+                EntitySaveData entSave = serializer.Deserialize(stream) as EntitySaveData;
+                stream.Close();
+
+                if (entSave == null)
+                    throw new FileNotFoundException("entSave was not loaded. SaveFile not present at: " + path);
+
+                ec.abiList = entSave.abiList;
+                ec.attrGrpList = entSave.attrGrpList;
+                ec.attrOtherList = entSave.attrOtherList;
+                ec.inventory = entSave.inventory;
+                // TODO: read entData here
+
+                if (ReferenceEquals(ec, Constants.gameLogic.pc))
+                    Debug.Log("Main Character loaded.");
+                else
+                    Debug.Log("Entity loaded.");
+
+                return true;
+            }
+            catch (FileNotFoundException e)
+            {
+                Debug.LogError(e.Message);
+                return false;
+            }
+        }
+
+        /**
+         * ITEM DATABASE
+         ****************/
+
+
         public void SaveItemDB()
         {
             // open a new xml file
@@ -139,6 +189,104 @@ namespace Assets.Scripts.Managers
         }
 
         /**
+         * SHOPS
+         **********/
+
+
+
+        int latestShopID;
+        HashSet<int> lockedShopIDs;
+
+        public int GetUniqShopID()
+        {
+            while (lockedShopIDs.Contains(++latestShopID)) { }
+            return latestShopID;
+        }
+
+        public bool LoadShop(Shop shop, int shopid)
+        {
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(ShopSaveData));
+                FileStream stream = new FileStream(Application.dataPath + shopXMLPrefix + shopid + ".xml", FileMode.Open);
+                ShopSaveData sh = serializer.Deserialize(stream) as ShopSaveData;
+                stream.Close();
+
+                shop.Set(sh);
+                return true;
+            } 
+            catch (FileNotFoundException e)
+            {
+                Debug.LogError(e.Message);
+                return false;
+            }
+        }
+
+        public void SaveShop(Shop shop,int shopid)
+        {
+            ShopSaveData saveData = new ShopSaveData();
+            saveData.shopID = shop.shopID;
+            saveData.money = shop.money;
+            saveData.items = shop.items;
+            saveData.boughtItems = shop.bougthItems;
+
+            XmlSerializer serializer = new XmlSerializer(typeof(ShopSaveData));
+            FileStream stream = new FileStream(Application.dataPath + shopXMLPrefix + shopid + ".xml", FileMode.Create);
+            serializer.Serialize(stream, saveData); // 
+            stream.Close();
+        }
+
+        /**
+         * GENERAL
+         ***********/
+
+        public bool LoadGeneralInformation()
+        {
+            // load data
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(GeneralInformation));
+                FileStream stream = new FileStream(Application.dataPath + generalInformationPrefix, FileMode.Open);
+                GeneralInformation gi = serializer.Deserialize(stream) as GeneralInformation;
+                stream.Close();
+
+                // apply data
+                latestShopID = gi.latestShopID;
+                latestCharID = gi.latestCharID;
+                lockedShopIDs = new HashSet<int>(gi.lockedShopIDs);
+                lockedCharIDs = new HashSet<int>(gi.lockedCharIDs);
+                return true;
+            }
+            catch (FileNotFoundException e)
+            {
+                latestCharID = 0;
+                latestShopID = 0;
+                lockedCharIDs = new HashSet<int>();
+                lockedShopIDs = new HashSet<int>();
+                Debug.LogError(e.Message);
+                return false;
+            }
+        }
+
+        public void SaveGeneralInformation()
+        {
+            // prepare data
+            GeneralInformation gi = new GeneralInformation();
+            gi.latestCharID = latestCharID;
+            gi.latestShopID = latestShopID;
+            gi.lockedCharIDs = new int[lockedCharIDs.Count];
+            lockedCharIDs.CopyTo(gi.lockedCharIDs);
+            gi.lockedShopIDs = new int[lockedShopIDs.Count];
+            lockedShopIDs.CopyTo(gi.lockedShopIDs);
+
+            // save data
+            XmlSerializer serializer = new XmlSerializer(typeof(GeneralInformation));
+            FileStream stream = new FileStream(Application.dataPath + generalInformationPrefix, FileMode.Create);
+            serializer.Serialize(stream, gi); // 
+            stream.Close();
+        }
+
+        /**
          * @return TRUE, if every item set is valid
          */
         public bool SanityCheck()
@@ -158,6 +306,38 @@ namespace Assets.Scripts.Managers
         }
     }
 
+    /**
+     * DATA CLASSES
+     ****************/
+
+    [System.Serializable]
+    [XmlRoot("Shop")]
+    public class ShopSaveData
+    {
+        [XmlAttribute("ID")]
+        public int shopID;
+        public Currency money;
+        [XmlArrayItem("i")]
+        public List<PraeItem> items;
+        [XmlArrayItem("b:")]
+        public List<PraeItem> boughtItems;
+    }
+
+
+    [System.Serializable]
+    [XmlRoot]
+    public class GeneralInformation
+    {
+        [XmlAttribute]
+        public int latestShopID;
+        [XmlArrayItem("id")]
+        public int[] lockedShopIDs;
+
+        [XmlAttribute]
+        public int latestCharID;
+        [XmlArrayItem("id")]
+        public int[] lockedCharIDs;
+    }
 
     [System.Serializable]
     [XmlRoot("ItemCollection")]

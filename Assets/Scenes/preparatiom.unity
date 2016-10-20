@@ -2594,6 +2594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a525dee73c87afa448ad56db53bcad2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopID: -1
   _inventory:
     _weight: 0
     _maxWeight: 20
@@ -2602,6 +2603,7 @@ MonoBehaviour:
       _K: 0
       _T: 0
     _items: []
+  charID: 0
 --- !u!114 &376593753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2666,15 +2668,7 @@ MonoBehaviour:
       _K: 0
       _T: 0
     _items: []
-  _shop:
-    _weight: 0
-    _maxWeight: 20
-    _money:
-      _G: 0
-      _K: 0
-      _T: 0
-    _items: []
-    _boughtItems: []
+  _shop: {fileID: 0}
 --- !u!114 &376593756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6202,6 +6196,7 @@ GameObject:
   - 114: {fileID: 820001300}
   - 114: {fileID: 820001299}
   - 114: {fileID: 820001297}
+  - 114: {fileID: 820001298}
   m_Layer: 0
   m_Name: ShopGuy
   m_TagString: Untagged
@@ -6232,6 +6227,24 @@ MonoBehaviour:
   canJump: 1
   _bRun: 1
   canRun: 1
+--- !u!114 &820001298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 820001296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bf1cb55d46c9e4c833e1f88a2262f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shopID: 1
+  _money:
+    _G: 0
+    _K: 0
+    _T: 0
+  _items: []
+  _boughtItems: []
 --- !u!114 &820001299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6243,6 +6256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e8ca90c96d44004088075c1ab16436d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopID: -1
   _inventory:
     _weight: 0
     _maxWeight: 20
@@ -6281,6 +6295,7 @@ MonoBehaviour:
         _K: 0
         _T: 0
       _icon: {fileID: 0}
+  charID: 0
 --- !u!114 &820001300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6339,15 +6354,7 @@ MonoBehaviour:
       _K: 0
       _T: 0
     _items: []
-  _shop:
-    _weight: 0
-    _maxWeight: 20
-    _money:
-      _G: 0
-      _K: 0
-      _T: 0
-    _items: []
-    _boughtItems: []
+  _shop: {fileID: 0}
 --- !u!114 &820001303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11403,6 +11410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a2983e8ef4a534fb474a651d8e0c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldSaveData: 1
 --- !u!4 &1703666193
 Transform:
   m_ObjectHideFlags: 0

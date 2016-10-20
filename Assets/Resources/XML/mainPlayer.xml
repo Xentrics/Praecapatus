@@ -22,17 +22,13 @@
     <Attr attr="SmP" val="156" />
   </AttrOther>
   <Inventory>
-    <money G="85" K="21" T="7">
-      <relative>8717</relative>
-    </money>
+    <money G="87" K="1" T="7" />
     <weight>6</weight>
     <maxWeight>20</maxWeight>
     <items>
       <PraeItem name="TestItem" amount="43" stackSize="100" weight="0.1">
         <desc>nothing</desc>
-        <value G="0" K="0" T="2">
-          <relative>2</relative>
-        </value>
+        <value G="0" K="0" T="2" />
         <iconPath />
       </PraeItem>
     </items>

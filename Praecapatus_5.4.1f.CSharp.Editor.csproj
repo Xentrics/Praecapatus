@@ -136,8 +136,10 @@
   <ItemGroup>
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
     <None Include="Assets\Resources\Conversations\test_g1.xml" />
+    <None Include="Assets\Resources\XML\GeneralInformation.xml" />
     <None Include="Assets\Resources\XML\itemdb.xml" />
     <None Include="Assets\Resources\XML\mainPlayer.xml" />
+    <None Include="Assets\Resources\XML\shop_1.xml" />
     <None Include="Assets\import\Standard Assets\Cameras\CameraGuidelines.txt" />
     <None Include="Assets\import\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\import\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />

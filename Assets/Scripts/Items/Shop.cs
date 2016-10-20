@@ -7,23 +7,44 @@ namespace Assets.Scripts.Items
     [Serializable]
     public class Shop : MonoBehaviour
     {
+        [SerializeField] protected int _shopID = -1;
         [SerializeField] Currency _money;
-        [SerializeField] List<PraeItem> _items;
-        [SerializeField] List<PraeItem> _boughtItems;
+        [SerializeField] List<PraeItem> _items = new List<PraeItem>();
+        [SerializeField] List<PraeItem> _boughtItems = new List<PraeItem>();
 
-        public Shop(Inventory inv) : base()
+        void Awake()
         {
-            Debug.Log("Created shop from given inventory.");
-            _money = inv.money;
-            _items = inv.items;
         }
 
-        public Shop()
+        void Start()
         {
-            _items = new List<PraeItem>();
-            _boughtItems = new List<PraeItem>();
+            if (_shopID > -1)
+                Constants.xmlHandler.LoadShop(this, _shopID);
+            else
+                /*TODO: GetUniqShopID? */;
         }
 
+        void OnApplicationQuit()
+        {
+            if (Constants.gameLogic.shouldSaveData)
+            {
+                if (_shopID == -1)
+                    Debug.LogError("ERROR: cannot save shop without valid id!");
+                else
+                {
+                    Constants.xmlHandler.SaveShop(this, _shopID);
+                }
+            }
+        }
+
+        public void Register()
+        {
+            if (_shopID == -1)
+            {
+                _shopID = Constants.xmlHandler.GetUniqShopID();
+                Debug.Log("New Shop registered: " + _shopID);
+            }
+        }
 
         public void AddBoughtItem(PraeItem item)
         {
@@ -89,22 +110,20 @@ namespace Assets.Scripts.Items
                 throw new ArgumentOutOfRangeException("Cannot remove item at postion invalid index!");
         }
 
-        public int boughtItemCount
-        {
-            get { return _boughtItems.Count; }
-        }
-
-        public List<PraeItem> bougthItems
-        {
-            get { return _boughtItems; }
-            protected set { _boughtItems = value; }
-        }
-
         public void Set(Shop sh)
         {
             _money = sh._money;
             _items = sh._items;
+            _boughtItems = sh._boughtItems;
+            _shopID = sh._shopID;
+        }
 
+        public void Set(Managers.ShopSaveData sh)
+        {
+            _money = sh.money;
+            _items = sh.items;
+            _boughtItems = sh.boughtItems;
+            _shopID = sh.shopID;
         }
 
         public void Set(Inventory inv)
@@ -123,6 +142,18 @@ namespace Assets.Scripts.Items
             }
         }
 
+        public int shopID
+        {
+            get { return _shopID; }
+            set
+            {
+                if (value > 0)
+                    _shopID = value;
+                else
+                    Debug.LogError("ShopID set to negative value. INVALID!");
+            }
+        }
+
         public int G
         {
             get { return _money.G; }
@@ -136,6 +167,17 @@ namespace Assets.Scripts.Items
         public int T
         {
             get { return _money.T; }
+        }
+
+        public int boughtItemCount
+        {
+            get { return _boughtItems.Count; }
+        }
+
+        public List<PraeItem> bougthItems
+        {
+            get { return _boughtItems; }
+            protected set { _boughtItems = value; }
         }
 
         public int itemCount

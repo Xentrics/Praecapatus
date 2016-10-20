@@ -15,6 +15,7 @@ namespace Assets.Scripts
         public static GameObject ShopUI;
         public static GameObject InteractionUI;
         public static InteractionManager interactionManager;
+        public static XmlDBManager xmlHandler;
 
         public static int NUM_ATTRIBUTE_GROUPS = Enum.GetNames(typeof(EAttributeGroup)).Length;
         public static int NUM_ATTRIBUTE_OTHER = Enum.GetNames(typeof(EAttributeOther)).Length;

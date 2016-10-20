@@ -18,7 +18,9 @@ namespace Assets.Scripts.Entity
         protected TestManager    DEB_testManager; // reference for debugging reasons. TODO: Should be performed by GameLogic later on
         protected EntityInfo     _entityInfo;     // basic attributes
         protected InteractionComponent _interComp;
+        public int shopID = -1;
         [SerializeField] protected Inventory _inventory;
+        [SerializeField] protected int charID;
 
         protected bool  _bInfight   = false;
 
@@ -27,7 +29,6 @@ namespace Assets.Scripts.Entity
 
         protected virtual void Awake()
         {
-            //TODO: make loading procedure here!
             moveComp = GetComponent<EntityMovement>();
             _praeObject = GetComponent<EntityObject>();
             _entityInfo = new EntityInfo();

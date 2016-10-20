@@ -41,6 +41,7 @@ namespace Assets.Scripts
 
         HashSet<timedInteraction> timedInteractions = new HashSet<timedInteraction>(); // will contain tempoary interactioncomps. Includes those from 'Astralbelebung'
 
+        public bool shouldSaveData = true;
 
         public void Awake()
         {
