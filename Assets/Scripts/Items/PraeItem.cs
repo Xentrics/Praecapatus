@@ -8,18 +8,19 @@ namespace Assets.Scripts.Items
     public class PraeItem
     {
         public static int GENERATED = 0;
-        [XmlAttribute("id")]    int             _id;    // is only important to identify specific items (e.g. quest items, template items)
-        [XmlAttribute("name")]  public string   name;
-        [XmlElement]            public string   desc;
-        [SerializeField]        float           _weightSingle;
-        [SerializeField]        int             _amount;
-        [SerializeField]        int             _stackSize;
-        [XmlElement("value")]   public Currency value;
-        [SerializeField]        Sprite          _icon;
+
+        [XmlAttribute("id")]    protected int       _id;    // is only important to identify specific items (e.g. quest items, template items)
+        [XmlAttribute("name")]  public string       name;
+        [XmlElement]            public string       desc;
+        [SerializeField]        protected float     _weightSingle;
+        [SerializeField]        protected int       _amount;
+        [SerializeField]        protected int       _stackSize;
+        [XmlElement]            public Currency     value;
+        [SerializeField]        protected Sprite    _icon;
 
         public PraeItem() {}
 
-        public PraeItem(PraeItem copy)
+        public PraeItem(ref PraeItem copy)
         {
             _id = copy._id;
             name = copy.name;
@@ -31,7 +32,7 @@ namespace Assets.Scripts.Items
             _icon = copy._icon;
         }
 
-        public PraeItem(PraeItem copy, int newAmount) : this(copy)
+        public PraeItem(ref PraeItem copy, int newAmount) : this(ref copy)
         {
             _amount = newAmount;
         }
@@ -42,10 +43,10 @@ namespace Assets.Scripts.Items
         public PraeItem(string name, float weightSingle, Currency value, int amount, int stackSize, Sprite icon)
         {
             this.name = name;
-            this.weightSingle = weightSingle;
+            this._weightSingle = weightSingle;
             this.value = value;
-            this.amount = amount;
-            this.stackSize = stackSize;
+            this._amount = amount;
+            this._stackSize = stackSize;
             this._icon = (icon) ? icon : Managers.XmlDBManager.NotSetIcon;
         }
 

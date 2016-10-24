@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 using System;
 
 namespace Assets.Scripts.Items
@@ -6,10 +7,11 @@ namespace Assets.Scripts.Items
     [Serializable]
     public class Inventory
     {
-        [UnityEngine.SerializeField] float _weight;
-        [UnityEngine.SerializeField] float _maxWeight = 20f;
-        [UnityEngine.SerializeField] protected Currency _money = new Currency();
-        [UnityEngine.SerializeField] protected List<PraeItem> _items = new List<PraeItem>();
+        [SerializeField] float _weight;
+        [SerializeField] float _maxWeight = 20f;
+        [SerializeField] public Currency money = new Currency();
+        [SerializeField] protected List<PraeItem> _items = new List<PraeItem>();
+        [SerializeField] protected Equipment _equipment = new Equipment();
 
         public Inventory()
         {
@@ -62,7 +64,7 @@ namespace Assets.Scripts.Items
          */
         public int AddItem(PraeItem item, bool stack = false, bool addPartial = true)
         {
-            PraeItem itemCopy = new PraeItem(item); // decouple references
+            PraeItem itemCopy = new PraeItem(ref item); // decouple references
 
             if (stack)
             {
@@ -152,34 +154,24 @@ namespace Assets.Scripts.Items
         {
             _weight = inv.weight;
             _maxWeight = inv.maxWeight;
-            _money = inv.money;
+            money = inv.money;
             _items = inv._items;
 
         }
 
-        public Currency money
-        {
-            get { return _money; }
-            set
-            {
-                if (value != null)
-                    _money.Set(value);
-            }
-        }
-
         public int G
         {
-            get { return _money.G; }
+            get { return money.G; }
         }
 
         public int K
         {
-            get { return _money.K; }
+            get { return money.K; }
         }
 
         public int T
         {
-            get { return _money.T; }
+            get { return money.T; }
         }
 
         public float weight
@@ -188,7 +180,7 @@ namespace Assets.Scripts.Items
             set
             {
                 if (value < 0)
-                    UnityEngine.Debug.LogError("Cannot set inventory weight: value is negative!");
+                    Debug.LogError("Cannot set inventory weight: value is negative!");
                 _weight = value;
             }
         }
@@ -199,7 +191,7 @@ namespace Assets.Scripts.Items
             set
             {
                 if (value < 0)
-                    UnityEngine.Debug.LogError("Cannot set inventory maxWeight: value is negative!");
+                    Debug.LogError("Cannot set inventory maxWeight: value is negative!");
                 _maxWeight = value;
             }
         }
@@ -209,13 +201,25 @@ namespace Assets.Scripts.Items
             get { return items.Count; }
         }
 
+        public Equipment equipment
+        {
+            get { return _equipment; }
+            set
+            {
+                if (value == null)
+                    Debug.LogError("Equipment set to NULL!");
+                else
+                    _equipment = value;
+            }
+        }
+
         public List<PraeItem> items
         {
             get { return _items; }
-            protected set
+            set
             {
                 if (value == null)
-                    UnityEngine.Debug.LogError("Inventory items set to NULL!");
+                    Debug.LogError("Inventory items set to NULL!");
                 else
                     _items = value;
             }

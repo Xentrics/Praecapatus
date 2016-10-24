@@ -15,7 +15,8 @@ NEXT SESSION TASKS:
 	- per character saved		+
 		- save abilities		++
 		- save attributes		++
-		- save inventory		++
+		- save inventory		+
+			- equipment			+
 		- save interactions		++
 		- save character states	
 			- debuffs			

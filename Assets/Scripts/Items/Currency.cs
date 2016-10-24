@@ -3,23 +3,18 @@ using System.Xml.Serialization;
 namespace Assets.Scripts.Items
 {
     [System.Serializable]
-    public class Currency
+    public struct Currency
     {
         [UnityEngine.SerializeField] int _G;
         [UnityEngine.SerializeField] int _K;
         [UnityEngine.SerializeField] int _T;
 
-        public Currency()
-        {
-            Set(0, 0, 0);
-        }
-
-        public Currency(Currency a)
+        public Currency(Currency a) : this()
         {
             Set(a);
         }
 
-        public Currency(int g, int k, int t)
+        public Currency(int g, int k, int t) : this()
         {
             Set(g, k, t);
         }
@@ -51,7 +46,7 @@ namespace Assets.Scripts.Items
         public int G
         {
             get { return _G; }
-            protected set
+            set
             {
                 if (value < 0)
                     UnityEngine.Debug.LogError("Currencies (G) must not be negative!");
@@ -63,7 +58,7 @@ namespace Assets.Scripts.Items
         public int K
         {
             get { return _K; }
-            protected set
+            set
             {
                 if (value < 0)
                     UnityEngine.Debug.LogError("Currencies (K) must not be negative!");
@@ -75,7 +70,7 @@ namespace Assets.Scripts.Items
         public int T
         {
             get { return _T; }
-            protected set
+            set
             {
                 if (value < 0)
                     UnityEngine.Debug.LogError("Currencies (T) must not be negative!");

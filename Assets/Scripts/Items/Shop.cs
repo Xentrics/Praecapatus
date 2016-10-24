@@ -7,10 +7,10 @@ namespace Assets.Scripts.Items
     [Serializable]
     public class Shop : MonoBehaviour
     {
-        [SerializeField] protected int _shopID = -1;
-        [SerializeField] Currency _money;
-        [SerializeField] List<PraeItem> _items = new List<PraeItem>();
-        [SerializeField] List<PraeItem> _boughtItems = new List<PraeItem>();
+        [SerializeField] protected int      _shopID = -1;
+        [SerializeField] public Currency    money;
+        [SerializeField] List<PraeItem>     _items = new List<PraeItem>();
+        [SerializeField] List<PraeItem>     _boughtItems = new List<PraeItem>();
 
         void Awake()
         {
@@ -53,7 +53,7 @@ namespace Assets.Scripts.Items
 
         public void AddItem(PraeItem item)
         {
-            PraeItem itemCopy = new PraeItem(item); // decouple references
+            PraeItem itemCopy = new PraeItem(ref item); // decouple references
 
             /* iterate all items and add 'item' until its amount is zero or weight constraint is reached */
             int rest = itemCopy.amount;
@@ -112,7 +112,7 @@ namespace Assets.Scripts.Items
 
         public void Set(Shop sh)
         {
-            _money = sh._money;
+            money = sh.money;
             _items = sh._items;
             _boughtItems = sh._boughtItems;
             _shopID = sh._shopID;
@@ -120,7 +120,7 @@ namespace Assets.Scripts.Items
 
         public void Set(Managers.ShopSaveData sh)
         {
-            _money = sh.money;
+            money = sh.money;
             _items = sh.items;
             _boughtItems = sh.boughtItems;
             _shopID = sh.shopID;
@@ -128,18 +128,8 @@ namespace Assets.Scripts.Items
 
         public void Set(Inventory inv)
         {
-            _money = inv.money;
+            money = inv.money;
             _items = inv.items;
-        }
-
-        public Currency money
-        {
-            get { return _money; }
-            set
-            {
-                if (value != null)
-                    _money.Set(value);
-            }
         }
 
         public int shopID
@@ -156,17 +146,17 @@ namespace Assets.Scripts.Items
 
         public int G
         {
-            get { return _money.G; }
+            get { return money.G; }
         }
 
         public int K
         {
-            get { return _money.K; }
+            get { return money.K; }
         }
 
         public int T
         {
-            get { return _money.T; }
+            get { return money.T; }
         }
 
         public int boughtItemCount
