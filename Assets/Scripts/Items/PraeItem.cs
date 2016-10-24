@@ -7,6 +7,8 @@ namespace Assets.Scripts.Items
     [System.Serializable]
     public class PraeItem
     {
+        public static int GENERATED = 0;
+        [XmlAttribute("id")]    int             _id;    // is only important to identify specific items (e.g. quest items, template items)
         [XmlAttribute("name")]  public string   name;
         [XmlElement]            public string   desc;
         [SerializeField]        float           _weightSingle;
@@ -19,6 +21,7 @@ namespace Assets.Scripts.Items
 
         public PraeItem(PraeItem copy)
         {
+            _id = copy._id;
             name = copy.name;
             desc = copy.desc;
             _weightSingle = copy._weightSingle;

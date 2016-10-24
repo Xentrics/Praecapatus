@@ -95,6 +95,7 @@ namespace Assets.Scripts.Managers
             entData.attrGrpList = ec.attrGrpList;
             entData.attrOtherList = ec.attrOtherList;
             entData.inventory = ec.inventory;
+            entData.conversationAssets = ec.interComp.conAssets;
             // TODO: fill entData here
 
             XmlSerializer serializer = new XmlSerializer(typeof(EntitySaveData));
@@ -130,6 +131,7 @@ namespace Assets.Scripts.Managers
                 ec.attrGrpList = entSave.attrGrpList;
                 ec.attrOtherList = entSave.attrOtherList;
                 ec.inventory = entSave.inventory;
+                ec.interComp.conAssets = entSave.conversationAssets;
                 // TODO: read entData here
 
                 if (ReferenceEquals(ec, Constants.gameLogic.pc))
@@ -150,6 +152,18 @@ namespace Assets.Scripts.Managers
          * ITEM DATABASE
          ****************/
 
+        HashSet<int> lockedItemIDs;
+        
+        public bool ItemIDInUse(int id)
+        {
+            return lockedItemIDs.Contains(id);
+        }
+
+        public void LockItemID(int id)
+        {
+            Debug.Assert(ItemIDInUse(id), "Cannot lock id [" + id + "] : already locked!");
+            lockedItemIDs.Add(id);
+        }
 
         public void SaveItemDB()
         {
@@ -255,6 +269,7 @@ namespace Assets.Scripts.Managers
                 latestCharID = gi.latestCharID;
                 lockedShopIDs = new HashSet<int>(gi.lockedShopIDs);
                 lockedCharIDs = new HashSet<int>(gi.lockedCharIDs);
+                lockedItemIDs = new HashSet<int>(gi.lockedItemIDs);
                 return true;
             }
             catch (FileNotFoundException e)
@@ -263,6 +278,7 @@ namespace Assets.Scripts.Managers
                 latestShopID = 0;
                 lockedCharIDs = new HashSet<int>();
                 lockedShopIDs = new HashSet<int>();
+                lockedItemIDs = new HashSet<int>();
                 Debug.LogError(e.Message);
                 return false;
             }
@@ -278,6 +294,8 @@ namespace Assets.Scripts.Managers
             lockedCharIDs.CopyTo(gi.lockedCharIDs);
             gi.lockedShopIDs = new int[lockedShopIDs.Count];
             lockedShopIDs.CopyTo(gi.lockedShopIDs);
+            gi.lockedItemIDs = new int[lockedItemIDs.Count];
+            lockedItemIDs.CopyTo(gi.lockedItemIDs);
 
             // save data
             XmlSerializer serializer = new XmlSerializer(typeof(GeneralInformation));
@@ -337,6 +355,9 @@ namespace Assets.Scripts.Managers
         public int latestCharID;
         [XmlArrayItem("id")]
         public int[] lockedCharIDs;
+
+        [XmlArrayItem("id")]
+        public int[] lockedItemIDs;
     }
 
     [System.Serializable]
@@ -389,5 +410,8 @@ namespace Assets.Scripts.Managers
         public List<AttributeOtherSaveData> attrOtherList;
         [XmlElement("Inventory")]
         public Inventory inventory;
+        [XmlArray("conAssets")]
+        [XmlArrayItem("c")]
+        public List<TextAsset> conversationAssets;
     }
 }

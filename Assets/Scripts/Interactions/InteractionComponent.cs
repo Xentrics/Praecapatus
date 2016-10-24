@@ -15,7 +15,7 @@ namespace Assets.Scripts.Interactions
         EntityController _ec;
         Inventory _inv;
         Shop _shop = null;      // the shop should go lost if the component is lost. Can be changed later on
-        List<TextAsset> conversations;
+        public List<TextAsset> conAssets;
 
         void Awake()
         {

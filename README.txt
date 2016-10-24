@@ -16,12 +16,12 @@ NEXT SESSION TASKS:
 		- save abilities		++
 		- save attributes		++
 		- save inventory		++
-		- save interactions		
+		- save interactions		++
 		- save character states	
 			- debuffs			
  - improve loading/saving		+
 	- shop						
-		- handle uniq id mechanics	+
+		- handle uniq id mechanics	++
 		- load and save shops		++
 	- characters				+
 	- map						
@@ -49,8 +49,9 @@ NOTES ON GAME MECHANICS
 ~ any valid object in the screne contains a PraeObject component	+
 - INTERACTIONS																		+
 	- interactions are controlled by 'InteractionComponents'						+
-		-> any object with this component are subject to interaction				
-		- any object can become/loose interaction by adding/removing this component	
+		-> any object with this component are subject to interaction				+	
+		- any object can become/loose interaction by adding/removing this component	++
+		- entities alway have interaction components								++
 	~ praeobjects are not PraeObject by default										++
 	- shop UI																		++
 	- Talk UI 																		+
@@ -60,13 +61,13 @@ NOTES ON GAME MECHANICS
 - CONVERSATIONS
 	- conversations can be preset using graphml based graphs (i.e. using yEd) ++
 	- graphml files can be loaded as TextAssets with ending .txt or .xml	  ++
-	- the loader can be found as a method inside class 'Conversation'
+	- the loader can be found as a method inside class 'Conversation'		  ++
 - INFAMIE
 - RUHM
 - ITEMS
 	- items can be saved and loaded as xml					++
-	- items can be added to /removed from the inventory
-	- items of a certain class can be equipped
+	- items can be added to /removed from the inventory		++
+	- items of a certain class can be equipped				
 
 
 NOTES ON STORY
