@@ -20,19 +20,12 @@ namespace Assets.Scripts.Items
 
         public PraeItem() {}
 
-        public PraeItem(ref PraeItem copy)
+        public PraeItem(PraeItem copy)
         {
-            _id = copy._id;
-            name = copy.name;
-            desc = copy.desc;
-            _weightSingle = copy._weightSingle;
-            value = copy.value;
-            _amount = copy._amount;
-            _stackSize = copy._stackSize;
-            _icon = copy._icon;
+            Set(copy);
         }
 
-        public PraeItem(ref PraeItem copy, int newAmount) : this(ref copy)
+        public PraeItem(PraeItem copy, int newAmount) : this(copy)
         {
             _amount = newAmount;
         }
@@ -50,6 +43,18 @@ namespace Assets.Scripts.Items
             this._icon = (icon) ? icon : Managers.XmlDBManager.NotSetIcon;
         }
 
+
+        public virtual void Set(PraeItem it)
+        {
+            _id = it._id;
+            name = it.name;
+            desc = it.desc;
+            _weightSingle = it._weightSingle;
+            value = it.value;
+            _amount = it._amount;
+            _stackSize = it._stackSize;
+            _icon = it._icon;
+        }
 
 
         /**

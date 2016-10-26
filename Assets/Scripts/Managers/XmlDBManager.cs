@@ -206,8 +206,6 @@ namespace Assets.Scripts.Managers
          * SHOPS
          **********/
 
-
-
         int latestShopID;
         HashSet<int> lockedShopIDs;
 

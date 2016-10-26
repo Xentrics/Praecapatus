@@ -26,43 +26,43 @@
     <weight>6</weight>
     <maxWeight>20</maxWeight>
     <equipment>
-      <Head name="" amount="0" stackSize="0" weight="0" armor="0">
+      <Head name="" amount="0" stackSize="1" weight="0" armor="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </Head>
-      <Torso name="" amount="0" stackSize="0" weight="0" armor="0">
+      <Torso name="" amount="0" stackSize="1" weight="0" armor="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </Torso>
-      <Arms name="" amount="0" stackSize="0" weight="0" armor="0">
+      <Arms name="" amount="0" stackSize="1" weight="0" armor="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </Arms>
-      <Legs name="" amount="0" stackSize="0" weight="0" armor="0">
+      <Legs name="" amount="0" stackSize="1" weight="0" armor="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </Legs>
-      <Shoes name="" amount="0" stackSize="0" weight="0" armor="0">
+      <Shoes name="" amount="0" stackSize="1" weight="0" armor="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </Shoes>
-      <LeftHand name="" amount="0" stackSize="0" weight="0" damage="0">
+      <LeftHand name="" amount="0" stackSize="1" weight="0" damage="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </LeftHand>
-      <RightHand name="" amount="0" stackSize="0" weight="0" damage="0">
+      <RightHand name="" amount="0" stackSize="1" weight="0" damage="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />

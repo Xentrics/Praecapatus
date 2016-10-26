@@ -53,7 +53,7 @@ namespace Assets.Scripts.Items
 
         public void AddItem(PraeItem item)
         {
-            PraeItem itemCopy = new PraeItem(ref item); // decouple references
+            PraeItem itemCopy = new PraeItem(item); // decouple references
 
             /* iterate all items and add 'item' until its amount is zero or weight constraint is reached */
             int rest = itemCopy.amount;

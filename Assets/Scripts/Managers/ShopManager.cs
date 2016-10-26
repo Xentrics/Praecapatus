@@ -508,7 +508,7 @@ namespace Assets.Scripts.Managers
             }
 
             // it can fit based on size
-            int rest = _buyer.AddItem(new PraeItem(ref pitem, amount), true, false);
+            int rest = _buyer.AddItem(new PraeItem(pitem, amount), true, false);
             Debug.Assert(rest == 0, "Adding item to inventory was unsuccessful!");
             uitem._item.amount -= (amount - rest);
             uitem.Set(uitem._item); // update labels
@@ -551,7 +551,7 @@ namespace Assets.Scripts.Managers
                 return false;
             }
 
-            _seller.AddBoughtItem(new PraeItem(ref pitem, amount));
+            _seller.AddBoughtItem(new PraeItem(pitem, amount));
             uitem._item.amount -= amount;
             uitem.Set(uitem._item); // update labels
             if (uitem._item.amount <= 0)

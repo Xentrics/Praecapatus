@@ -64,7 +64,7 @@ namespace Assets.Scripts.Items
          */
         public int AddItem(PraeItem item, bool stack = false, bool addPartial = true)
         {
-            PraeItem itemCopy = new PraeItem(ref item); // decouple references
+            PraeItem itemCopy = new PraeItem(item); // decouple references
 
             if (stack)
             {
@@ -156,7 +156,7 @@ namespace Assets.Scripts.Items
             _maxWeight = inv.maxWeight;
             money = inv.money;
             _items = inv._items;
-
+            _equipment.Set(inv._equipment);
         }
 
         public int G

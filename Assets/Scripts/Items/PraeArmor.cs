@@ -22,6 +22,12 @@ namespace Assets.Scripts.Items
          * GETTER AND SETTER
          *********************/
 
+        public void Set(PraeArmor ar)
+        {
+            base.Set(ar);
+            _armor = ar._armor;
+        }
+
         [XmlAttribute("armor")]
         public float armor
         {

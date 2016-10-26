@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace Assets.Scripts.Interactions
 {
@@ -365,6 +367,67 @@ namespace Assets.Scripts.Interactions
 
 
             return newConArr;
+        }
+
+
+        public static XGMLGraph loadFromXGML(TextAsset f)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(XGMLGraph));
+            StringReader r = new StringReader(f.text);
+            XGMLGraph xmlDoc = serializer.Deserialize(r) as XGMLGraph;
+            r.Close();
+
+
+
+            return xmlDoc;
+        }
+    }
+
+
+    [Serializable, XmlRoot("section")]
+    public class XGMLGraph
+    {
+        [XmlAttribute] public string name;
+
+        [XmlElement("attribute")] public List<XGMLAttribute> attributes;
+        public XGMLGraphSection section;
+
+
+        [Serializable]
+        public class XGMLAttribute
+        {
+            [XmlText] public string attribute;
+            [XmlAttribute] public string key;
+            [XmlAttribute] public string type;
+        }
+
+
+        [Serializable]
+        public class XGMLGraphSection
+        {
+            [XmlAttribute]
+            public string name;
+
+            [XmlElement("attribute")] public List<XGMLAttribute>    attributes;
+            [XmlElement("section")]   public List<XGMLNodeEdgeSection>  sections;
+        }
+
+
+        [Serializable]
+        public class XGMLNodeEdgeSection
+        {
+            [XmlAttribute] public string name;
+
+            [XmlElement("attribute")] public List<XGMLAttribute>    attributes;
+            [XmlElement("section")]   public List<XGMLDataSection>  sections;
+
+            [Serializable]
+            public class XGMLDataSection
+            {
+                [XmlAttribute] public string name;
+
+                [XmlElement("attribute")] public List<XGMLAttribute> attributes;
+            }
         }
     }
 }

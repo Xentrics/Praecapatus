@@ -21,6 +21,13 @@ namespace Assets.Scripts.Items
          * GETTER AND SETTER
          *********************/
 
+        public void Set(PraeWeapon pw)
+        {
+            base.Set(pw);
+
+            _damage = pw._damage;
+        }
+
         [XmlAttribute("damage")]
         public float damage
         {

@@ -9,6 +9,8 @@ NOTES ON NOTES:
 NEXT SESSION TASKS:
  - implement InteractionObject	+
 	- basic conversation		++
+	- load conversations		++
+	- improved loading/reading using xgml +
  - deal with time mechanics 	+
  - implement GameSaver			+
 	- item database				+
@@ -21,15 +23,12 @@ NEXT SESSION TASKS:
 		- save character states	
 			- debuffs			
  - improve loading/saving		+
-	- shop						
-		- handle uniq id mechanics	++
-		- load and save shops		++
 	- characters				+
 	- map						
  - implement Quest Mechanics	
  - DEBUFF mechanics				
 	- new class DEBUFF			
-
+ - shared animation controller
 
 NOTES ON GAME CONTROL
 - Abilities can be used in 2 major ways:
@@ -55,6 +54,7 @@ NOTES ON GAME MECHANICS
 		- entities alway have interaction components								++
 	~ praeobjects are not PraeObject by default										++
 	- shop UI																		++
+		- loading, saving															++
 	- Talk UI 																		+
 		- basic conversation														++
 		- interaction events														+
@@ -63,12 +63,19 @@ NOTES ON GAME MECHANICS
 	- conversations can be preset using graphml based graphs (i.e. using yEd) ++
 	- graphml files can be loaded as TextAssets with ending .txt or .xml	  ++
 	- the loader can be found as a method inside class 'Conversation'		  ++
+- MAP
+	- loading, saving
+	- dynmaic generation
+	- optimized rotation
 - INFAMIE
 - RUHM
 - ITEMS
 	- items can be saved and loaded as xml					++
 	- items can be added to /removed from the inventory		++
-	- items of a certain class can be equipped				
+	- items of a certain class can be equipped				+
+	- items can be assigned a uniq id to identify them		++
+- PERFORMANCE OPTIMIZATION
+	- shared anim controller for background elements like forests
 
 
 NOTES ON STORY

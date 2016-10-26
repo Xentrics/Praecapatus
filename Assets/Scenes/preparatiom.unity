@@ -2598,11 +2598,103 @@ MonoBehaviour:
   _inventory:
     _weight: 0
     _maxWeight: 20
-    _money:
+    money:
       _G: 0
       _K: 0
       _T: 0
     _items: []
+    _equipment:
+      armor_head:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _armor: 0
+      armor_torso:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _armor: 0
+      armor_arms:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _armor: 0
+      armor_legs:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _armor: 0
+      armor_shoes:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _armor: 0
+      weapon_lefthand:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _damage: 0
+      weapon_righthand:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _damage: 0
   charID: 0
 --- !u!114 &376593753
 MonoBehaviour:
@@ -2659,16 +2751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca9375c7e2a8ed34da109ddeddfcf425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ec: {fileID: 0}
-  _inv:
-    _weight: 0
-    _maxWeight: 20
-    _money:
-      _G: 0
-      _K: 0
-      _T: 0
-    _items: []
-  _shop: {fileID: 0}
+  conAssets: []
 --- !u!114 &376593756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6239,7 +6322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shopID: 1
-  _money:
+  money:
     _G: 0
     _K: 0
     _T: 0
@@ -6260,10 +6343,10 @@ MonoBehaviour:
   _inventory:
     _weight: 0
     _maxWeight: 20
-    _money:
-      _G: 10
-      _K: 9
-      _T: 8
+    money:
+      _G: 0
+      _K: 0
+      _T: 0
     _items:
     - name: TestItem
       desc: UNKNOWN
@@ -6295,6 +6378,98 @@ MonoBehaviour:
         _K: 0
         _T: 0
       _icon: {fileID: 0}
+    _equipment:
+      armor_head:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _armor: 0
+      armor_torso:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _armor: 0
+      armor_arms:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _armor: 0
+      armor_legs:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _armor: 0
+      armor_shoes:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _armor: 0
+      weapon_lefthand:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _damage: 0
+      weapon_righthand:
+        name: 
+        desc: 
+        _weightSingle: 0
+        _amount: 0
+        _stackSize: 0
+        value:
+          _G: 0
+          _K: 0
+          _T: 0
+        _icon: {fileID: 0}
+        gearType: 0
+        _damage: 0
   charID: 0
 --- !u!114 &820001300
 MonoBehaviour:
@@ -6345,16 +6520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca9375c7e2a8ed34da109ddeddfcf425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ec: {fileID: 0}
-  _inv:
-    _weight: 0
-    _maxWeight: 20
-    _money:
-      _G: 0
-      _K: 0
-      _T: 0
-    _items: []
-  _shop: {fileID: 0}
+  conAssets: []
 --- !u!114 &820001303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11392,6 +11558,7 @@ GameObject:
   - 114: {fileID: 1703666192}
   - 114: {fileID: 1703666194}
   - 114: {fileID: 1703666196}
+  - 114: {fileID: 1703666195}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: GameLogic
@@ -11435,6 +11602,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4030c63537f2ced4da974f04f3d01d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1703666195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1703666191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b76150683fb9d4ab76217463753774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conAsset: {fileID: 4900000, guid: 497dd1578ca484643ac7b560f0c8a2c7, type: 3}
+  graph:
+    name: 
+    attributes: []
+    section:
+      name: 
+      attributes: []
+      sections: []
 --- !u!114 &1703666196
 MonoBehaviour:
   m_ObjectHideFlags: 0

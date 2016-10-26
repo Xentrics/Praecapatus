@@ -19,6 +19,13 @@ namespace Assets.Scripts.Items
         }
 
         public PraeGear(string name, float weightSingle, Currency value, Sprite icon) : this(name, weightSingle, value, 1, 1, icon) {}
+
+
+        public void Set(PraeGear pg)
+        {
+            base.Set(pg);
+            gearType = pg.gearType;
+        }
     }
 
 
