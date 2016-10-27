@@ -10,7 +10,6 @@ NEXT SESSION TASKS:
  - implement InteractionObject	+
 	- basic conversation		++
 	- load conversations		++
-	- improved loading/reading using xgml +
  - deal with time mechanics 	+
  - implement GameSaver			+
 	- item database				+
@@ -20,14 +19,14 @@ NEXT SESSION TASKS:
 		- save inventory		+
 			- equipment			+
 		- save interactions		++
-		- save character states	
-			- debuffs			
+		- save character states	+
+			- debuffs			+
  - improve loading/saving		+
 	- characters				+
 	- map						
  - implement Quest Mechanics	
- - DEBUFF mechanics				
-	- new class DEBUFF			
+ - DE/BUFF mechanics			+
+	- new class AbstractBuff	+
  - shared animation controller
 
 NOTES ON GAME CONTROL
@@ -60,9 +59,9 @@ NOTES ON GAME MECHANICS
 		- interaction events														+
 			- open shopUI															++
 - CONVERSATIONS
-	- conversations can be preset using graphml based graphs (i.e. using yEd) ++
-	- graphml files can be loaded as TextAssets with ending .txt or .xml	  ++
-	- the loader can be found as a method inside class 'Conversation'		  ++
+	- conversations can be preset using GraphML based graphs (i.e. using Gephi) ++
+	- graphml files can be loaded as TextAssets with ending .txt or .xml	  	++
+	- the loader can be found as a method inside class 'Conversation'		  	++
 - MAP
 	- loading, saving
 	- dynmaic generation

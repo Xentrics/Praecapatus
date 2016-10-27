@@ -5,7 +5,7 @@ namespace Assets.Scripts.Interactions
     class ConTester : MonoBehaviour
     {
         public TextAsset conAsset;
-        public XGMLGraph graph;
+        //public C graph;
 
         void Awake()
         {
@@ -13,7 +13,7 @@ namespace Assets.Scripts.Interactions
 
         void Start()
         {
-            graph = Conversation.loadFromXGML(conAsset);
+            Conversation[] cons = Conversation.loadFromGephiGraphML(conAsset);
         }
     }
 }

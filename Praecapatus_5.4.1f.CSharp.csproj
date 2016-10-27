@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Animation\SpriteAnimation.cs" />
     <Compile Include="Assets\Scripts\Attributes.cs" />
     <Compile Include="Assets\Scripts\BringToFront.cs" />
+    <Compile Include="Assets\Scripts\Buffs\AbstractBuff.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraPlayer.cs" />
     <Compile Include="Assets\Scripts\Camera\SideWiseCamera.cs" />
     <Compile Include="Assets\Scripts\Commands\AbstractCommand.cs" />
@@ -276,7 +277,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
-    <None Include="Assets\Resources\Conversations\test_g1 - Kopie.xml" />
+    <None Include="Assets\Resources\Conversations\test_g1.xml" />
     <None Include="Assets\Resources\XML\GeneralInformation.xml" />
     <None Include="Assets\Resources\XML\itemdb.xml" />
     <None Include="Assets\Resources\XML\mainPlayer.xml" />

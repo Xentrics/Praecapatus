@@ -35,7 +35,7 @@ namespace Assets.Scripts.Interactions
         public void StartConversation(InteractionComponent target)
         {
             TextAsset conAsset = Resources.Load<TextAsset>("Conversations/test_g1"); // just for testing!
-            Conversation[] con = Conversation.loadFromGraphml(conAsset);
+            Conversation[] con = Conversation.loadFromGephiGraphML(conAsset);
             Debug.Assert(target != null);
             Constants.interactionManager.StartInteraction(this, target, con[0]);
         }

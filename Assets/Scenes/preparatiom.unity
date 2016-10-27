@@ -11613,14 +11613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b76150683fb9d4ab76217463753774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  conAsset: {fileID: 4900000, guid: 497dd1578ca484643ac7b560f0c8a2c7, type: 3}
-  graph:
-    name: 
-    attributes: []
-    section:
-      name: 
-      attributes: []
-      sections: []
+  conAsset: {fileID: 4900000, guid: 03853c1c11fda5d409dd8eb505b10329, type: 3}
 --- !u!114 &1703666196
 MonoBehaviour:
   m_ObjectHideFlags: 0

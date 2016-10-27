@@ -1,8 +1,15 @@
 ﻿using UnityEngine;
 using System.Xml.Serialization;
+using System.Collections.Generic;
+using Assets.Scripts.Buffs;
 
 namespace Assets.Scripts.Entity
 {
+    /**
+     *  container for attributes
+     *  container for class
+     *  handler for buffs/debuffs
+     */
     [System.Serializable]
     [XmlRoot("EntityInfo")]
     public class EntityInfo
@@ -11,6 +18,9 @@ namespace Assets.Scripts.Entity
         ECharClass _charClass;
         EAttributeGroup primaryAttr;
         EAttributeGroup secondaryAttr;
+
+        List<AbstractBuff> buffs;
+
 
         public EntityInfo()
         {
@@ -23,6 +33,9 @@ namespace Assets.Scripts.Entity
             characterClass = ECharClass.IndustrieAdept;
         }
 
+        /**
+         * ATTRIBUTE RELATED
+         */
 
         public int getAttributeValue(EAttributeGroup A) { return attr.getAttributeLevel(A); }
 
@@ -36,17 +49,46 @@ namespace Assets.Scripts.Entity
          */
         public int getSecondaryAttributeLevel() { return attr.getAttributeLevel(secondaryAttr); }
 
+
+        /**
+         * BUFFS MECHANICS
+         */
+
+        /**
+         * func: handles buffs effects
+         * @deltaTime: the amount of time past since last call
+         * NOTE: deltaTime may be kept track of from within this class
+         */
+        public void Update(float deltaTime)
+        {
+            foreach (AbstractBuff buff in buffs)
+            {
+                buff.restDuration -= deltaTime;
+                if (buff.restDuration <= 0)
+                {
+                    buff.applyEndEffect();
+                    buffs.Remove(buff);
+                }
+                else
+                {
+                    if (buff.hasDurationEffect())
+                        buff.applyDurationEffect(deltaTime);
+                }
+            }
+        }
+
+
         /**
          * XML INTERFACE
          ********************/
 
-        public System.Collections.Generic.List<Managers.AttributeGroupSaveData> attrGrpList
+        public List<Managers.AttributeGroupSaveData> attrGrpList
         {
             get { return attr.attrGrpList; }
             set { attr.attrGrpList = value; }
         }
 
-        public System.Collections.Generic.List<Managers.AttributeOtherSaveData> attrOtherList
+        public List<Managers.AttributeOtherSaveData> attrOtherList
         {
             get { return attr.attrOtherList; }
             set { attr.attrOtherList = value; }
@@ -55,6 +97,23 @@ namespace Assets.Scripts.Entity
         /**
          * GETTER AND SETTER
          ********************/
+
+        public void AddBuff(AbstractBuff newbuff)
+        {
+            if (newbuff == null)
+                throw new System.NullReferenceException("Cannot add new buff: buff is null!");
+
+            if (newbuff.buffedEntity != null)
+            {
+                Debug.Assert(ReferenceEquals(newbuff.buffedEntity, this), "Only add buffs to the entity of the effected entity!");
+                buffs.Add(newbuff);
+            }
+            else
+            {
+                newbuff.buffedEntity = this;
+                buffs.Add(newbuff);
+            }
+        }
 
         /**
          * load some basic presets based on the given character class

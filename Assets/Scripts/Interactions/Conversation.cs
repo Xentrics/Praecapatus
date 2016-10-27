@@ -52,7 +52,7 @@ namespace Assets.Scripts.Interactions
                 _responses.Add(resp);
             }
 
-            public BasicDialResponse RetResponse(int id)
+            public BasicDialResponse GetResponse(int id)
             {
                 if (id < 0 || id >= _responses.Count)
                     throw new ArgumentOutOfRangeException("Cannot choose response with invalid id!" + id);
@@ -85,6 +85,14 @@ namespace Assets.Scripts.Interactions
                         throw new NullReferenceException("Question text must not be null!");
                     _dialogueText = value;
                 }
+            }
+
+            public override string ToString()
+            {
+                string str = "";
+                foreach (BasicDialResponse r in _responses)
+                    str = str + "[" + r.responseText + "] ";
+                return str;
             }
         }
 
@@ -127,10 +135,11 @@ namespace Assets.Scripts.Interactions
          */
         public EConOptionType chose(int id)
         {
-            BasicDialResponse resp = _currentNode.RetResponse(id);
+            BasicDialResponse resp = _currentNode.GetResponse(id);
             switch(resp.optionType)
             {
                 case EConOptionType.UNSET:
+                case EConOptionType.NORMAL:
                     if (resp.nextNode.HasOptions())
                     {
                         _currentNode = resp.nextNode;
@@ -141,7 +150,6 @@ namespace Assets.Scripts.Interactions
                         _currentNode = resp.nextNode;
                         return EConOptionType.EXIT;
                     }
-
                 default:
                     return resp.optionType;
             }
@@ -219,7 +227,7 @@ namespace Assets.Scripts.Interactions
          * - a group is considered a separate conversation, but edge can connect them
          * @graphmlFile: Asset reference to a valid graphml file
          */
-        public static Conversation[] loadFromGraphml(TextAsset graphmlFile)
+        public static Conversation[] loadFromYedGraphml(TextAsset graphmlFile)
         {
             if (!graphmlFile)
                 throw new NullReferenceException("no xmlFile given!");
@@ -296,7 +304,6 @@ namespace Assets.Scripts.Interactions
             }
 
             // LOAD EDGE ~> RESPONSES
-            // TODO: connect stuff here!
             foreach (XmlNode edge in conEdgeList)
             {
                 BasicDialResponse response = new BasicDialResponse();
@@ -377,9 +384,244 @@ namespace Assets.Scripts.Interactions
             XGMLGraph xmlDoc = serializer.Deserialize(r) as XGMLGraph;
             r.Close();
 
-
+            // TODO: extract information for conversation
 
             return xmlDoc;
+        }
+
+        public static Dictionary<string, string> XmlNodesToDic(XmlNodeList nodes, string attr)
+        {
+            Dictionary<string, string> nodeDic = new Dictionary<string, string>(nodes.Count + 1);
+            foreach (XmlNode node in nodes)
+                if (!node.InnerText.Equals(""))
+                    nodeDic[node.Attributes[attr].Value] = node.InnerText;
+
+            return nodeDic;
+        }
+
+        public static Conversation[] loadFromGephiGraphML(TextAsset f)
+        {
+            if (f == null)
+                throw new NullReferenceException("Cannot load graph from NULL reference!");
+
+            /* load and prepare data */
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(f.text);
+
+            XmlNodeList conKeyList = xmlDoc.GetElementsByTagName("key");
+            XmlNodeList conNodeList = xmlDoc.GetElementsByTagName("node");
+            XmlNodeList conEdgeList = xmlDoc.GetElementsByTagName("edge");
+            Dictionary<string, BasicDialNode> dialNodes = new Dictionary<string, BasicDialNode>();
+            List<BasicDialNode> conStartNodes = new List<BasicDialNode>(); // store conversation starts
+
+            /* get data keys */
+            string PlayerEventNodeId = null;
+            string ActivationEventNodeId = null;
+            string PlayerEventEdgeId = null;
+            string ActivationEventEdgeId = null;
+            string RequirementEdgeId = null;
+
+            foreach (XmlNode key in conKeyList)
+            {
+                switch(key.Attributes["attr.name"].Value)
+                {
+                    case "PlayerEvent":
+                        if (key.Attributes["for"].Value.Equals("node"))
+                            PlayerEventNodeId = key.Attributes["id"].Value;
+                        else
+                            PlayerEventEdgeId = key.Attributes["id"].Value;
+                        break;
+                    case "ActivationEvent":
+                        if (key.Attributes["for"].Value.Equals("node"))
+                            ActivationEventNodeId = key.Attributes["id"].Value;
+                        else
+                            ActivationEventEdgeId = key.Attributes["id"].Value;
+                        break;
+                    case "Requirement":
+                        RequirementEdgeId = key.Attributes["id"].Value;
+                        break;
+                }
+            }
+
+            /* load nodes aka dialogue */
+            BasicDialNode latestNode;
+            foreach (XmlNode node in conNodeList)
+            {
+                latestNode = new BasicDialNode();
+                latestNode.XmlID = node.Attributes["id"].Value;
+                Debug.Assert(!dialNodes.ContainsKey(latestNode.XmlID), "Duplicated nodes entries found in XML!");
+                dialNodes[latestNode.XmlID] = latestNode;
+
+                // get important ATTRIBUTES for this node
+                Dictionary<string, string> nodeDic = XmlNodesToDic(node.ChildNodes, "key");
+                Debug.Assert(nodeDic["label"] != null, "A node should contain a label!");
+                latestNode.dialogueText = nodeDic["label"];
+                if (nodeDic.ContainsKey("notetype"))
+                {
+                    string nodetype = nodeDic["notetype"];
+                    switch (nodetype)
+                    {
+                        case "Start":
+                            conStartNodes.Add(latestNode);
+                            break;
+                        case "OpenUI": // doesn't do much here
+                            break;
+                        case "Exit":   // doesn't do much here
+                            break;
+                        default:
+                            Debug.LogError("Unknown Node Type detected: " + nodetype + " for node: " + latestNode.XmlID);
+                            break;
+                    }
+                }
+
+                if (nodeDic.ContainsKey(PlayerEventNodeId))
+                {
+                    Debug.Log(nodeDic[PlayerEventNodeId] + ": Node Activation Event found!");
+                }
+
+                if (nodeDic.ContainsKey(ActivationEventNodeId))
+                {
+                    Debug.Log(nodeDic[ActivationEventNodeId] + ": Node Player Event found!");
+                }
+            }
+
+            /* load edges aka responses */
+            foreach (XmlNode edge in conEdgeList)
+            {
+                BasicDialResponse response = new BasicDialResponse();
+                response.nextNode = dialNodes[edge.Attributes["target"].Value];     // set target node link
+                dialNodes[edge.Attributes["source"].Value].AddResponse(response);   // set source node link
+
+                // get important ATTRIBUTES for this edge
+                Dictionary<string, string> edgeDic = XmlNodesToDic(edge.ChildNodes, "key");
+                Debug.Assert(edgeDic["edgelabel"] != null, "An edge should contain a label!");
+                response.responseText = edgeDic["edgelabel"];
+
+                if (edgeDic.ContainsKey("edgetype"))
+                {
+                    switch (edgeDic["edgetype"])
+                    {
+                        case "OpenShop":
+                            response.optionType = EConOptionType.OPEN_SHOP;
+                            break;
+                        case "Exit":
+                            response.optionType = EConOptionType.EXIT;
+                            break;
+                        default:
+                            Debug.LogError("Unknown edge type: " + edgeDic["edgetype"]);
+                            break;
+                    }
+                }
+                else
+                    response.optionType = EConOptionType.NORMAL;
+
+                if (edgeDic.ContainsKey(PlayerEventEdgeId))
+                {
+                    Debug.Log(edgeDic[PlayerEventEdgeId] + ": Requirement found!");
+                }
+
+                if (edgeDic.ContainsKey(ActivationEventEdgeId))
+                {
+                    Debug.Log(edgeDic[ActivationEventEdgeId] + ": Requirement found!");
+                }
+
+                if (edgeDic.ContainsKey(RequirementEdgeId))
+                {
+                    Debug.Log(edgeDic[RequirementEdgeId] + ": Requirement found!");
+                }
+            }
+
+
+            // separate nodes into multiple conversations, if necessary
+            Conversation[] newConArr = new Conversation[(conStartNodes.Count > 0) ? conStartNodes.Count : 1];
+            BasicDialNode[] dialNodesArr = new BasicDialNode[dialNodes.Count];
+            dialNodes.Values.CopyTo(dialNodesArr, 0);
+
+            if (conStartNodes.Count == 0)
+            {
+                Debug.LogError("A valid conversion file should ALWAYS have at least 1 conversation start!");
+            }
+            else
+            {
+                for (int i = 0; i < conStartNodes.Count; ++i)
+                {
+                    Conversation newCon = new Conversation();
+                    newCon.conNodes = dialNodesArr;
+                    newCon.startNode = conStartNodes[i];
+                    newCon._currentNode = conStartNodes[i];
+                    newConArr[i] = newCon;
+                    Debug.Log(newCon.startNode);
+                }
+            }
+
+            return newConArr;
+        }
+    }
+
+
+    [Serializable, XmlRoot(ElementName ="graphml", Namespace = "http://graphml.graphdrawing.org/xmlns")]
+    public class GraphMLGraph
+    {
+        [XmlElement("key")] public List<Key> keys;
+        [XmlElement]        public Graph     graph;
+
+        [Serializable]
+        public class Key
+        {
+            [XmlAttribute("attr.name")] public string name;
+            [XmlAttribute("attr.type")] public string type;
+            [XmlAttribute("for")]       public string _for;
+            [XmlAttribute]              public string id;
+        }
+
+        [Serializable]
+        public class Graph
+        {
+            [XmlElement("node")] public List<Node> nodes;
+            [XmlElement("edge")] public List<Edge> edges;
+        }
+
+        [Serializable]
+        public class Node
+        {
+            [XmlAttribute]       public string     id;
+            [XmlElement("data")] public List<Data> datas;
+            private Dictionary<string, string> _dataDic;
+
+            public Dictionary<string, string> dataDic
+            {
+                get
+                {
+                    if (_dataDic != null)
+                        return _dataDic;
+                    else
+                    {
+                        Dictionary<string, string> dDic = new Dictionary<string, string>(datas.Count + 1);
+                        foreach (Data d in datas)
+                            dDic[d.key] = d.value;
+
+                        _dataDic = dDic;
+                        return dDic;
+                    }
+                }
+            }
+        }
+
+        [Serializable]
+        public class Edge
+        {
+            [XmlAttribute]         public string     source;
+            [XmlAttribute]         public string     target;
+            [XmlElement("data")]   public List<Data> datas;
+        }
+
+        [Serializable]
+        public class Data
+        {
+            [XmlAttribute]
+            public string key;
+            [XmlText]
+            public string value;
         }
     }
 
