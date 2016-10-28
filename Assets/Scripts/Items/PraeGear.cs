@@ -13,12 +13,11 @@ namespace Assets.Scripts.Items
          * create items outside the database, if necessary
          * stacksize should typically be one, except for stuff like ammunition
          */
-        public PraeGear(string name, float weightSingle, Currency value, int amount, int stackSize, Sprite icon) : base(name, weightSingle, value, amount, stackSize, icon)
+        public PraeGear(string name, float weightSingle, Currency value, Sprite icon, EGearType gearType, bool sellable = true, int amount = 1, int stackSize = 1) 
+            : base(name, weightSingle, value, icon, sellable, amount, stackSize)
         {
-            
+            this.gearType = gearType;
         }
-
-        public PraeGear(string name, float weightSingle, Currency value, Sprite icon) : this(name, weightSingle, value, 1, 1, icon) {}
 
 
         public void Set(PraeGear pg)

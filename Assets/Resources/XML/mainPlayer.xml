@@ -26,43 +26,43 @@
     <weight>6</weight>
     <maxWeight>20</maxWeight>
     <equipment>
-      <Head name="" amount="0" stackSize="1" weight="0" armor="0">
+      <Head name="" sellable="true" amount="0" id="0" stackSize="1" weight="0" armor="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </Head>
-      <Torso name="" amount="0" stackSize="1" weight="0" armor="0">
+      <Torso name="" sellable="true" amount="0" id="0" stackSize="1" weight="0" armor="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </Torso>
-      <Arms name="" amount="0" stackSize="1" weight="0" armor="0">
+      <Arms name="" sellable="true" amount="0" id="0" stackSize="1" weight="0" armor="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </Arms>
-      <Legs name="" amount="0" stackSize="1" weight="0" armor="0">
+      <Legs name="" sellable="true" amount="0" id="0" stackSize="1" weight="0" armor="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </Legs>
-      <Shoes name="" amount="0" stackSize="1" weight="0" armor="0">
+      <Shoes name="" sellable="true" amount="0" id="0" stackSize="1" weight="0" armor="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </Shoes>
-      <LeftHand name="" amount="0" stackSize="1" weight="0" damage="0">
+      <LeftHand name="" sellable="true" amount="0" id="0" stackSize="1" weight="0" damage="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
         <gearType>UNDEFINED</gearType>
       </LeftHand>
-      <RightHand name="" amount="0" stackSize="1" weight="0" damage="0">
+      <RightHand name="" sellable="true" amount="0" id="0" stackSize="1" weight="0" damage="0">
         <desc />
         <value G="0" K="0" T="0" />
         <iconPath />
@@ -70,7 +70,7 @@
       </RightHand>
     </equipment>
     <items>
-      <PraeItem name="TestItem" amount="43" stackSize="100" weight="0.1">
+      <PraeItem name="TestItem" sellable="true" amount="43" id="0" stackSize="100" weight="0.1">
         <desc>nothing</desc>
         <value G="0" K="0" T="2" />
         <iconPath />

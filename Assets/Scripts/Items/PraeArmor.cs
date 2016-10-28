@@ -10,12 +10,11 @@ namespace Assets.Scripts.Items
 
         public PraeArmor() : base() { }
 
-        public PraeArmor(string name, float weightSingle, Currency value, int amount, int stackSize, Sprite icon) : base(name, weightSingle, value, amount, stackSize, icon)
+        public PraeArmor(string name, float weightSingle, Currency value, Sprite icon, EGearType gearType, bool sellable = true, int amount = 1, int stackSize = 1) 
+            : base(name, weightSingle, value, icon, gearType, sellable, amount, stackSize)
         {
 
         }
-
-        public PraeArmor(string name, float weightSingle, Currency value, Sprite icon) : this(name, weightSingle, value, 1, 1, icon) { }
 
 
         /**

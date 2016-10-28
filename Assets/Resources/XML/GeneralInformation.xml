@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<GeneralInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" latestShopID="1" latestCharID="0">
+<GeneralInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" latestShopID="1" latestCharID="0" latestItemID="3">
   <lockedShopIDs />
   <lockedCharIDs />
-  <lockedItemIDs />
+  <lockedItemIDs>
+    <i>1</i>
+    <i>2</i>
+    <i>3</i>
+  </lockedItemIDs>
 </GeneralInformation>

@@ -7,15 +7,10 @@ NOTES ON NOTES:
  - 3 +: manageable from interface
  
 NEXT SESSION TASKS:
- - implement InteractionObject	+
-	- basic conversation		++
-	- load conversations		++
  - deal with time mechanics 	+
  - implement GameSaver			+
 	- item database				+
 	- per character saved		+
-		- save abilities		++
-		- save attributes		++
 		- save inventory		+
 			- equipment			+
 		- save interactions		++

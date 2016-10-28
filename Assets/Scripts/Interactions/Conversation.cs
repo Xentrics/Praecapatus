@@ -153,7 +153,6 @@ namespace Assets.Scripts.Interactions
                 default:
                     return resp.optionType;
             }
-            
         }
 
         public string getDialogue()
@@ -376,19 +375,6 @@ namespace Assets.Scripts.Interactions
             return newConArr;
         }
 
-
-        public static XGMLGraph loadFromXGML(TextAsset f)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(XGMLGraph));
-            StringReader r = new StringReader(f.text);
-            XGMLGraph xmlDoc = serializer.Deserialize(r) as XGMLGraph;
-            r.Close();
-
-            // TODO: extract information for conversation
-
-            return xmlDoc;
-        }
-
         public static Dictionary<string, string> XmlNodesToDic(XmlNodeList nodes, string attr)
         {
             Dictionary<string, string> nodeDic = new Dictionary<string, string>(nodes.Count + 1);
@@ -550,126 +536,10 @@ namespace Assets.Scripts.Interactions
                     newCon.startNode = conStartNodes[i];
                     newCon._currentNode = conStartNodes[i];
                     newConArr[i] = newCon;
-                    Debug.Log(newCon.startNode);
                 }
             }
 
             return newConArr;
-        }
-    }
-
-
-    [Serializable, XmlRoot(ElementName ="graphml", Namespace = "http://graphml.graphdrawing.org/xmlns")]
-    public class GraphMLGraph
-    {
-        [XmlElement("key")] public List<Key> keys;
-        [XmlElement]        public Graph     graph;
-
-        [Serializable]
-        public class Key
-        {
-            [XmlAttribute("attr.name")] public string name;
-            [XmlAttribute("attr.type")] public string type;
-            [XmlAttribute("for")]       public string _for;
-            [XmlAttribute]              public string id;
-        }
-
-        [Serializable]
-        public class Graph
-        {
-            [XmlElement("node")] public List<Node> nodes;
-            [XmlElement("edge")] public List<Edge> edges;
-        }
-
-        [Serializable]
-        public class Node
-        {
-            [XmlAttribute]       public string     id;
-            [XmlElement("data")] public List<Data> datas;
-            private Dictionary<string, string> _dataDic;
-
-            public Dictionary<string, string> dataDic
-            {
-                get
-                {
-                    if (_dataDic != null)
-                        return _dataDic;
-                    else
-                    {
-                        Dictionary<string, string> dDic = new Dictionary<string, string>(datas.Count + 1);
-                        foreach (Data d in datas)
-                            dDic[d.key] = d.value;
-
-                        _dataDic = dDic;
-                        return dDic;
-                    }
-                }
-            }
-        }
-
-        [Serializable]
-        public class Edge
-        {
-            [XmlAttribute]         public string     source;
-            [XmlAttribute]         public string     target;
-            [XmlElement("data")]   public List<Data> datas;
-        }
-
-        [Serializable]
-        public class Data
-        {
-            [XmlAttribute]
-            public string key;
-            [XmlText]
-            public string value;
-        }
-    }
-
-
-    [Serializable, XmlRoot("section")]
-    public class XGMLGraph
-    {
-        [XmlAttribute] public string name;
-
-        [XmlElement("attribute")] public List<XGMLAttribute> attributes;
-        public XGMLGraphSection section;
-
-
-        [Serializable]
-        public class XGMLAttribute
-        {
-            [XmlText] public string attribute;
-            [XmlAttribute] public string key;
-            [XmlAttribute] public string type;
-        }
-
-
-        [Serializable]
-        public class XGMLGraphSection
-        {
-            [XmlAttribute]
-            public string name;
-
-            [XmlElement("attribute")] public List<XGMLAttribute>    attributes;
-            [XmlElement("section")]   public List<XGMLNodeEdgeSection>  sections;
-        }
-
-
-        [Serializable]
-        public class XGMLNodeEdgeSection
-        {
-            [XmlAttribute] public string name;
-
-            [XmlElement("attribute")] public List<XGMLAttribute>    attributes;
-            [XmlElement("section")]   public List<XGMLDataSection>  sections;
-
-            [Serializable]
-            public class XGMLDataSection
-            {
-                [XmlAttribute] public string name;
-
-                [XmlElement("attribute")] public List<XGMLAttribute> attributes;
-            }
         }
     }
 }

@@ -55,13 +55,12 @@ namespace Assets.Scripts.Managers
             if (Constants.gameLogic.shouldSaveData)
             {
                 Debug.Log("Saving data ...");
-
-                /* general information */
-                SaveGeneralInformation();
                 /* item db related */
                 SaveItemDB();
                 /* main character */
                 SaveEntityData(Constants.gameLogic.pc, mainPlayerPath);
+                /* general information - ALWAYS SAVE LAST */
+                SaveGeneralInformation();
 
                 Debug.Log("Finished saving.");
             }
@@ -103,7 +102,7 @@ namespace Assets.Scripts.Managers
             serializer.Serialize(stream, entData);
             stream.Close();
 
-            if (Object.ReferenceEquals(ec, Constants.gameLogic.pc))
+            if (ReferenceEquals(ec, Constants.gameLogic.pc))
                 Debug.Log("Main Character loaded.");
             else
                 Debug.Log("Entity loaded.");
@@ -152,32 +151,63 @@ namespace Assets.Scripts.Managers
          * ITEM DATABASE
          ****************/
 
+        int latestItemID;
         HashSet<int> lockedItemIDs;
         
-        public bool ItemIDInUse(int id)
+        public int GetNewItemID()
+        {
+            while (lockedItemIDs.Contains(++latestItemID)) { }
+            LockItemID(latestItemID);
+            return latestItemID;
+        }
+
+        public bool IsItemIDInUse(int id)
         {
             return lockedItemIDs.Contains(id);
         }
 
         public void LockItemID(int id)
         {
-            Debug.Assert(ItemIDInUse(id), "Cannot lock id [" + id + "] : already locked!");
+            Debug.Assert(!IsItemIDInUse(id), "Cannot lock id [" + id + "] : already locked!");
             lockedItemIDs.Add(id);
+        }
+
+        public void AddToItemDB(PraeItem i)
+        {
+            if (i == null)
+                throw new System.NullReferenceException("cannot add null to item database");
+
+            if (i.id <= 0)
+                i.id = GetNewItemID();
+            itemDB.items.Add(i);
+        }
+
+        /**
+         * working in unity editor allows adding items to the database without checkups
+         * cleanup here
+         * is called during 'SaveItemDB' when working in the editor
+         */
+        private void EnforceItemIds()
+        {
+            foreach (PraeItem i in itemDB.items)
+                if (i.id <= 0)
+                    i.id = GetNewItemID();
+            //itemDB.items.Sort((x,y)=> { return x.id.CompareTo(y.id); });
         }
 
         public void SaveItemDB()
         {
+#if UNITY_EDITOR
+            EnforceItemIds();
+            if (!SanityCheck())
+                Debug.LogError("One or more items have invalid properties!");
+#endif
             // open a new xml file
             XmlSerializer serializer = new XmlSerializer(typeof(ItemDB));
             FileStream stream = new FileStream(Application.dataPath + itemDBPath, FileMode.Create);
             serializer.Serialize(stream, itemDB); // 
             stream.Close();
-#if UNITY_EDITOR
-            if (SanityCheck())
-                Debug.LogError("One or more items have invalid properties!");
-            UnityEditor.AssetDatabase.Refresh();
-            Debug.Log("AssetDB refresh");
-#endif
+
             Debug.Log("Item database saved to disk.");
         }
 
@@ -197,7 +227,6 @@ namespace Assets.Scripts.Managers
             foreach (PraeItem item in itemDB.items)
             {
                 // do stuff
-                Debug.Log(item.name);
             }
             Debug.Log("ItemDatabase loaded.");
         }
@@ -265,6 +294,7 @@ namespace Assets.Scripts.Managers
                 // apply data
                 latestShopID = gi.latestShopID;
                 latestCharID = gi.latestCharID;
+                latestItemID = gi.latestItemID;
                 lockedShopIDs = new HashSet<int>(gi.lockedShopIDs);
                 lockedCharIDs = new HashSet<int>(gi.lockedCharIDs);
                 lockedItemIDs = new HashSet<int>(gi.lockedItemIDs);
@@ -288,6 +318,7 @@ namespace Assets.Scripts.Managers
             GeneralInformation gi = new GeneralInformation();
             gi.latestCharID = latestCharID;
             gi.latestShopID = latestShopID;
+            gi.latestItemID = latestItemID;
             gi.lockedCharIDs = new int[lockedCharIDs.Count];
             lockedCharIDs.CopyTo(gi.lockedCharIDs);
             gi.lockedShopIDs = new int[lockedShopIDs.Count];
@@ -309,6 +340,7 @@ namespace Assets.Scripts.Managers
         {
             /* item check */
             bool failed = false;
+            Dictionary<int, PraeItem> ItemIDMap = new Dictionary<int, PraeItem>(itemDB.items.Count+1); // any 2 items must not share the same id!
             foreach (PraeItem i in itemDB.items)
             {
                 if (!i.SanityCheck())
@@ -316,9 +348,19 @@ namespace Assets.Scripts.Managers
                     Debug.LogError("Invalid item properties of item: " + i.name);
                     failed = true;
                 }
+
+                if (ItemIDMap.ContainsKey(i.id))
+                {
+                    Debug.LogError("Item [" + ItemIDMap[i.id].name + "] and Item [" + i.name + "] share same id!");
+                    i.id = GetNewItemID();
+                    Debug.LogError("ID shifted to: " + i.id);
+                    failed = true;
+                }
+
+                ItemIDMap.Add(i.id, i);
             }
 
-            return false;
+            return !failed;
         }
     }
 
@@ -346,15 +388,17 @@ namespace Assets.Scripts.Managers
     {
         [XmlAttribute]
         public int latestShopID;
-        [XmlArrayItem("id")]
+        [XmlArrayItem("i")]
         public int[] lockedShopIDs;
 
         [XmlAttribute]
         public int latestCharID;
-        [XmlArrayItem("id")]
+        [XmlArrayItem("i")]
         public int[] lockedCharIDs;
 
-        [XmlArrayItem("id")]
+        [XmlAttribute] 
+        public int latestItemID;
+        [XmlArrayItem("i")]
         public int[] lockedItemIDs;
     }
 

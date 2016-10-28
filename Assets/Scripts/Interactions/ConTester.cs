@@ -13,7 +13,7 @@ namespace Assets.Scripts.Interactions
 
         void Start()
         {
-            Conversation[] cons = Conversation.loadFromGephiGraphML(conAsset);
+            //Conversation[] cons = Conversation.loadFromGephiGraphML(conAsset);
         }
     }
 }

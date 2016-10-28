@@ -9,12 +9,13 @@ namespace Assets.Scripts.Items
     {
         public static int GENERATED = 0;
 
-        [XmlAttribute("id")]    protected int       _id;    // is only important to identify specific items (e.g. quest items, template items)
+        [SerializeField]        protected int       _id;    // is only important to identify specific items (e.g. quest items, template items). Default 0 is considered "unset"
         [XmlAttribute("name")]  public string       name;
         [XmlElement]            public string       desc;
         [SerializeField]        protected float     _weightSingle;
         [SerializeField]        protected int       _amount;
         [SerializeField]        protected int       _stackSize;
+        [XmlAttribute]          public bool         sellable = true;
         [XmlElement]            public Currency     value;
         [SerializeField]        protected Sprite    _icon;
 
@@ -33,13 +34,14 @@ namespace Assets.Scripts.Items
         /**
          * create items outside the database, if necessary
          */
-        public PraeItem(string name, float weightSingle, Currency value, int amount, int stackSize, Sprite icon)
+        public PraeItem(string name, float weightSingle, Currency value, Sprite icon, bool sellable = true, int amount = 1, int stackSize = 1)
         {
             this.name = name;
             this._weightSingle = weightSingle;
             this.value = value;
             this._amount = amount;
             this._stackSize = stackSize;
+            this.sellable = sellable;
             this._icon = (icon) ? icon : Managers.XmlDBManager.NotSetIcon;
         }
 
@@ -53,6 +55,7 @@ namespace Assets.Scripts.Items
             value = it.value;
             _amount = it._amount;
             _stackSize = it._stackSize;
+            sellable = it.sellable;
             _icon = it._icon;
         }
 
@@ -100,6 +103,18 @@ namespace Assets.Scripts.Items
             set
             {
                 _icon = (value) ? value : Managers.XmlDBManager.NotSetIcon; ;
+            }
+        }
+
+        [XmlAttribute]
+        public int id
+        {
+            get { return _id; }
+            set
+            {
+                if (value < 0)
+                    Debug.LogError("[" + name + "] id set to negative value. Intended?");
+                _id = value;
             }
         }
 
