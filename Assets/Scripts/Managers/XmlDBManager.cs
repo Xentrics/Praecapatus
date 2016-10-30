@@ -103,9 +103,9 @@ namespace Assets.Scripts.Managers
             stream.Close();
 
             if (ReferenceEquals(ec, Constants.gameLogic.pc))
-                Debug.Log("Main Character loaded.");
+                Debug.Log("Main Character saved.");
             else
-                Debug.Log("Entity loaded.");
+                Debug.Log("Entity saved.");
         }
 
         public void LoadEntityData(EntityController ec, int charid)

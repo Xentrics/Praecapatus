@@ -11,8 +11,8 @@
       <value G="0" K="0" T="0" />
       <iconPath>Assets/Resources/Icons/NotSetIcon.png</iconPath>
     </Item>
-    <Item name="Quest Item 2" sellable="true" amount="1" id="3" stackSize="10" weight="0.1">
-      <desc>Stackable items to acquire</desc>
+    <Item name="Berries" sellable="false" amount="1" id="3" stackSize="10" weight="0.02">
+      <desc>The guy from the shop want some really bad.</desc>
       <value G="0" K="0" T="0" />
       <iconPath>Assets/Resources/Icons/NotSetIcon.png</iconPath>
     </Item>

@@ -131,6 +131,7 @@
     <Compile Include="Assets\Scripts\Managers\GameOverManager.cs" />
     <Compile Include="Assets\Scripts\Managers\InteractionManager.cs" />
     <Compile Include="Assets\Scripts\Managers\PlayerInputManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\QuestManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ShopManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ShortKeyBarManager.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Assets\Scripts\Objects\PraeObject.cs" />
     <Compile Include="Assets\Scripts\Objects\PraeTree.cs" />
     <Compile Include="Assets\Scripts\Objects\TreeFactory.cs" />
+    <Compile Include="Assets\Scripts\Quests\Quest.cs" />
     <Compile Include="Assets\Scripts\SanityChecker.cs" />
     <Compile Include="Assets\Scripts\Useful.cs" />
     <Compile Include="Assets\import\Standard Assets\2D\Scripts\Camera2DFollow.cs" />
@@ -278,6 +280,7 @@
   <ItemGroup>
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
     <None Include="Assets\Resources\Conversations\test_g1.xml" />
+    <None Include="Assets\Resources\Quests\QuestSaveData.xml" />
     <None Include="Assets\Resources\XML\GeneralInformation.xml" />
     <None Include="Assets\Resources\XML\itemdb.xml" />
     <None Include="Assets\Resources\XML\mainPlayer.xml" />

@@ -12,14 +12,21 @@ NEXT SESSION TASKS:
 	- item database				+
 	- per character saved		+
 		- save inventory		+
-			- equipment			+
+			- equipment			++
 		- save interactions		++
 		- save character states	+
 			- debuffs			+
+ - items
+	- equipment					+
+	- usables					
  - improve loading/saving		+
 	- characters				+
 	- map						
- - implement Quest Mechanics	
+ - implement Quest Mechanics	+
+	- setting up syntax			+
+	- GATHER/DELIVER
+	- CON_NODE
+	- FIND
  - DE/BUFF mechanics			+
 	- new class AbstractBuff	+
  - shared animation controller
@@ -70,6 +77,11 @@ NOTES ON GAME MECHANICS
 	- items can be assigned a uniq id to identify them		++
 - PERFORMANCE OPTIMIZATION
 	- shared anim controller for background elements like forests
+- QUESTS
+	- saved as graphml											++
+	- the name of the save file is also the name of the quest 	++
+	- encoding with specified syntax (see below)				+
+	- loading/saving of progress using manager and xml			+
 
 
 NOTES ON STORY
@@ -94,3 +106,28 @@ NOTES ON ABILITIES
 	- (Telepathie:		Gefühlsteilung)
 - fundamential melee attack
 - fundamential range attack
+
+
+SYNTAX DEFINITIONS
+	QUEST ENCODING
+		- node.Attributes = label, description, GoalDesc, GoalType, GoalData
+			- string label: abbrevation of the current goal
+			- string description: the main description of the quest
+		
+		- edge.Attributes = label, Alignment, GoalDesc, GoalType, GoalData
+			- string label: will be used as sub-title for the side/alignment goal
+			- int Alignment: indicates the accumulation of ruhm and infamie for the completion of the quest
+		
+		- GoalDesc, GoalType and GoalData should always have the same length
+			- string[] GoalDesc: array of descriptions encoding each sub-goal. Can be obsolete for some trivial gaols like gathering
+				- automated replacements
+					-  @C: replaced by character name based on goal data
+			- string[] GoalType:
+				- CON_NODE: reach a certain conversation node (through dialogue)
+				- DELIVER: bring certain items to another entity by interacting with item
+				- GATHER: acquire a certain item or collection of items
+				- FIND: acquire of find a certain item in range				
+			- string[] GoalData:
+				- items: ITEM "item by id" "number to have"
+				- chars: CHAR "character id"
+				- cons:	 CON "conversation by id" "con node by id"

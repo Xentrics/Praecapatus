@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
-using System.Xml.Serialization;
-using System.IO;
 
 namespace Assets.Scripts.Interactions
 {

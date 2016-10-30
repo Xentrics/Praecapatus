@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+<key attr.name="label" attr.type="string" for="node" id="label"/>
+<key attr.name="Edge Label" attr.type="string" for="edge" id="edgelabel"/>
+<key attr.name="weight" attr.type="double" for="edge" id="weight"/>
+<key attr.name="r" attr.type="int" for="node" id="r"/>
+<key attr.name="g" attr.type="int" for="node" id="g"/>
+<key attr.name="b" attr.type="int" for="node" id="b"/>
+<key attr.name="x" attr.type="float" for="node" id="x"/>
+<key attr.name="y" attr.type="float" for="node" id="y"/>
+<key attr.name="size" attr.type="float" for="node" id="size"/>
+<key attr.name="GoalDatas" attr.type="string" for="node" id="goaldatas"/>
+<key attr.name="ActivationEvent" attr.type="string" for="node" id="activationevent"/>
+<key attr.name="Alignment" attr.type="int" for="node" id="alignment"/>
+<key attr.name="Description" attr.type="string" for="node" id="description"/>
+<key attr.name="GoalTypes" attr.type="string" for="node" id="goaltypes"/>
+<key attr.name="GoalDescs" attr.type="string" for="node" id="goaldescs"/>
+<key attr.name="Requirement" attr.type="string" for="node" id="requirement"/>
+<key attr.name="Reward" attr.type="string" for="node" id="reward"/>
+<key attr.name="IsStart" attr.type="boolean" for="node" id="isstart"/>
+<key attr.name="Alignment" attr.type="int" for="edge" id="alignment"/>
+<key attr.name="GoalDescs" attr.type="string" for="edge" id="goaldescs"/>
+<key attr.name="GoalTypes" attr.type="string" for="edge" id="goaltypes"/>
+<key attr.name="GoalDatas" attr.type="string" for="edge" id="goaldatas"/>
+<key attr.name="Requirement" attr.type="string" for="edge" id="requirement"/>
+<key attr.name="IsSide" attr.type="boolean" for="edge" id="isside"/>
+<graph edgedefault="directed">
+<node id="5">
+<data key="label">Open the shop</data>
+<data key="goaldatas">CON 1 1</data>
+<data key="alignment">0</data>
+<data key="description">Talk to the wierd guy next to you.</data>
+<data key="goaltypes">CON_NODE</data>
+<data key="goaldescs">Open the shop</data>
+<data key="isstart">true</data>
+<data key="size">10.0</data>
+<data key="r">170</data>
+<data key="g">170</data>
+<data key="b">170</data>
+<data key="x">-114.22552</data>
+<data key="y">49.335083</data>
+</node>
+<node id="6">
+<data key="label">Gather Berries</data>
+<data key="goaldatas">ITEM 3</data>
+<data key="description">Gather 10 berries and bring them to the shop guy!</data>
+<data key="goaltypes">FIND</data>
+<data key="goaldescs">Find Barries</data>
+<data key="size">10.0</data>
+<data key="r">170</data>
+<data key="g">170</data>
+<data key="b">170</data>
+<data key="x">-113.24151</data>
+<data key="y">176.48096</data>
+</node>
+<node id="7">
+<data key="label">Give to shop</data>
+<data key="goaltypes"/>
+<data key="reward"/>
+<data key="size">10.0</data>
+<data key="r">170</data>
+<data key="g">170</data>
+<data key="b">170</data>
+<data key="x">26.950878</data>
+<data key="y">312.44943</data>
+</node>
+<node id="8">
+<data key="label">Give to other</data>
+<data key="alignment">-10</data>
+<data key="size">10.0</data>
+<data key="r">255</data>
+<data key="g">77</data>
+<data key="b">46</data>
+<data key="x">-215.81525</data>
+<data key="y">308.66562</data>
+</node>
+<node id="9">
+<data key="label">Gather 20</data>
+<data key="description"/>
+<data key="goaltypes"/>
+<data key="goaldescs"/>
+<data key="size">10.0</data>
+<data key="r">153</data>
+<data key="g">153</data>
+<data key="b">153</data>
+<data key="x">-303.1034</data>
+<data key="y">238.12047</data>
+</node>
+<edge id="18" source="5" target="6">
+<data key="edgelabel">Open and close shop</data>
+<data key="weight">1.0</data>
+<data key="alignment">0</data>
+<data key="goaldescs"/>
+</edge>
+<edge id="20" source="6" target="8">
+<data key="edgelabel">Betray shop guy</data>
+<data key="weight">1.0</data>
+<data key="alignment">-10</data>
+<data key="goaldescs">Pickup Barries | Bring to @C</data>
+<data key="goaltypes">GATHER | DELIVER</data>
+<data key="goaldatas">ITEM{3}{10} | CHAR{ Other}</data>
+</edge>
+<edge id="21" source="6" target="7">
+<data key="edgelabel">Help shop guy</data>
+<data key="weight">1.0</data>
+<data key="alignment">10</data>
+<data key="goaldescs">Pickup Barries | Bring to @C</data>
+<data key="goaltypes">GATHER | DELIVER</data>
+<data key="goaldatas">ITEM{3}{10} | CHAR{ ShopGuy}</data>
+</edge>
+<edge id="22" source="6" target="9">
+<data key="edgelabel">Gather more barries</data>
+<data key="weight">1.0</data>
+<data key="goaldescs">Pickup more Barries</data>
+<data key="goaltypes">GATHER</data>
+<data key="goaldatas">ITEM{3}{10}</data>
+<data key="isside">true</data>
+</edge>
+</graph>
+</graphml>

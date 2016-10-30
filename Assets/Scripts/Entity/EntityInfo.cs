@@ -104,15 +104,11 @@ namespace Assets.Scripts.Entity
                 throw new System.NullReferenceException("Cannot add new buff: buff is null!");
 
             if (newbuff.buffedEntity != null)
-            {
                 Debug.Assert(ReferenceEquals(newbuff.buffedEntity, this), "Only add buffs to the entity of the effected entity!");
-                buffs.Add(newbuff);
-            }
             else
-            {
                 newbuff.buffedEntity = this;
-                buffs.Add(newbuff);
-            }
+
+            buffs.Add(newbuff);
         }
 
         /**

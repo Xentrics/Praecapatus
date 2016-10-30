@@ -2605,11 +2605,13 @@ MonoBehaviour:
     _items: []
     _equipment:
       armor_head:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -2618,11 +2620,13 @@ MonoBehaviour:
         gearType: 0
         _armor: 0
       armor_torso:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -2631,11 +2635,13 @@ MonoBehaviour:
         gearType: 0
         _armor: 0
       armor_arms:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -2644,11 +2650,13 @@ MonoBehaviour:
         gearType: 0
         _armor: 0
       armor_legs:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -2657,11 +2665,13 @@ MonoBehaviour:
         gearType: 0
         _armor: 0
       armor_shoes:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -2670,11 +2680,13 @@ MonoBehaviour:
         gearType: 0
         _armor: 0
       weapon_lefthand:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -2683,11 +2695,13 @@ MonoBehaviour:
         gearType: 0
         _damage: 0
       weapon_righthand:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -6348,31 +6362,37 @@ MonoBehaviour:
       _K: 0
       _T: 0
     _items:
-    - name: TestItem
+    - _id: 0
+      name: TestItem
       desc: UNKNOWN
       _weightSingle: 0.1
       _amount: 1
       _stackSize: 64
+      sellable: 1
       value:
         _G: 0
         _K: 0
         _T: 5
       _icon: {fileID: 0}
-    - name: MagnoNI
+    - _id: 0
+      name: MagnoNI
       desc: moabla
       _weightSingle: 0.5
       _amount: 5
       _stackSize: 10
+      sellable: 1
       value:
         _G: 0
         _K: 2
         _T: 0
       _icon: {fileID: 0}
-    - name: Astra
+    - _id: 0
+      name: Astra
       desc: Not to sell!
       _weightSingle: 5
       _amount: 2
       _stackSize: 2
+      sellable: 1
       value:
         _G: 1
         _K: 0
@@ -6380,11 +6400,13 @@ MonoBehaviour:
       _icon: {fileID: 0}
     _equipment:
       armor_head:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -6393,11 +6415,13 @@ MonoBehaviour:
         gearType: 0
         _armor: 0
       armor_torso:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -6406,11 +6430,13 @@ MonoBehaviour:
         gearType: 0
         _armor: 0
       armor_arms:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -6419,11 +6445,13 @@ MonoBehaviour:
         gearType: 0
         _armor: 0
       armor_legs:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -6432,11 +6460,13 @@ MonoBehaviour:
         gearType: 0
         _armor: 0
       armor_shoes:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -6445,11 +6475,13 @@ MonoBehaviour:
         gearType: 0
         _armor: 0
       weapon_lefthand:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -6458,11 +6490,13 @@ MonoBehaviour:
         gearType: 0
         _damage: 0
       weapon_righthand:
+        _id: 0
         name: 
         desc: 
         _weightSingle: 0
         _amount: 0
         _stackSize: 0
+        sellable: 1
         value:
           _G: 0
           _K: 0
@@ -11559,6 +11593,7 @@ GameObject:
   - 114: {fileID: 1703666194}
   - 114: {fileID: 1703666196}
   - 114: {fileID: 1703666195}
+  - 114: {fileID: 1703666197}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: GameLogic
@@ -11627,16 +11662,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemDB:
     items:
-    - name: TestItem
+    - _id: 0
+      name: TestItem
       desc: UNKNOWN
       _weightSingle: 1
       _amount: 0
       _stackSize: 10
+      sellable: 1
       value:
         _G: 1
         _K: 2
         _T: 3
       _icon: {fileID: 21300000, guid: ac62a82fc25eabe499fb0414eda2d633, type: 3}
+--- !u!114 &1703666197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1703666191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fab037b7ee5cff04e9c2a973183f6fd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceptedQuests: []
 --- !u!1 &1706313862
 GameObject:
   m_ObjectHideFlags: 0
