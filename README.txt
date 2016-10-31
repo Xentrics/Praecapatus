@@ -24,9 +24,10 @@ NEXT SESSION TASKS:
 	- map						
  - implement Quest Mechanics	+
 	- setting up syntax			+
-	- GATHER/DELIVER
-	- CON_NODE
-	- FIND
+	- write goal parser			+
+	- GATHER/DELIVER			
+	- CON_NODE					
+	- FIND						
  - DE/BUFF mechanics			+
 	- new class AbstractBuff	+
  - shared animation controller
@@ -107,6 +108,7 @@ NOTES ON ABILITIES
 - fundamential melee attack
 - fundamential range attack
 
+LINES: 9018
 
 SYNTAX DEFINITIONS
 	QUEST ENCODING
@@ -119,6 +121,7 @@ SYNTAX DEFINITIONS
 			- int Alignment: indicates the accumulation of ruhm and infamie for the completion of the quest
 		
 		- GoalDesc, GoalType and GoalData should always have the same length
+			- array separator: " | "
 			- string[] GoalDesc: array of descriptions encoding each sub-goal. Can be obsolete for some trivial gaols like gathering
 				- automated replacements
 					-  @C: replaced by character name based on goal data
@@ -130,4 +133,4 @@ SYNTAX DEFINITIONS
 			- string[] GoalData:
 				- items: ITEM "item by id" "number to have"
 				- chars: CHAR "character id"
-				- cons:	 CON "conversation by id" "con node by id"
+				- cons:	 CON "conversation by name" "con node by id"

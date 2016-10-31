@@ -5,6 +5,11 @@ using System.Collections.Generic;
 namespace Assets.Scripts.Quests
 {
     [Serializable]
+    /**
+     * - A quest is in essenace a graph of nodes (main goals + rewards) and edges (decisional and optional goals)
+     * - an optional goal is implemented by an edge (QuestOption) makes as 'side'
+     *  - the node succeeding such a goal will add to the full reward ONLY if the main quest is fulfilled
+     */
     public class Quest
     {
         public string title;
@@ -51,7 +56,7 @@ namespace Assets.Scripts.Quests
     }
 
     /**
-     * - basically a collection of goals which may return a reword when reached
+     * - basically a collection of goals which may return a reward when reached
      * - represented by nodes in graphml
      */
     [Serializable]
@@ -119,11 +124,18 @@ namespace Assets.Scripts.Quests
         }
     }
 
+    /**
+     * interface used to hold a list of quest rewards
+     * is implemented by 'QuestReward'
+     */
     public interface IQuestReward
     {
         object reward { get; }
     }
 
+    /**
+     * Generic class keeping any kind of reward definable as a class
+     */
     public class QuestReward<T> : IQuestReward
     {
         T _reward;
@@ -151,11 +163,20 @@ namespace Assets.Scripts.Quests
         }
     }
 
+    /**
+     * interface used to hold a list of quest goals
+     * is implemented by 'QuestGoal'
+     */
     public interface IQuestGoal
     {
         object goal { get; }
+        string desc { get; }
     }
 
+    /**
+     * generic class to instanciate quest goals
+     * also remembers the type used for 'Data'
+     */
     public class QuestGoal<Data> : IQuestGoal
     {
         string _desc;
@@ -195,6 +216,26 @@ namespace Assets.Scripts.Quests
         public Type goalType
         {
             get { return _goalType; }
+        }
+
+        string IQuestGoal.desc
+        {
+            get { return _desc; }
+        }
+    }
+
+    /**
+     * data container for conversation node goals
+     */
+    class ConNodeGoalData
+    {
+        public string conName;
+        public string nodeId;
+
+        public ConNodeGoalData(string name, string node)
+        {
+            conName = name;
+            nodeId = node;
         }
     }
 

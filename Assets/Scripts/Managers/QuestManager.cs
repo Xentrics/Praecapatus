@@ -15,6 +15,7 @@ namespace Assets.Scripts.Managers
          *************/
         public static string resourcePath = "/Resources/Quests/";
         public static string saveDataPath = "QuestSaveData.xml";
+        public static readonly string[] stringSeparator = new string[] { " | " };
 
         [SerializeField] List<Quest> acceptedQuests;
         [SerializeField] HashSet<string> finishedQuests;
@@ -22,6 +23,10 @@ namespace Assets.Scripts.Managers
         /**
          * STATIC FUNCTIONS 
          ********************/
+
+        /**
+         * takes a collection of nodes and creates a dictionary based on the given attribute name 'attr'
+         */
         static Dictionary<string, string> XmlNodesToDic(XmlNodeList nodes, string attr)
         {
             Dictionary<string, string> nodeDic = new Dictionary<string, string>(nodes.Count + 1);
@@ -32,10 +37,47 @@ namespace Assets.Scripts.Managers
             return nodeDic;
         }
 
+        /**
+         * takes a string with specified syntax and interprets them as a list of goals
+         */
         static List<IQuestGoal> ParseGoals(string descs, string types, string datas)
         {
-            List<IQuestGoal> parsedGoals = new List<IQuestGoal>();
-            //throw new NotImplementedException();
+            if (descs.Equals("") || types.Equals("") || datas.Equals(""))
+                return new List<IQuestGoal>();
+
+            string[] desArr = descs.Split(stringSeparator, StringSplitOptions.None);
+            string[] typesArr = types.Split(stringSeparator, StringSplitOptions.None);
+            string[] dataArr = datas.Split(stringSeparator, StringSplitOptions.None);
+            Debug.Assert(desArr.Length == typesArr.Length && typesArr.Length == dataArr.Length, "goal encoding invalid: split array lengths differ!");
+            List<IQuestGoal> parsedGoals = new List<IQuestGoal>(desArr.Length);
+            for (int i=0; i< typesArr.Length; ++i)
+            {
+                switch (typesArr[i])
+                {
+                    case "CON_NODE":
+                        string[] dat = dataArr[i].Split(' ');
+                        if (dat[0].Equals("CON"))
+                        {
+                            string conName = dat[1];
+                            string nodeId = dat[2];
+                            ConNodeGoalData cd = new ConNodeGoalData(dat[1], dat[2]);
+                            parsedGoals.Add(new QuestGoal<ConNodeGoalData>(desArr[i], EQuestType.CON_NODE, cd));
+                        }
+                        else
+                            Debug.LogError("ConNode goal error: dat[0]: " + dat[0]);
+                        break;
+                    case "FIND":
+                        break;
+                    case "DELIVER":
+                        break;
+                    case "GATHER":
+                        break;
+                    default:
+                        Debug.LogError("Undefined goal type: " + typesArr[i]);
+                        break;
+                }
+            }
+
             return parsedGoals;
         }
 

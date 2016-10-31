@@ -13,7 +13,7 @@ namespace Assets.Scripts.Managers
         /**
          * TODO: encryption code can be found in 'useful'
          ***/
-
+        public bool shouldSave;
         public static Sprite NotSetIcon = null;
         public const string itemDBPath = "/Resources/XML/itemdb.xml";
         public ItemDB itemDB;
@@ -52,7 +52,7 @@ namespace Assets.Scripts.Managers
 
         void OnApplicationQuit()
         {
-            if (Constants.gameLogic.shouldSaveData)
+            if (shouldSave)
             {
                 Debug.Log("Saving data ...");
                 /* item db related */
@@ -192,7 +192,7 @@ namespace Assets.Scripts.Managers
             foreach (PraeItem i in itemDB.items)
                 if (i.id <= 0)
                     i.id = GetNewItemID();
-            //itemDB.items.Sort((x,y)=> { return x.id.CompareTo(y.id); });
+            itemDB.items.Sort((x,y)=> { return x.id.CompareTo(y.id); });
         }
 
         public void SaveItemDB()
@@ -281,6 +281,23 @@ namespace Assets.Scripts.Managers
          * GENERAL
          ***********/
 
+        int latestConId;
+        [SerializeField] List<UIdToConData> idToConNameList;
+
+        public string GetConNameById(int id)
+        {
+            int i = id;
+            while(i >= 0 && idToConNameList[i].id != id) { --i; }
+
+            if (idToConNameList[i].id == id)
+                return idToConNameList[i].conName;
+            else
+            {
+                Debug.Log("Could not find conversation with id: " + id);
+                return "";
+            }
+        }
+        
         public bool LoadGeneralInformation()
         {
             // load data
@@ -295,6 +312,8 @@ namespace Assets.Scripts.Managers
                 latestShopID = gi.latestShopID;
                 latestCharID = gi.latestCharID;
                 latestItemID = gi.latestItemID;
+                latestConId = gi.latestConID;
+                idToConNameList = new List<UIdToConData>(gi.idToconData);
                 lockedShopIDs = new HashSet<int>(gi.lockedShopIDs);
                 lockedCharIDs = new HashSet<int>(gi.lockedCharIDs);
                 lockedItemIDs = new HashSet<int>(gi.lockedItemIDs);
@@ -302,29 +321,76 @@ namespace Assets.Scripts.Managers
             }
             catch (FileNotFoundException e)
             {
-                latestCharID = 0;
-                latestShopID = 0;
+                latestCharID = 1;
+                latestShopID = 1;
+                latestItemID = 1;
+                latestConId = 1;
                 lockedCharIDs = new HashSet<int>();
                 lockedShopIDs = new HashSet<int>();
                 lockedItemIDs = new HashSet<int>();
+                idToConNameList = new List<UIdToConData>();
                 Debug.LogError(e.Message);
                 return false;
             }
+        }
+
+        void preventIdGaps(int[] arr, out int latestIndex, bool sort = true)
+        {
+            if (sort)
+                System.Array.Sort(arr);
+
+            if (arr[0] != 1)
+                latestConId = 1;
+            for (int i=1; i<arr.Length; ++i)
+                if (arr[i-1] + 1 != arr[i])
+                {
+                    latestIndex = i + 1;
+                    return;
+                }
+
+            latestIndex = arr[arr.Length - 1];
+        }
+
+        void preventIdGaps(List<UIdToConData> arr, out int latestIndex)
+        {
+            if (arr[0].id != 1)
+                latestConId = 1;
+            for (int i = 1; i < arr.Count; ++i)
+                if (arr[i - 1].id + 1 != arr[i].id)
+                {
+                    latestIndex = i + 1;
+                    return;
+                }
+
+            latestIndex = arr[arr.Count - 1].id;
         }
 
         public void SaveGeneralInformation()
         {
             // prepare data
             GeneralInformation gi = new GeneralInformation();
-            gi.latestCharID = latestCharID;
-            gi.latestShopID = latestShopID;
-            gi.latestItemID = latestItemID;
+
             gi.lockedCharIDs = new int[lockedCharIDs.Count];
             lockedCharIDs.CopyTo(gi.lockedCharIDs);
             gi.lockedShopIDs = new int[lockedShopIDs.Count];
             lockedShopIDs.CopyTo(gi.lockedShopIDs);
             gi.lockedItemIDs = new int[lockedItemIDs.Count];
             lockedItemIDs.CopyTo(gi.lockedItemIDs);
+
+            // handle id gaps and so on
+#if UNITY_EDITOR
+            idToConNameList.Sort((x, y) => { return x.id.CompareTo(y.id); });
+            preventIdGaps(idToConNameList, out gi.latestConID);
+            preventIdGaps(gi.lockedCharIDs, out gi.latestCharID);
+            preventIdGaps(gi.lockedItemIDs, out gi.latestItemID);
+            preventIdGaps(gi.lockedShopIDs, out gi.latestShopID);
+#endif
+            gi.idToconData = idToConNameList.ToArray();
+
+            gi.latestCharID = latestCharID;
+            gi.latestShopID = latestShopID;
+            gi.latestItemID = latestItemID;
+            gi.latestConID = latestConId;
 
             // save data
             XmlSerializer serializer = new XmlSerializer(typeof(GeneralInformation));
@@ -381,6 +447,18 @@ namespace Assets.Scripts.Managers
         public List<PraeItem> boughtItems;
     }
 
+    [System.Serializable]
+    public struct UIdToConData
+    {
+        [XmlAttribute] public int id;
+        [XmlAttribute] public string conName;
+
+        public UIdToConData(int id, string conName)
+        {
+            this.id = id;
+            this.conName = conName;
+        }
+    }
 
     [System.Serializable]
     [XmlRoot]
@@ -388,18 +466,23 @@ namespace Assets.Scripts.Managers
     {
         [XmlAttribute]
         public int latestShopID;
-        [XmlArrayItem("i")]
+        [XmlArrayItem("s")]
         public int[] lockedShopIDs;
 
         [XmlAttribute]
         public int latestCharID;
-        [XmlArrayItem("i")]
+        [XmlArrayItem("c")]
         public int[] lockedCharIDs;
 
         [XmlAttribute] 
         public int latestItemID;
         [XmlArrayItem("i")]
         public int[] lockedItemIDs;
+
+        [XmlAttribute]
+        public int latestConID;
+        [XmlArrayItem("c")]
+        public UIdToConData[] idToconData;
     }
 
     [System.Serializable]

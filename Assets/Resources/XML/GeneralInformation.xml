@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<GeneralInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" latestShopID="1" latestCharID="0" latestItemID="3">
-  <lockedShopIDs />
-  <lockedCharIDs />
+<GeneralInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" latestShopID="1" latestCharID="1" latestItemID="3" latestConID="1">
+  <lockedShopIDs>
+    <s>0</s>
+  </lockedShopIDs>
+  <lockedCharIDs>
+    <c>0</c>
+  </lockedCharIDs>
   <lockedItemIDs>
+    <i>0</i>
     <i>1</i>
     <i>2</i>
     <i>3</i>
   </lockedItemIDs>
+  <idToconData>
+    <c id="0" conName="locked" />
+    <c id="1" conName="Tutorial" />
+  </idToconData>
 </GeneralInformation>

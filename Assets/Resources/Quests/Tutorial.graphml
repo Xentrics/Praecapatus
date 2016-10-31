@@ -27,7 +27,7 @@
 <graph edgedefault="directed">
 <node id="5">
 <data key="label">Open the shop</data>
-<data key="goaldatas">CON 1 1</data>
+<data key="goaldatas">CON test_g1 1</data>
 <data key="alignment">0</data>
 <data key="description">Talk to the wierd guy next to you.</data>
 <data key="goaltypes">CON_NODE</data>
