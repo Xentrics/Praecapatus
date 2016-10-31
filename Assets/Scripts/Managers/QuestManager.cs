@@ -55,22 +55,71 @@ namespace Assets.Scripts.Managers
                 switch (typesArr[i])
                 {
                     case "CON_NODE":
+                        //TODO: advanced syntax split must occur here
                         string[] dat = dataArr[i].Split(' ');
                         if (dat[0].Equals("CON"))
                         {
                             string conName = dat[1];
                             string nodeId = dat[2];
-                            ConNodeGoalData cd = new ConNodeGoalData(dat[1], dat[2]);
-                            parsedGoals.Add(new QuestGoal<ConNodeGoalData>(desArr[i], EQuestType.CON_NODE, cd));
+                            ConNodeGoalData goalData = new ConNodeGoalData(dat[1], dat[2]);
+                            parsedGoals.Add(new QuestGoal<ConNodeGoalData>(desArr[i], EQuestType.CON_NODE, goalData));
+                            //TODO: con node trigger notification system
                         }
                         else
-                            Debug.LogError("ConNode goal error: dat[0]: " + dat[0]);
+                            Debug.LogError("CON_NODE goal error: dat[0]: " + dat[0]);
                         break;
                     case "FIND":
+                        //TODO: advanced syntax split must occur here!
+                        dat = dataArr[i].Split(' ');
+                        switch(dat[0])
+                        {
+                            case "ITEM":
+                                Items.PraeItem item = Constants.xmlHandler.GetItemById(int.Parse(dat[1]));
+                                ItemGoalData goalData = new ItemGoalData(item, int.Parse(dat[2]));
+                                parsedGoals.Add(new QuestGoal<ItemGoalData>(desArr[i], EQuestType.FIND, goalData));
+                                break;
+                            default:
+                                Debug.LogError("FIND goal error: dat[0]: " + dat[0]);
+                                break;
+                        }
                         break;
                     case "DELIVER":
+                        //TODO: advanced syntax split must occur here!
+                        dat = dataArr[i].Split(' ');
+                        switch (dat[0])
+                        {
+                            case "CHAR":
+                                if (dat[1].Equals("ALL"))
+                                {
+                                    ItemDeliverAllGoalData goalData = new ItemDeliverAllGoalData(int.Parse(dat[2]));
+                                    parsedGoals.Add(new QuestGoal<ItemDeliverAllGoalData>(desArr[i], EQuestType.DELIVER, goalData));
+                                }
+                                else if (dat[1].Equals("LIST"))
+                                {
+                                    throw new NotImplementedException();
+                                }
+                                else
+                                    Debug.LogError("DELIVER goal error: invalid syntax! CHAR [ALL|LIST] id expected");
+                                break;
+                            default:
+                                Debug.LogError("DELIVER goal error: dat[0]: " + dat[0]);
+                                break;
+                        }
                         break;
                     case "GATHER":
+                        //TODO: advanced syntax split must occur here!
+                        dat = dataArr[i].Split(' ');
+                        switch (dat[0])
+                        {
+                            case "ITEM":
+                                Items.PraeItem item = Constants.xmlHandler.GetItemById(int.Parse(dat[1]));
+                                ItemGoalData goalData = new ItemGoalData(item, int.Parse(dat[2]));
+                                parsedGoals.Add(new QuestGoal<ItemGoalData>(desArr[i], EQuestType.GATHER, goalData));
+                                break;
+                            default:
+                                Debug.LogError("GATHER goal error: dat[0]: " + dat[0]);
+                                break;
+                        }
                         break;
                     default:
                         Debug.LogError("Undefined goal type: " + typesArr[i]);
@@ -188,7 +237,7 @@ namespace Assets.Scripts.Managers
          * MEMBER FUNCTIONS 
          ********************/
 
-        void Awake()
+        void Start()
         {
             resourcePath = Application.dataPath + resourcePath;
             saveDataPath = resourcePath + saveDataPath;

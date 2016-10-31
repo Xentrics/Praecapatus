@@ -24,10 +24,10 @@ NEXT SESSION TASKS:
 	- map						
  - implement Quest Mechanics	+
 	- setting up syntax			+
-	- write goal parser			+
-	- GATHER/DELIVER			
-	- CON_NODE					
-	- FIND						
+	- write goal parser			+|
+	- GATHER/DELIVER			+
+	- CON_NODE					+
+	- FIND						+
  - DE/BUFF mechanics			+
 	- new class AbstractBuff	+
  - shared animation controller
@@ -108,7 +108,8 @@ NOTES ON ABILITIES
 - fundamential melee attack
 - fundamential range attack
 
-LINES: 9018
+LINES: 9136
+ find . -name '*.cs' | xargs wc -l
 
 SYNTAX DEFINITIONS
 	QUEST ENCODING

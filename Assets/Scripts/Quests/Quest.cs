@@ -225,7 +225,8 @@ namespace Assets.Scripts.Quests
     }
 
     /**
-     * data container for conversation node goals
+     * - data container for conversation node goals
+     * - con_node
      */
     class ConNodeGoalData
     {
@@ -239,6 +240,57 @@ namespace Assets.Scripts.Quests
         }
     }
 
+    /**
+     * - data container for any goal that requires items
+     * - find, gather
+     */
+    class ItemGoalData
+    {
+        public Items.PraeItem item;
+        public int amount;
+
+        public ItemGoalData(Items.PraeItem item, int amount)
+        {
+            this.item = item;
+            this.amount = amount;
+        }
+    }
+
+    /**
+     * - data container for any goal that requires items
+     * - deliver
+     */
+    struct ItemDeliverAllGoalData
+    {
+        public int charId;
+
+        public ItemDeliverAllGoalData(int charId)
+        {
+            this.charId = charId;
+        }
+    }
+
+    /**
+     * - data container for any goal that requires items
+     * - deliver
+     */
+    class ItemDeliverGoalData
+    {
+        public List<Items.PraeItem> items;
+        public List<int> amounts;
+        public int charId;
+
+        public ItemDeliverGoalData(int charId)
+        {
+            items = new List<Items.PraeItem>();
+            amounts = new List<int>();
+            this.charId = charId;
+        }
+    }
+
+    /**
+     * makes the transition from stored quest to actual game events easier
+     */
     public enum EQuestType
     {
         CON_NODE,

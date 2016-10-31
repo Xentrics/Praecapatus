@@ -172,6 +172,19 @@ namespace Assets.Scripts.Managers
             lockedItemIDs.Add(id);
         }
 
+        public PraeItem GetItemById(int id)
+        {
+            PraeItem item;
+            itemDB.itemDic.TryGetValue(id, out item);
+            if (item != null)
+                return item;
+            else
+            {
+                Debug.LogError("Couldn't find item with id [" + id + "] in databse!");
+                return null;
+            }
+        }
+
         public void AddToItemDB(PraeItem i)
         {
             if (i == null)
@@ -223,10 +236,12 @@ namespace Assets.Scripts.Managers
                 throw new System.NullReferenceException("ItemDB not found!");
             if (itemDB.items.Count <= 0)
                 Debug.LogError("No entries in item database?");
-            
+
+            // make dictionary for instant access
+            itemDB.itemDic = new Dictionary<int, PraeItem>(itemDB.items.Count+10);
             foreach (PraeItem item in itemDB.items)
             {
-                // do stuff
+                itemDB.itemDic.Add(item.id, item);
             }
             Debug.Log("ItemDatabase loaded.");
         }
@@ -492,6 +507,8 @@ namespace Assets.Scripts.Managers
         [XmlArray("Items")]
         [XmlArrayItem("Item")]
         public List<PraeItem> items = new List<PraeItem>();
+        [XmlIgnore]
+        public Dictionary<int, PraeItem> itemDic;
     }
 
 
