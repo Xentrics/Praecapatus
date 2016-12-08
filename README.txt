@@ -25,13 +25,19 @@ NEXT SESSION TASKS:
  - implement Quest Mechanics	+
 	- setting up syntax			+
 	- write goal parser			+|
-	- GATHER/DELIVER			+
-	- CON_NODE					+
-	- FIND						+
+		- GATHER/DELIVER			+
+		- CON_NODE					+
+		- FIND						+
+	- make quests available
+		- by world trigger
+		- by geographic trigger
+		- by conversation nodes	+
+		- by item interaction
  - DE/BUFF mechanics			+
 	- new class AbstractBuff	+
  - shared animation controller
 
+ 
 NOTES ON GAME CONTROL
 - Abilities can be used in 2 major ways:
 	(1) story mode
@@ -112,6 +118,25 @@ LINES: 9136
  find . -name '*.cs' | xargs wc -l
 
 SYNTAX DEFINITIONS
+	CONVERSATION ENCODING
+		- NodeType:
+			- Start: initial starting point of the conversation
+			- Exit: explizit end of conversation. Implizit ends are reached when no edges leave a node
+			- OpenUI: open shop ui
+		
+		- ActivationEvent
+			- Separator: " | "
+			- OFFER_QUEST: OFFER_QUEST "quest name"
+			- ACCEPT_QUEST: ACCEPT_QUEST "quest name"
+			- COMPLETE_QUEST_GOAL COMPLETE_QUEST_GOAL "quest name" ["goal id"]
+		
+		- PlayerEvent
+			- Separator: " | "
+			- HAS_QUEST
+			- HAS_ITEM
+			- HAS_REPUTATION
+	
+
 	QUEST ENCODING
 		- node.Attributes = label, description, GoalDesc, GoalType, GoalData
 			- string label: abbrevation of the current goal
@@ -123,7 +148,7 @@ SYNTAX DEFINITIONS
 		
 		- GoalDesc, GoalType and GoalData should always have the same length
 			- array separator: " | "
-			- string[] GoalDesc: array of descriptions encoding each sub-goal. Can be obsolete for some trivial gaols like gathering
+			- string[] GoalDesc: array of descriptions encoding each sub-goal. Can be redundant for some trivial goals like gathering
 				- automated replacements
 					-  @C: replaced by character name based on goal data
 			- string[] GoalType:

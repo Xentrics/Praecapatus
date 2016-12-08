@@ -53,7 +53,6 @@ namespace Assets.Scripts.Abilities
         public abstract void applySuccess(int version, int rp, ELuck luck, EntityController user, List<PraeObject> targets);
 
         /**
-         * TODO: method header may need some tweaking later on
          * is called from the ability manager, when this ability failed on use
          * @version: most abilities have different usage modes. Can be used as bitflag
          * @rp: the absolute difference between the required and the roled test value
@@ -64,7 +63,6 @@ namespace Assets.Scripts.Abilities
         public abstract void applyFailure(int version, int rp, ELuck luck, EntityController user, List<PraeObject> targets);
 
         /**
-         * TODO:     method header may need some tweaking later on
          * func:     handles all the visual effects in the game
          * @version: most abilities have different usage modes. Can be used as bitflag
          * @rp:      the absolute difference between the required and the roled test value

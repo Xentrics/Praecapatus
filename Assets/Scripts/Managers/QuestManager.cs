@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml;
 using Assets.Scripts.Quests;
 using System;
+using Assets.Scripts.Exception;
 
 namespace Assets.Scripts.Managers
 {
@@ -39,91 +40,115 @@ namespace Assets.Scripts.Managers
 
         /**
          * takes a string with specified syntax and interprets them as a list of goals
+         * - the syntax specification can be found inside the readme
          */
         static List<IQuestGoal> ParseGoals(string descs, string types, string datas)
         {
             if (descs.Equals("") || types.Equals("") || datas.Equals(""))
                 return new List<IQuestGoal>();
 
+            /*
+             * a goal is encoded in 3 different categories:
+             * 1. a goal description. This text will be shown next to a goal (e.g. 'Find Berries')
+             * 2. a goal type. See IQuestGoal for all the different types available
+             * 3. a data segment. Depending on the type, the specifics of the goal are encoded here
+             * The class "QuestGoal" takes specialized container classes to store the extracted information
+             */
             string[] desArr = descs.Split(stringSeparator, StringSplitOptions.None);
             string[] typesArr = types.Split(stringSeparator, StringSplitOptions.None);
             string[] dataArr = datas.Split(stringSeparator, StringSplitOptions.None);
             Debug.Assert(desArr.Length == typesArr.Length && typesArr.Length == dataArr.Length, "goal encoding invalid: split array lengths differ!");
+            string[] dat = null;
             List<IQuestGoal> parsedGoals = new List<IQuestGoal>(desArr.Length);
             for (int i=0; i< typesArr.Length; ++i)
             {
-                switch (typesArr[i])
+                try
                 {
-                    case "CON_NODE":
-                        //TODO: advanced syntax split must occur here
-                        string[] dat = dataArr[i].Split(' ');
-                        if (dat[0].Equals("CON"))
-                        {
-                            string conName = dat[1];
-                            string nodeId = dat[2];
-                            ConNodeGoalData goalData = new ConNodeGoalData(dat[1], dat[2]);
-                            parsedGoals.Add(new QuestGoal<ConNodeGoalData>(desArr[i], EQuestType.CON_NODE, goalData));
-                            //TODO: con node trigger notification system
-                        }
-                        else
-                            Debug.LogError("CON_NODE goal error: dat[0]: " + dat[0]);
-                        break;
-                    case "FIND":
-                        //TODO: advanced syntax split must occur here!
-                        dat = dataArr[i].Split(' ');
-                        switch(dat[0])
-                        {
-                            case "ITEM":
-                                Items.PraeItem item = Constants.xmlHandler.GetItemById(int.Parse(dat[1]));
-                                ItemGoalData goalData = new ItemGoalData(item, int.Parse(dat[2]));
-                                parsedGoals.Add(new QuestGoal<ItemGoalData>(desArr[i], EQuestType.FIND, goalData));
-                                break;
-                            default:
-                                Debug.LogError("FIND goal error: dat[0]: " + dat[0]);
-                                break;
-                        }
-                        break;
-                    case "DELIVER":
-                        //TODO: advanced syntax split must occur here!
-                        dat = dataArr[i].Split(' ');
-                        switch (dat[0])
-                        {
-                            case "CHAR":
-                                if (dat[1].Equals("ALL"))
-                                {
-                                    ItemDeliverAllGoalData goalData = new ItemDeliverAllGoalData(int.Parse(dat[2]));
-                                    parsedGoals.Add(new QuestGoal<ItemDeliverAllGoalData>(desArr[i], EQuestType.DELIVER, goalData));
-                                }
-                                else if (dat[1].Equals("LIST"))
-                                {
-                                    throw new NotImplementedException();
-                                }
-                                else
-                                    Debug.LogError("DELIVER goal error: invalid syntax! CHAR [ALL|LIST] id expected");
-                                break;
-                            default:
-                                Debug.LogError("DELIVER goal error: dat[0]: " + dat[0]);
-                                break;
-                        }
-                        break;
-                    case "GATHER":
-                        //TODO: advanced syntax split must occur here!
-                        dat = dataArr[i].Split(' ');
-                        switch (dat[0])
-                        {
-                            case "ITEM":
-                                Items.PraeItem item = Constants.xmlHandler.GetItemById(int.Parse(dat[1]));
-                                ItemGoalData goalData = new ItemGoalData(item, int.Parse(dat[2]));
-                                parsedGoals.Add(new QuestGoal<ItemGoalData>(desArr[i], EQuestType.GATHER, goalData));
-                                break;
-                            default:
-                                Debug.LogError("GATHER goal error: dat[0]: " + dat[0]);
-                                break;
-                        }
-                        break;
-                    default:
-                        Debug.LogError("Undefined goal type: " + typesArr[i]);
-                        break;
+                    switch (typesArr[i])
+                    {
+                        case "CON_NODE":
+                            //TODO: advanced syntax split must occur here
+                            dat = dataArr[i].Split(' ');
+                            if (dat[0].Equals("CON"))
+                            {
+                                string conName = dat[1];
+                                string nodeId = dat[2];
+                                ConNodeGoalData goalData = new ConNodeGoalData(dat[1], dat[2]);
+                                parsedGoals.Add(new QuestGoal<ConNodeGoalData>(desArr[i], EQuestType.CON_NODE, goalData));
+                                //TODO: con node trigger notification system
+                            }
+                            else
+                                Debug.LogError("CON_NODE goal error: dat[0]: " + dat[0]);
+                            break;
+                        case "FIND":
+                            //TODO: advanced syntax split must occur here!
+                            dat = dataArr[i].Split(' ');
+                            switch (dat[0])
+                            {
+                                case "ITEM":
+                                    Items.PraeItem item = Constants.xmlHandler.GetItemById(int.Parse(dat[1])); // the xmlHandler loads an item database for static items
+                                    ItemGoalData goalData = new ItemGoalData(item, int.Parse(dat[2]));
+                                    parsedGoals.Add(new QuestGoal<ItemGoalData>(desArr[i], EQuestType.FIND, goalData));
+                                    break;
+                                default:
+                                    Debug.LogError("FIND goal error: dat[0]: " + dat[0]);
+                                    break;
+                            }
+                            break;
+                        case "DELIVER":
+                            //TODO: advanced syntax split must occur here!
+                            dat = dataArr[i].Split(' ');
+                            switch (dat[0])
+                            {
+                                case "CHAR":
+                                    if (dat[1].Equals("ALL"))
+                                    {
+                                        ItemDeliverAllGoalData goalData = new ItemDeliverAllGoalData(int.Parse(dat[2]));
+                                        parsedGoals.Add(new QuestGoal<ItemDeliverAllGoalData>(desArr[i], EQuestType.DELIVER, goalData));
+                                    }
+                                    else if (dat[1].Equals("LIST"))
+                                    {
+                                        throw new NotImplementedException();
+                                    }
+                                    else
+                                        Debug.LogError("DELIVER goal error: invalid syntax! CHAR [ALL|LIST] id expected");
+                                    break;
+                                default:
+                                    Debug.LogError("DELIVER goal error: dat[0]: " + dat[0]);
+                                    break;
+                            }
+                            break;
+                        case "GATHER":
+                            //TODO: advanced syntax split must occur here!
+                            dat = dataArr[i].Split(' ');
+                            switch (dat[0])
+                            {
+                                case "ITEM":
+                                    Items.PraeItem item = Constants.xmlHandler.GetItemById(int.Parse(dat[1]));
+                                    ItemGoalData goalData = new ItemGoalData(item, int.Parse(dat[2]));
+                                    parsedGoals.Add(new QuestGoal<ItemGoalData>(desArr[i], EQuestType.GATHER, goalData));
+                                    break;
+                                default:
+                                    Debug.LogError("GATHER goal error: dat[0]: " + dat[0]);
+                                    break;
+                            }
+                            break;
+                        default:
+                            Debug.LogError("Undefined goal type: " + typesArr[i]);
+                            break;
+                    }
+                }
+                catch (ItemDBException e)
+                {
+                    Debug.Log(e);
+                }
+                catch (FormatException e)
+                {
+                    Debug.Log("Cannot parse goal. Parsing the data block failed! | " + e);
+                }
+                catch (ArgumentNullException e)
+                {
+                    Debug.Log("Cannot parse goal. Parts or the data block is null!" + string.Join(";" , dat));
                 }
             }
 
@@ -249,6 +274,9 @@ namespace Assets.Scripts.Managers
             SaveToDisk();
         }
 
+        /**
+         * load the saved state of all accepted and finished quests
+         */
         public void LoadFromDisk()
         {
             try
@@ -279,6 +307,9 @@ namespace Assets.Scripts.Managers
             }
         }
 
+        /**
+         * Stores the current state of all accepted and finished quests to the hard drive
+         */
         public void SaveToDisk()
         {
             if (!Constants.gameLogic.shouldSaveData)

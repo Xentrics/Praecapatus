@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using System.IO;
 using Assets.Scripts.Items;
 using Assets.Scripts.Entity;
+using Assets.Scripts.Exception;
 
 namespace Assets.Scripts.Managers
 {
@@ -180,8 +181,7 @@ namespace Assets.Scripts.Managers
                 return item;
             else
             {
-                Debug.LogError("Couldn't find item with id [" + id + "] in databse!");
-                return null;
+                throw new ItemDBException(id);
             }
         }
 

@@ -14,7 +14,7 @@ namespace Assets.Scripts.Interactions
     {
         EntityController _ec;
         Inventory _inv;
-        Shop _shop = null;      // the shop should go lost if the component is lost. Can be changed later on
+        Shop _shop = null;      // HACK: the shop should go lost if the component is lost. Can be changed later on
         public List<TextAsset> conAssets;
 
         void Awake()
@@ -29,12 +29,13 @@ namespace Assets.Scripts.Interactions
 
         public void addInteractionOption(object inter)
         {
+            // TODO
             throw new NotImplementedException();
         }
 
         public void StartConversation(InteractionComponent target)
         {
-            TextAsset conAsset = Resources.Load<TextAsset>("Conversations/test_g1"); // just for testing!
+            TextAsset conAsset = Resources.Load<TextAsset>("Conversations/test_g1"); // TESTING:
             Conversation[] con = Conversation.loadFromGephiGraphML(conAsset);
             Debug.Assert(target != null);
             Constants.interactionManager.StartInteraction(this, target, con[0]);

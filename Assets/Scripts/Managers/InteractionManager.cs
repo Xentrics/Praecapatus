@@ -47,7 +47,6 @@ namespace Assets.Scripts.Managers
         }
 
         /**
-         * TODO: InterComponent can also be replaced by the moore generell 'PraeObject' class
          * func: sets up first dialogue message and responses
          */
         public void StartInteraction(InteractionComponent questioner, InteractionComponent responder, Conversation con)
@@ -77,6 +76,9 @@ namespace Assets.Scripts.Managers
                     Constants.ShopUI.GetComponent<ShopManager>().currendManager = this;
                     Constants.ShopUI.GetComponent<ShopManager>().SetInventories(responder.inventory, questioner.shop);
                     Constants.ActivateUI(EUIMode.SHOP_UI);
+                    break;
+                case EConOptionType.OFFER_QUEST:
+
                     break;
                 default:
                     break;

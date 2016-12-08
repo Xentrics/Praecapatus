@@ -13,9 +13,15 @@ namespace Assets.Scripts.Interactions
         UNSET,
         NORMAL,
         EXIT,
-        OPEN_SHOP
+        OPEN_SHOP,
+        OFFER_QUEST
     }
 
+    /**
+     * data container for conversations
+     * Also contains loading routines
+     * some additional logic can be found in 'InteractionManager'
+     */
     public class Conversation
     {
         // Conversation related stuff
@@ -490,6 +496,10 @@ namespace Assets.Scripts.Interactions
                             break;
                         case "Exit":
                             response.optionType = EConOptionType.EXIT;
+                            break;
+                        case "Quest":  // EConOptionType.OFFER_QUEST
+                            response.optionType = EConOptionType.OFFER_QUEST;
+                            // TODO: load quest name
                             break;
                         default:
                             Debug.LogError("Unknown edge type: " + edgeDic["edgetype"]);
