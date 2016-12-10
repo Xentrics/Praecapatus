@@ -33,18 +33,19 @@ namespace Assets.Scripts.Interactions
             throw new NotImplementedException();
         }
 
-        public void StartConversation(InteractionComponent target)
+        public void StartInteraction(InteractionComponent target)
         {
             TextAsset conAsset = Resources.Load<TextAsset>("Conversations/test_g1"); // TESTING:
             Conversation[] con = Conversation.loadFromGephiGraphML(conAsset);
             Debug.Assert(target != null);
-            Constants.interactionManager.StartInteraction(this, target, con[0]);
+            Constants.interactionManager.StartConversation(this, target, con[0]);
         }
 
         /**
          * GETTER AND SETTER
          **********************/
 
+        public bool hasConversation() { return conAssets != null && conAssets.Count > 0; }
         public bool hasController() { return _ec != null; }
         public bool hasInventory() { return _inv != null; }
 

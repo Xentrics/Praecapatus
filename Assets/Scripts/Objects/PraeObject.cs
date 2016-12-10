@@ -121,7 +121,7 @@ namespace Assets.Scripts
         {
             if (!disableInteraction && HasInteraction())
             {
-                interComp.StartConversation(target.interComp);
+                interComp.StartInteraction(target.interComp);
                 return true;
             }
             else

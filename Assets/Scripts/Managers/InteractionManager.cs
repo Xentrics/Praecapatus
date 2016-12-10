@@ -49,7 +49,7 @@ namespace Assets.Scripts.Managers
         /**
          * func: sets up first dialogue message and responses
          */
-        public void StartInteraction(InteractionComponent questioner, InteractionComponent responder, Conversation con)
+        public void StartConversation(InteractionComponent questioner, InteractionComponent responder, Conversation con)
         {
             if (con == null || questioner == null || responder == null)
                 throw new NullReferenceException("Cannot start interaction: con, questioner or responder reference not set!");

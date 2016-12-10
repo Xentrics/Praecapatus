@@ -18,6 +18,7 @@ namespace Assets.Scripts.Items
         [XmlAttribute]          public bool         sellable = true;
         [XmlElement]            public Currency     value;
         [SerializeField]        protected Sprite    _icon;
+        [SerializeField]        protected TextAsset _quest;
 
         public PraeItem() {}
 
@@ -102,7 +103,7 @@ namespace Assets.Scripts.Items
             get { return _icon; }
             set
             {
-                _icon = (value) ? value : Managers.XmlDBManager.NotSetIcon; ;
+                _icon = (value) ? value : Managers.XmlDBManager.NotSetIcon;
             }
         }
 
@@ -133,13 +134,31 @@ namespace Assets.Scripts.Items
                 if (value != null && value.Trim() != "")
                 {
                     Debug.Log("iconPath: <" + value.Trim() + ">.");
-                    Sprite s = (Sprite)UnityEditor.AssetDatabase.LoadAssetAtPath(value, typeof(Sprite));
+                    Sprite s = (Sprite)UnityEditor.AssetDatabase.LoadAssetAtPath(value, typeof(Sprite)); // HACK: best way to load assets!
                     icon = s;
                     if (!s)
-                        Debug.LogError("Item " + name + " : icon was not found at given path! : " + value);
+                        Debug.LogError("Item " + value + " : was not found at given path!");
                 }
                 else
                     icon = null;
+            }
+        }
+
+        [XmlElement]
+        public string quest
+        {
+            get { return _quest.name; }
+            protected set
+            {
+                if (value != null && value.Trim() != "")
+                {
+                    TextAsset t = (TextAsset)UnityEditor.AssetDatabase.LoadAssetAtPath(value, typeof(TextAsset));
+                    _quest = t;
+                    if (!t)
+                        Debug.LogError("Quest " + value + " : was not found at given path!");
+                }
+                else
+                    _quest = null;
             }
         }
 
@@ -195,6 +214,7 @@ namespace Assets.Scripts.Items
                 _weightSingle == i._weightSingle &&
                 _stackSize == i._stackSize &&
                 value.Equals(i.value);
+                _quest.Equals(i._quest);
             // TODO: icon equals?
         }
 

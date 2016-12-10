@@ -121,7 +121,7 @@ SYNTAX DEFINITIONS
 	CONVERSATION ENCODING
 		- NodeType:
 			- Start: initial starting point of the conversation
-			- Exit: explizit end of conversation. Implizit ends are reached when no edges leave a node
+			- Exit: explicit end of conversation. Implicit ends are reached when no edges leave a node
 			- OpenUI: open shop ui
 		
 		- ActivationEvent
