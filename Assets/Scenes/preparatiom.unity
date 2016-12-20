@@ -2617,6 +2617,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _armor: 0
       armor_torso:
@@ -2632,6 +2633,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _armor: 0
       armor_arms:
@@ -2647,6 +2649,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _armor: 0
       armor_legs:
@@ -2662,6 +2665,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _armor: 0
       armor_shoes:
@@ -2677,6 +2681,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _armor: 0
       weapon_lefthand:
@@ -2692,6 +2697,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _damage: 0
       weapon_righthand:
@@ -2707,6 +2713,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _damage: 0
   charID: 0
@@ -6374,6 +6381,7 @@ MonoBehaviour:
         _K: 0
         _T: 5
       _icon: {fileID: 0}
+      _quest: {fileID: 0}
     - _id: 0
       name: MagnoNI
       desc: moabla
@@ -6386,6 +6394,7 @@ MonoBehaviour:
         _K: 2
         _T: 0
       _icon: {fileID: 0}
+      _quest: {fileID: 0}
     - _id: 0
       name: Astra
       desc: Not to sell!
@@ -6398,6 +6407,7 @@ MonoBehaviour:
         _K: 0
         _T: 0
       _icon: {fileID: 0}
+      _quest: {fileID: 0}
     _equipment:
       armor_head:
         _id: 0
@@ -6412,6 +6422,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _armor: 0
       armor_torso:
@@ -6427,6 +6438,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _armor: 0
       armor_arms:
@@ -6442,6 +6454,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _armor: 0
       armor_legs:
@@ -6457,6 +6470,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _armor: 0
       armor_shoes:
@@ -6472,6 +6486,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _armor: 0
       weapon_lefthand:
@@ -6487,6 +6502,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _damage: 0
       weapon_righthand:
@@ -6502,6 +6518,7 @@ MonoBehaviour:
           _K: 0
           _T: 0
         _icon: {fileID: 0}
+        _quest: {fileID: 0}
         gearType: 0
         _damage: 0
   charID: 0
@@ -11660,6 +11677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d510399ee8ea5447b5868d2039e55d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldSave: 0
   itemDB:
     items:
     - _id: 0
@@ -11674,6 +11692,8 @@ MonoBehaviour:
         _K: 2
         _T: 3
       _icon: {fileID: 21300000, guid: ac62a82fc25eabe499fb0414eda2d633, type: 3}
+      _quest: {fileID: 0}
+  idToConNameList: []
 --- !u!114 &1703666197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11682,7 +11702,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1703666191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fab037b7ee5cff04e9c2a973183f6fd6, type: 3}
+  m_Script: {fileID: 11500000, guid: d53ccf847ac536a40b40bd4432620a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   acceptedQuests: []

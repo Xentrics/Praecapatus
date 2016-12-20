@@ -34,6 +34,11 @@ namespace Assets.Scripts.Quests
             get { return currentQuestNode.xmlID;}
         }
 
+        public QuestNode GetCurrentNode()
+        {
+            return currentQuestNode;
+        }
+
         private QuestNode GetNode(string xmlId)
         {
             foreach (QuestNode n in questNodes)
@@ -63,21 +68,19 @@ namespace Assets.Scripts.Quests
     public class QuestNode
     {
         public string xmlID;
-        public string label;
-        public int alignment;
-        List<IQuestGoal> goals = new List<IQuestGoal>();
-        List<QuestOption> options = new List<QuestOption>();   // one of these must be fulfilled completely to solve this quest
+        QuestOption main_goal = new QuestOption();
+        List<QuestOption> options = new List<QuestOption>();   // if none empty, one of these must be fulfilled completely to solve this quest
         List<QuestOption> voluntaries = new List<QuestOption>(); // these are optional, but may result in bigger rewards
 
-        public void AddGoal(IQuestGoal goal)
+        public void AddGoal(QuestGoal goal)
         {
             if (goal == null)
                 throw new NullReferenceException("A quest goal cannot be added: reference is NULL!");
 
-            goals.Add(goal);
+            main_goal.AddGoal(goal);
         }
 
-        public void AddGoals(List<IQuestGoal> goals)
+        public void AddGoals(List<QuestGoal> goals)
         {
             if (goals == null)
                 throw new NullReferenceException("A quest goal cannot be added: reference is NULL!");
@@ -94,6 +97,22 @@ namespace Assets.Scripts.Quests
             else
                 options.Add(o);
         }
+
+        //TODO: restrict data access
+        public QuestOption GetMainGoal()
+        {
+            return main_goal;
+        }
+
+        public List<QuestOption> GetOptions()
+        {
+            return options;
+        }
+
+        public List<QuestOption> GetVoluntaries()
+        {
+            return voluntaries;
+        }
     }
 
     /**
@@ -105,9 +124,9 @@ namespace Assets.Scripts.Quests
         public QuestNode nextNode;
         public string label;
         public int alignment;
-        List<IQuestGoal> goals;
+        public List<QuestGoal> goals;
 
-        public void AddGoal(IQuestGoal goal)
+        public void AddGoal(QuestGoal goal)
         {
             if (goal == null)
                 throw new NullReferenceException("A quest goal cannot be added: reference is NULL!");
@@ -115,7 +134,7 @@ namespace Assets.Scripts.Quests
             goals.Add(goal);
         }
 
-        public void AddGoals(List<IQuestGoal> goals)
+        public void AddGoals(List<QuestGoal> goals)
         {
             if (goals == null)
                 throw new NullReferenceException("A quest goal cannot be added: reference is NULL!");
@@ -124,19 +143,11 @@ namespace Assets.Scripts.Quests
         }
     }
 
-    /**
-     * interface used to hold a list of quest rewards
-     * is implemented by 'QuestReward'
-     */
-    public interface IQuestReward
-    {
-        object reward { get; }
-    }
 
     /**
      * Generic class keeping any kind of reward definable as a class
      */
-    public class QuestReward<T> : IQuestReward
+    public class QuestReward<T>
     {
         T _reward;
         Type _rewardType;
@@ -152,45 +163,24 @@ namespace Assets.Scripts.Quests
             get { return _reward; }
         }
 
-        object IQuestReward.reward
-        {
-            get { return _reward; }
-        }
-
         public Type rewardType
         {
             get { return _rewardType; }
         }
     }
 
-    /**
-     * interface used to hold a list of quest goals
-     * is implemented by 'QuestGoal'
-     */
-    public interface IQuestGoal
+    public abstract class QuestGoal
     {
-        object goal { get; }
-        string desc { get; }
-    }
-
-    /**
-     * generic class to instanciate quest goals
-     * also remembers the type used for 'Data'
-     */
-    public class QuestGoal<Data> : IQuestGoal
-    {
-        string _desc;
-        EQuestType _questType;
-        Data _goal;
-        Type _goalType;
+        protected string _desc;
+        protected EQuestType _questType;
+        protected Type _goalType;
         public bool bFinished;
 
-        public QuestGoal(string desc, EQuestType questType, Data goal)
+        public QuestGoal(string desc, EQuestType questType)
         {
             _desc = desc;
             _questType = questType;
-            _goal = goal;
-            _goalType = typeof(Data);
+            _goalType = typeof(object);
         }
 
         public string description
@@ -203,24 +193,29 @@ namespace Assets.Scripts.Quests
             get { return _questType; }
         }
 
-        public Data goal
-        {
-            get { return _goal; }
-        }
-
-        object IQuestGoal.goal
-        {
-            get { return _goal; }
-        }
-
         public Type goalType
         {
             get { return _goalType; }
         }
+    }
 
-        string IQuestGoal.desc
+    /**
+     * generic class to instanciate quest goals
+     * also remembers the type used for 'Data'
+     */
+    public class QuestGoal<Data> : QuestGoal
+    {
+        Data _goal;
+
+        public QuestGoal(string desc, EQuestType questType, Data goal) : base(desc, questType)
         {
-            get { return _desc; }
+            _goal = goal;
+            _goalType = typeof(Data);
+        }
+
+        public Data goal
+        {
+            get { return _goal; }
         }
     }
 
@@ -228,7 +223,7 @@ namespace Assets.Scripts.Quests
      * - data container for conversation node goals
      * - con_node
      */
-    class ConNodeGoalData
+    public class ConNodeGoalData
     {
         public string conName;
         public string nodeId;
@@ -244,7 +239,7 @@ namespace Assets.Scripts.Quests
      * - data container for any goal that requires items
      * - find, gather
      */
-    class ItemGoalData
+    public class ItemGoalData
     {
         public Items.PraeItem item;
         public int amount;
@@ -260,7 +255,7 @@ namespace Assets.Scripts.Quests
      * - data container for any goal that requires items
      * - deliver
      */
-    struct ItemDeliverAllGoalData
+    public struct ItemDeliverAllGoalData
     {
         public int charId;
 
@@ -274,7 +269,7 @@ namespace Assets.Scripts.Quests
      * - data container for any goal that requires items
      * - deliver
      */
-    class ItemDeliverGoalData
+    public class ItemDeliverGoalData
     {
         public List<Items.PraeItem> items;
         public List<int> amounts;
